@@ -37,7 +37,7 @@
     <!-- Styles -->
     <link href="~/css/app.css" rel="stylesheet" />
 </head>
-<body>
+<body data-page="@GetPageName()">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -45,7 +45,7 @@
                 <!-- Logo and Brand -->
                 <a href="/" class="navbar-brand">
                     <img src="/images/bamberger-spinnerei-heart-logo.svg" alt="Bamberger Spinnerei Logo" class="navbar-logo" style="height: 50px; max-height: 50px; width: auto;" />
-                    <span class="navbar-title">Bamberger Spinnerei</span>
+                    <span class="navbar-title">BAMBERGER SPINNEREI</span>
                 </a>
 
                 <!-- Mobile Menu Toggle -->
@@ -290,5 +290,20 @@
         }
         
         return result;
+    }
+    
+    private string GetPageName()
+    {
+        var path = ViewContext.RouteData.Values["page"]?.ToString()?.ToLower();
+        if (string.IsNullOrEmpty(path)) return "home";
+        
+        return path.TrimStart('/').Split('/')[0] switch
+        {
+            "about" => "about",
+            "contact" => "contact", 
+            "beta" => "beta",
+            "support" => "support",
+            _ => "home"
+        };
     }
 }

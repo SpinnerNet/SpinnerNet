@@ -20,7 +20,7 @@
 
 /* ===== VARIABLES ===== */
 :root {
-    /* Colors - World Vision inspired */
+    /* Colors - Primary blue for home */
     --color-primary: #2c5aa0;
     --color-primary-dark: #1e3f73;
     --color-secondary: #f4f4f4;
@@ -28,6 +28,12 @@
     --color-success: #28a745;
     --color-warning: #ffc107;
     --color-danger: #dc3545;
+    
+    /* Alternative colors for other pages */
+    --color-alt-primary: #7c3aed;    /* Purple */
+    --color-alt-secondary: #059669;   /* Green */
+    --color-alt-tertiary: #dc2626;    /* Red */
+    --color-alt-quaternary: #ea580c;  /* Orange */
     
     /* Neutral colors */
     --color-white: #ffffff;
@@ -132,6 +138,8 @@ h1, h2, h3, h4, h5, h6 {
     line-height: var(--line-height-tight);
     color: var(--color-gray-900);
     margin-bottom: var(--space-16);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
 h1 { font-size: var(--font-size-48); }
@@ -851,4 +859,46 @@ p {
 .nav-link:focus {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+}
+
+/* ===== PAGE-SPECIFIC COLOR SCHEMES ===== */
+
+/* About page - Purple theme */
+body[data-page="about"] {
+    --color-primary: var(--color-alt-primary);
+    --color-primary-dark: #6d28d9;
+}
+
+body[data-page="about"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-primary) 0%, #8b5cf6 100%);
+}
+
+/* Contact page - Green theme */
+body[data-page="contact"] {
+    --color-primary: var(--color-alt-secondary);
+    --color-primary-dark: #047857;
+}
+
+body[data-page="contact"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #10b981 100%);
+}
+
+/* Beta page - Orange theme */
+body[data-page="beta"] {
+    --color-primary: var(--color-alt-quaternary);
+    --color-primary-dark: #c2410c;
+}
+
+body[data-page="beta"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #f97316 100%);
+}
+
+/* Support page - Red theme */
+body[data-page="support"] {
+    --color-primary: var(--color-alt-tertiary);
+    --color-primary-dark: #b91c1c;
+}
+
+body[data-page="support"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-tertiary) 0%, #ef4444 100%);
 }
