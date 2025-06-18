@@ -7,6 +7,17 @@
     box-sizing: border-box;
 }
 
+/* ===== FONT FACE DEFINITIONS ===== */
+@font-face {
+    font-family: 'ABC ROM Mono';
+    src: url('../fonts/ABCROMMono-Regular-Trial.woff2') format('woff2'),
+         url('../fonts/ABCROMMono-Regular-Trial.woff') format('woff'),
+         url('../fonts/ABCROMMono-Regular-Trial.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* ===== VARIABLES ===== */
 :root {
     /* Colors - World Vision inspired */
@@ -33,7 +44,7 @@
     --color-gray-900: #0d0d0d;
     
     /* Typography */
-    --font-family: 'Arial Rounded MT Bold', 'Arial Rounded MT', Arial, sans-serif;
+    --font-family: 'ABC ROM Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
