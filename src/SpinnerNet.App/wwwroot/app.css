@@ -1,0 +1,40 @@
+/* SpinnerNet.App - Clean Blazor with MudBlazor */
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Focus outline for accessibility */
+*:focus {
+    outline: 2px solid #1976d2;
+    outline-offset: 2px;
+}
+
+/* Blazor error boundary */
+.blazor-error-boundary {
+    background: #f44336;
+    color: white;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 4px;
+}
+
+.blazor-error-boundary::after {
+    content: "An error has occurred.";
+}
+
+/* Blazor validation styles */
+.validation-message {
+    color: #f44336;
+    font-size: 0.875rem;
+}
+
+.invalid {
+    border-color: #f44336 !important;
+}
+
+.valid {
+    border-color: #4caf50 !important;
+}

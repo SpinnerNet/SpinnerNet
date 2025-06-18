@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using MudBlazor
+@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+        <MudSpacer />
+        <MudText Typo="Typo.h5" Class="ml-3">Spinner.Net</MudText>
+        <MudSpacer />
+        <MudText>Welcome, Demo User</MudText>
+        <MudButton Color="Color.Inherit" Disabled="true">Demo Mode</MudButton>
+    </MudAppBar>
+    
+    <MudMainContent Class="pt-16 px-16">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <!-- Blue heart logo -->
+  <g transform="translate(10, 10)">
+    <!-- Heart shape -->
+    <path d="M20,30 C20,25 15,20 10,20 C5,20 0,25 0,30 C0,40 20,50 20,50 C20,50 40,40 40,30 C40,25 35,20 30,20 C25,20 20,25 20,30 Z" 
+          fill="#4A90E2" stroke="none"/>
+  </g>
+  
+  <!-- Bamberger Spinnerei text -->
+  <text x="70" y="25" font-family="Fira Sans, Arial, sans-serif" font-size="18" font-weight="600" fill="#333333">
+    Bamberger
+  </text>
+  <text x="70" y="45" font-family="Fira Sans, Arial, sans-serif" font-size="18" font-weight="600" fill="#333333">
+    Spinnerei
+  </text>
+</svg>

@@ -1,0 +1,67 @@
+<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define filters for watercolor effect -->
+  <defs>
+    <!-- Turbulence filter for texture -->
+    <filter id="watercolor">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="turbulence"/>
+      <feColorMatrix in="turbulence" type="saturate" values="0" result="desaturatedTurbulence"/>
+      <feComponentTransfer in="desaturatedTurbulence" result="texture">
+        <feFuncA type="discrete" tableValues="0 0.05 0.1 0.1 0.15 0.2 0.3"/>
+      </feComponentTransfer>
+      <feComposite in="texture" in2="SourceGraphic" operator="multiply" result="textured"/>
+      <feGaussianBlur in="textured" stdDeviation="0.3" result="blurred"/>
+      <feComposite in="blurred" in2="SourceGraphic" operator="atop" result="final"/>
+    </filter>
+    
+    <!-- Gradient for depth -->
+    <radialGradient id="blueGradient" cx="50%" cy="45%">
+      <stop offset="0%" style="stop-color:#b8d4e3;stop-opacity:0.8"/>
+      <stop offset="70%" style="stop-color:#a2c4d9;stop-opacity:0.85"/>
+      <stop offset="100%" style="stop-color:#9bbfd5;stop-opacity:0.9"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Main heart shape - matching the exact proportions from v4 -->
+  <path d="M 200,100
+           C 200,70 170,50 140,50
+           C 100,50 70,80 70,120
+           C 70,180 130,240 200,310
+           C 270,240 330,180 330,120
+           C 330,80 300,50 260,50
+           C 230,50 200,70 200,100 Z" 
+           fill="url(#blueGradient)" 
+           filter="url(#watercolor)"
+           opacity="0.9"/>
+  
+  <!-- Additional watercolor layer for texture -->
+  <path d="M 200,100
+           C 200,70 170,50 140,50
+           C 100,50 70,80 70,120
+           C 70,180 130,240 200,310
+           C 270,240 330,180 330,120
+           C 330,80 300,50 260,50
+           C 230,50 200,70 200,100 Z" 
+           fill="#aacde5" 
+           opacity="0.25"
+           transform="translate(3, 3)"
+           filter="url(#watercolor)"/>
+  
+  <!-- Asymmetrical, subtle highlights -->
+  <ellipse cx="135" cy="95" rx="25" ry="22" fill="#c5dae6" opacity="0.15" filter="url(#watercolor)" transform="rotate(-10 135 95)"/>
+  <ellipse cx="265" cy="105" rx="28" ry="20" fill="#c5dae6" opacity="0.12" filter="url(#watercolor)" transform="rotate(15 265 105)"/>
+  <ellipse cx="160" cy="110" rx="18" ry="15" fill="#c8dce6" opacity="0.1" filter="url(#watercolor)"/>
+  
+  <!-- Very subtle edge definition -->
+  <path d="M 200,100
+           C 200,70 170,50 140,50
+           C 100,50 70,80 70,120
+           C 70,180 130,240 200,310
+           C 270,240 330,180 330,120
+           C 330,80 300,50 260,50
+           C 230,50 200,70 200,100 Z" 
+           fill="none" 
+           stroke="#90b8d2" 
+           stroke-width="1" 
+           opacity="0.15"
+           filter="url(#watercolor)"/>
+</svg>

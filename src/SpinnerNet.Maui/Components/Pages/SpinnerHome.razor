@@ -1,0 +1,100 @@
+@page "/"
+@using MudBlazor
+
+<PageTitle>Spinner.Net - AI Time Companion</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudPaper Class="pa-6" Elevation="4">
+        <MudGrid>
+            <MudItem xs="12" Class="text-center mb-6">
+                <!-- Spinner.Net Logo -->
+                <div style="margin-bottom: 20px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="3" stroke="#512bd4" stroke-width="2"/>
+                        <path d="M12 9V3M12 21v-6M9 12H3M21 12h-6" stroke="#512bd4" stroke-width="2"/>
+                    </svg>
+                </div>
+                <MudText Typo="Typo.h3" Color="Color.Primary" Class="mb-2">
+                    Welcome to Spinner.Net
+                </MudText>
+                <MudText Typo="Typo.h6" Color="Color.Secondary">
+                    Your AI-powered time companion for productivity and mindful time management
+                </MudText>
+            </MudItem>
+            
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Elevation="2">
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5" Class="mb-3">
+                            <MudIcon Icon="Icons.Material.Filled.AccessTime" Class="mr-2" />
+                            ZeitCoin Time Banking
+                        </MudText>
+                        <MudText Class="mb-4">
+                            Track your time with purpose. Earn ZeitCoin rewards for productive, value-creating activities 
+                            while maintaining complete control over your data.
+                        </MudText>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mr-2">
+                            Start Tracking
+                        </MudButton>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            
+            <MudItem xs="12" md="6">
+                <MudCard Class="pa-4" Elevation="2">
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5" Class="mb-3">
+                            <MudIcon Icon="Icons.Material.Filled.Psychology" Class="mr-2" />
+                            AI Buddy Assistant
+                        </MudText>
+                        <MudText Class="mb-4">
+                            Get personalized guidance from your AI companion. Chat about goals, 
+                            receive insights, and build better time management habits.
+                        </MudText>
+                        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Class="mr-2">
+                            Chat with Buddy
+                        </MudButton>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4 text-center" Elevation="1">
+                    <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-2">
+                        <MudIcon Icon="Icons.Material.Filled.Security" />
+                    </MudText>
+                    <MudText Typo="Typo.h6" Class="mb-2">Data Sovereignty</MudText>
+                    <MudText>Your data stays local by default. You control where and how it's stored.</MudText>
+                </MudPaper>
+            </MudItem>
+            
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4 text-center" Elevation="1">
+                    <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-2">
+                        <MudIcon Icon="Icons.Material.Filled.Devices" />
+                    </MudText>
+                    <MudText Typo="Typo.h6" Class="mb-2">Cross-Platform</MudText>
+                    <MudText>Access your time companion on web, mobile, and desktop seamlessly.</MudText>
+                </MudPaper>
+            </MudItem>
+            
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4 text-center" Elevation="1">
+                    <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-2">
+                        <MudIcon Icon="Icons.Material.Filled.Analytics" />
+                    </MudText>
+                    <MudText Typo="Typo.h6" Class="mb-2">Smart Analytics</MudText>
+                    <MudText>Understand your productivity patterns with AI-powered insights.</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        // Initialize any required data for the home page
+        await base.OnInitializedAsync();
+    }
+}

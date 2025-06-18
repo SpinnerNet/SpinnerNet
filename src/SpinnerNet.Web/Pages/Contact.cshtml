@@ -1,0 +1,244 @@
+@page
+@model SpinnerNet.Web.Pages.ContactModel
+@{
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="padding: var(--space-64) 0; background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%);">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("Contact_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("Contact_Hero_Subtitle")</p>
+            <p class="lead">@Model.GetText("Contact_Hero_Description")</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Contact_Info_Title")</h2>
+            <p class="lead">@Model.GetText("Contact_Info_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Contact_General_Placeholder")</strong><br>
+                            @Model.GetText("Contact_General_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Contact_General_Title")</h3>
+                        <p class="card-text">@Model.GetText("Contact_General_Text")</p>
+                        <p><strong>@Model.GetText("Contact_General_Email")</strong> <a href="mailto:@(ViewData["InfoEmail"] ?? "info@example.com")">@(ViewData["InfoEmail"] ?? "info@example.com")</a></p>
+                        <a href="mailto:@(ViewData["InfoEmail"] ?? "info@example.com")" class="btn btn-primary">@Model.GetText("Contact_General_Send")</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Contact_Beta_Placeholder")</strong><br>
+                            @Model.GetText("Contact_Beta_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Contact_Beta_Title")</h3>
+                        <p class="card-text">@Model.GetText("Contact_Beta_Text")</p>
+                        <p><strong>@Model.GetText("Contact_General_Email")</strong> <a href="mailto:@(ViewData["BetaEmail"] ?? "beta@example.com")">@(ViewData["BetaEmail"] ?? "beta@example.com")</a></p>
+                        <a href="/beta" class="btn btn-primary">@Model.GetText("Contact_Beta_Apply")</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Contact_Consultation_Placeholder")</strong><br>
+                            @Model.GetText("Contact_Consultation_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Contact_Consultation_Title")</h3>
+                        <p class="card-text">@Model.GetText("Contact_Consultation_Text")</p>
+                        <p><strong>@Model.GetText("Contact_General_Email")</strong> <a href="mailto:@(ViewData["ContactEmail"] ?? "contact@example.com")">@(ViewData["ContactEmail"] ?? "contact@example.com")</a></p>
+                        <a href="mailto:@(ViewData["ContactEmail"] ?? "contact@example.com")" class="btn btn-primary">@Model.GetText("Contact_Consultation_Schedule")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="section" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2>@Model.GetText("Contact_Form_Title")</h2>
+                <p class="lead">@Model.GetText("Contact_Form_Subtitle")</p>
+                
+                <form method="post" style="background: white; padding: var(--space-32); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                    <div class="row">
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Contact_Form_Name") *</label>
+                            <input type="text" name="name" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" 
+                                   placeholder="@Model.GetText("Contact_Form_NamePlaceholder")" />
+                        </div>
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Contact_Form_Email") *</label>
+                            <input type="email" name="email" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" 
+                                   placeholder="@Model.GetText("Contact_Form_EmailPlaceholder")" />
+                        </div>
+                    </div>
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Contact_Form_Subject")</label>
+                        <select name="subject" 
+                                style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);">
+                            <option value="">@Model.GetText("Contact_Form_SubjectPlaceholder")</option>
+                            <option value="general">@Model.GetText("Contact_Form_SubjectGeneral")</option>
+                            <option value="zeitsparkasse">@Model.GetText("Contact_Form_SubjectTimeBank")</option>
+                            <option value="beta">@Model.GetText("Contact_Form_SubjectBeta")</option>
+                            <option value="partnership">@Model.GetText("Contact_Form_SubjectPartnership")</option>
+                            <option value="workshop">@Model.GetText("Contact_Form_SubjectWorkshop")</option>
+                            <option value="media">@Model.GetText("Contact_Form_SubjectMedia")</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Contact_Form_Message") *</label>
+                        <textarea name="message" rows="6" required 
+                                  style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16); resize: vertical;" 
+                                  placeholder="@Model.GetText("Contact_Form_MessagePlaceholder")"></textarea>
+                    </div>
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: flex; align-items: center; gap: var(--space-8);">
+                            <input type="checkbox" name="newsletter" value="true" />
+                            <span>@Model.GetText("Contact_Form_Newsletter")</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">@Model.GetText("Contact_Form_Send")</button>
+                </form>
+            </div>
+            
+            <div class="col-4">
+                <div style="background: white; padding: var(--space-32); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); height: fit-content;">
+                    <h3>@Model.GetText("Contact_Info_SidebarTitle")</h3>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <h4 style="color: var(--color-primary); margin-bottom: var(--space-8);">@Model.GetText("Contact_Info_Address")</h4>
+                        <p style="margin: 0; line-height: var(--line-height-relaxed);">
+                            @Model.GetText("Contact_Info_AddressLine1")<br>
+                            @Model.GetText("Contact_Info_AddressLine2")<br>
+                            @Model.GetText("Contact_Info_AddressLine3")<br>
+                            @Model.GetText("Contact_Info_AddressLine4")
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <h4 style="color: var(--color-primary); margin-bottom: var(--space-8);">@Model.GetText("Contact_Info_ResponseTimes")</h4>
+                        <p style="margin: 0; line-height: var(--line-height-relaxed);">
+                            @Model.GetText("Contact_Info_EmailResponse")<br>
+                            @Model.GetText("Contact_Info_BetaResponse")<br>
+                            @Model.GetText("Contact_Info_ConsultationResponse")
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <h4 style="color: var(--color-primary); margin-bottom: var(--space-8);">@Model.GetText("Contact_Info_FollowUs")</h4>
+                        <div style="display: flex; gap: var(--space-12);">
+                            <a href="#" class="btn btn-outline btn-sm">LinkedIn</a>
+                            <a href="#" class="btn btn-outline btn-sm">Twitter</a>
+                            <a href="#" class="btn btn-outline btn-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: var(--space-32);">
+                    <div class="card-img card-img-placeholder" style="height: 200px;">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Contact_Info_MapPlaceholder")</strong><br>
+                            @Model.GetText("Contact_Info_MapPlaceholderDesc")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Contact_FAQ_Title")</h2>
+            <p class="lead">@Model.GetText("Contact_FAQ_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">@Model.GetText("Contact_FAQ_What_Title")</h4>
+                    <p>@Html.Raw(Model.GetText("Contact_FAQ_What_Text"))</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">@Model.GetText("Contact_FAQ_Beta_Title")</h4>
+                    <p>@Html.Raw(Model.GetText("Contact_FAQ_Beta_Text"))</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">@Model.GetText("Contact_FAQ_Free_Title")</h4>
+                    <p>@Html.Raw(Model.GetText("Contact_FAQ_Free_Text"))</p>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">@Model.GetText("Contact_FAQ_Location_Title")</h4>
+                    <p>@Html.Raw(Model.GetText("Contact_FAQ_Location_Text"))</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">@Model.GetText("Contact_FAQ_Partnership_Title")</h4>
+                    <p>@Html.Raw(Model.GetText("Contact_FAQ_Partnership_Text"))</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">@Model.GetText("Contact_FAQ_TimeBank_Title")</h4>
+                    <p>@Html.Raw(Model.GetText("Contact_FAQ_TimeBank_Text"))</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%); color: white;">
+    <div class="container">
+        <div class="row" style="align-items: center;">
+            <div class="col-8">
+                <h2 style="color: white; margin-bottom: var(--space-24);">@Model.GetText("Contact_Newsletter_Title")</h2>
+                <p class="lead" style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-32);">
+                    @Model.GetText("Contact_Newsletter_Text")
+                </p>
+            </div>
+            <div class="col-4">
+                <div style="display: flex; gap: var(--space-8); align-items: stretch;">
+                    <input type="email" placeholder="@Model.GetText("Contact_Newsletter_Placeholder")" 
+                           style="flex: 1; padding: var(--space-12); border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-md); font-size: var(--font-size-16); background: rgba(255,255,255,0.1); color: white;" />
+                    <button class="btn btn-secondary">@Model.GetText("Contact_Newsletter_Subscribe")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

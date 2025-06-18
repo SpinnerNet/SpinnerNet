@@ -1,0 +1,370 @@
+@page
+@model SpinnerNet.Web.Pages.SupportModel
+@{
+    ViewData["Title"] = "Support";
+    ViewData["Description"] = "Support und Hilfe für die Bamberger Spinnerei - Finden Sie Antworten auf häufige Fragen, Kontaktieren Sie unser Support-Team oder durchsuchen Sie unsere Wissensdatenbank.";
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="padding: var(--space-64) 0; background: linear-gradient(135deg, var(--color-success) 0%, #34ce57 100%);">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("Support_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("Support_Hero_Description")</p>
+            <p class="lead">@Model.GetText("Support_Hero_Subtitle")</p>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Help Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Support_QuickHelp_Title")</h2>
+            <p class="lead">@Model.GetText("Support_QuickHelp_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>FAQ Knowledge Base</strong><br>
+                            Searchable knowledge base interface with categories, search bar, and popular articles showing comprehensive help documentation.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Support_FAQ_Title")</h3>
+                        <p class="card-text">@Model.GetText("Support_FAQ_Description")</p>
+                        <a href="#faq" class="btn btn-primary">FAQ durchsuchen</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>Technical Support</strong><br>
+                            Support ticket system interface with priority levels, status tracking, and technical problem diagnosis tools.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Support_TechSupport_Title")</h3>
+                        <p class="card-text">@Model.GetText("Support_TechSupport_Description")</p>
+                        <a href="#contact" class="btn btn-primary">Support kontaktieren</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>Community Help</strong><br>
+                            Community forum interface with user discussions, peer support, and community moderators providing mutual assistance.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Support_Community_Title")</h3>
+                        <p class="card-text">@Model.GetText("Support_Community_Description")</p>
+                        <a href="#community" class="btn btn-primary">Community fragen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Emergency Support -->
+<section class="section-sm" style="background-color: var(--color-warning); color: white;">
+    <div class="container">
+        <div class="row" style="align-items: center;">
+            <div class="col-8">
+                <h3 style="color: white; margin-bottom: var(--space-12);">🚨 @Model.GetText("Support_Emergency_Title")</h3>
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 0;">@Model.GetText("Support_Emergency_Description")</p>
+            </div>
+            <div class="col-4" style="text-align: right;">
+                <a href="mailto:emergency@bamberger-spinnerei.org" class="btn btn-secondary btn-lg">@Model.GetText("Support_Emergency_Button")</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Support Categories -->
+<section class="section" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Support_Categories_Title")</h2>
+            <p class="lead">@Model.GetText("Support_Categories_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div style="background: white; padding: var(--space-24); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-bottom: var(--space-24);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-16);">💰 Zeitsparkasse™ Support</h4>
+                    <ul style="margin-bottom: var(--space-16); line-height: var(--line-height-relaxed);">
+                        <li>ZeitCoin-Transaktionen</li>
+                        <li>TimeCredit-Konvertierung</li>
+                        <li>Wallet-Probleme</li>
+                        <li>Tauschbörse</li>
+                    </ul>
+                    <a href="mailto:zeitsparkasse@bamberger-spinnerei.org" class="btn btn-outline btn-sm">Zeitsparkasse Support</a>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div style="background: white; padding: var(--space-24); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-bottom: var(--space-24);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-16);">🔧 Technischer Support</h4>
+                    <ul style="margin-bottom: var(--space-16); line-height: var(--line-height-relaxed);">
+                        <li>Login-Probleme</li>
+                        <li>Plattform-Fehler</li>
+                        <li>Performance-Issues</li>
+                        <li>Mobile App</li>
+                    </ul>
+                    <a href="mailto:tech@bamberger-spinnerei.org" class="btn btn-outline btn-sm">Tech Support</a>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div style="background: white; padding: var(--space-24); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-bottom: var(--space-24);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-16);">👥 Community Support</h4>
+                    <ul style="margin-bottom: var(--space-16); line-height: var(--line-height-relaxed);">
+                        <li>Profil-Einstellungen</li>
+                        <li>Vernetzung</li>
+                        <li>Events & Workshops</li>
+                        <li>Mentoring</li>
+                    </ul>
+                    <a href="mailto:community@bamberger-spinnerei.org" class="btn btn-outline btn-sm">Community Support</a>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div style="background: white; padding: var(--space-24); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-bottom: var(--space-24);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-16);">🎓 Bildung & Training</h4>
+                    <ul style="margin-bottom: var(--space-16); line-height: var(--line-height-relaxed);">
+                        <li>Onboarding</li>
+                        <li>Tutorials</li>
+                        <li>Best Practices</li>
+                        <li>Workshops</li>
+                    </ul>
+                    <a href="mailto:education@bamberger-spinnerei.org" class="btn btn-outline btn-sm">Bildung Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Häufig gestellte Fragen</h2>
+            <p class="lead">Die wichtigsten Antworten auf einen Blick</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">🔐 Wie sichere ich mein Konto?</h4>
+                    <p>Verwenden Sie ein starkes Passwort, aktivieren Sie 2FA und loggen Sie sich nur von vertrauenswürdigen Geräten ein. Teilen Sie niemals Ihre Zugangsdaten.</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">💰 Wie funktioniert die Zeitsparkasse™?</h4>
+                    <p>Die Zeitsparkasse™ nutzt ZeitCoin als Hauptwährung (1 Stunde = 1 ZeitCoin) und TimeCredit als Stabilisator. Bei Volatilität konvertiert das System automatisch.</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">📱 Gibt es eine mobile App?</h4>
+                    <p>Ja, die mobile App ist in der Beta-Phase. Beta-Tester erhalten frühzeitigen Zugang für iOS und Android.</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">🏗️ Wie buche ich ein Innovation Lab?</h4>
+                    <p>Digitale Labs sind über die Plattform buchbar. Physische Labs werden ab 2026 in Bamberg verfügbar sein.</p>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">👤 Kann ich mein Profil löschen?</h4>
+                    <p>Ja, Sie haben vollständige Kontrolle über Ihre Daten. Kontaktieren Sie den Support für die vollständige Datenlöschung.</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">🔄 Wie tausche ich ZeitCoins?</h4>
+                    <p>Gehen Sie zur Zeitsparkasse, wählen Sie "Tauschen" und folgen Sie den Anweisungen. Der Tausch erfolgt sofort bei verfügbaren Partnern.</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">📧 Wie ändere ich meine E-Mail?</h4>
+                    <p>Gehen Sie zu Profil → Einstellungen → E-Mail ändern. Sie erhalten eine Bestätigungs-E-Mail an die neue Adresse.</p>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h4 style="color: var(--color-primary); margin-bottom: var(--space-12);">🆘 Was bei technischen Problemen?</h4>
+                    <p>Prüfen Sie zuerst Ihre Internetverbindung, leeren Sie den Browser-Cache oder kontaktieren Sie unseren Tech-Support.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Support Form -->
+<section class="section" id="contact" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2>@Model.GetText("Support_Contact_Title")</h2>
+                <p class="lead">@Model.GetText("Support_Contact_Description")</p>
+                
+                <form method="post" style="background: white; padding: var(--space-32); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                    <div class="row">
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Support_Form_Name") *</label>
+                            <input type="text" name="name" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" />
+                        </div>
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Support_Form_Email") *</label>
+                            <input type="email" name="email" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" />
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Support_Form_Category") *</label>
+                        <select name="category" required 
+                                style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);">
+                            <option value="">Wählen Sie eine Kategorie</option>
+                            <option value="zeitsparkasse">Zeitsparkasse™</option>
+                            <option value="technical">Technisches Problem</option>
+                            <option value="account">Konto & Profil</option>
+                            <option value="community">Community & Vernetzung</option>
+                            <option value="billing">Abrechnung & Zahlungen</option>
+                            <option value="feedback">Feedback & Vorschläge</option>
+                            <option value="other">Sonstiges</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Support_Form_Priority")</label>
+                        <select name="priority" 
+                                style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);">
+                            <option value="low">Niedrig - Allgemeine Frage</option>
+                            <option value="normal" selected>Normal - Standard Support</option>
+                            <option value="high">Hoch - Beeinträchtigt die Nutzung</option>
+                            <option value="urgent">Dringend - Kritisches Problem</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Support_Form_Description") *</label>
+                        <textarea name="description" rows="6" required 
+                                  style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16); resize: vertical;" 
+                                  placeholder="Beschreiben Sie Ihr Problem so detailliert wie möglich. Welche Schritte haben zu dem Problem geführt? Welche Fehlermeldungen sehen Sie?"></textarea>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-32);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">@Model.GetText("Support_Form_SystemInfo")</label>
+                        <input type="text" name="systemInfo" 
+                               style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" 
+                               placeholder="z.B. Chrome 120, Windows 11, iPhone iOS 17" />
+                        <small style="color: var(--color-gray-600); font-size: var(--font-size-14);">Diese Information hilft uns bei der Problemdiagnose</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg">@Model.GetText("Support_Form_Submit")</button>
+                </form>
+            </div>
+            
+            <div class="col-4">
+                <div style="background: white; padding: var(--space-32); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); height: fit-content;">
+                    <h3>Support-Zeiten</h3>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <h4 style="color: var(--color-success); margin-bottom: var(--space-8);">📧 E-Mail Support</h4>
+                        <p style="margin: 0; line-height: var(--line-height-relaxed);">
+                            <strong>Antwortzeit:</strong> 4-8 Stunden<br>
+                            <strong>Verfügbar:</strong> 24/7<br>
+                            <strong>Sprachen:</strong> Deutsch, Englisch
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <h4 style="color: var(--color-warning); margin-bottom: var(--space-8);">🚨 Notfall-Support</h4>
+                        <p style="margin: 0; line-height: var(--line-height-relaxed);">
+                            <strong>Antwortzeit:</strong> 1-2 Stunden<br>
+                            <strong>Verfügbar:</strong> Mo-So 8-22 Uhr<br>
+                            <strong>Für:</strong> Kritische Probleme
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <h4 style="color: var(--color-primary); margin-bottom: var(--space-8);">💬 Community Forum</h4>
+                        <p style="margin: 0; line-height: var(--line-height-relaxed);">
+                            <strong>Antwortzeit:</strong> Variiert<br>
+                            <strong>Verfügbar:</strong> 24/7<br>
+                            <strong>Von:</strong> Community & Team
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: var(--space-32);">
+                    <div class="card-img card-img-placeholder" style="height: 200px;">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>Support Team</strong><br>
+                            Friendly support team working together in a modern office environment, representing responsive customer service and technical expertise.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Knowledge Base -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Wissensdatenbank</h2>
+            <p class="lead">Selbstständig Lösungen finden</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-primary); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-16); color: white; font-size: var(--font-size-24); font-weight: var(--font-weight-bold);">📚</div>
+                    <h4>Erste Schritte</h4>
+                    <p>Onboarding, Profil-Setup und grundlegende Funktionen</p>
+                    <a href="#" class="btn btn-outline btn-sm">Guides ansehen</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-accent); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-16); color: white; font-size: var(--font-size-24); font-weight: var(--font-weight-bold);">🎥</div>
+                    <h4>Video-Tutorials</h4>
+                    <p>Schritt-für-Schritt Anleitungen für alle Features</p>
+                    <a href="#" class="btn btn-outline btn-sm">Videos ansehen</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-success); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-16); color: white; font-size: var(--font-size-24); font-weight: var(--font-weight-bold);">💡</div>
+                    <h4>Tipps & Tricks</h4>
+                    <p>Experten-Tipps für optimale Nutzung der Plattform</p>
+                    <a href="#" class="btn btn-outline btn-sm">Tipps lesen</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-gray-600); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-16); color: white; font-size: var(--font-size-24); font-weight: var(--font-weight-bold);">🔧</div>
+                    <h4>Troubleshooting</h4>
+                    <p>Häufige Probleme und Lösungsansätze</p>
+                    <a href="#" class="btn btn-outline btn-sm">Probleme lösen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

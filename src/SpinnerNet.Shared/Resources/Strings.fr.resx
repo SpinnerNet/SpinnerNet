@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Navigation -->
+  <data name="Nav_Home" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="Nav_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Nav_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Nav_Beta" xml:space="preserve">
+    <value>Accès Bêta</value>
+  </data>
+  <data name="Nav_App" xml:space="preserve">
+    <value>Aller à l'app</value>
+  </data>
+  <data name="Language_German" xml:space="preserve">
+    <value>Allemand</value>
+  </data>
+  <data name="Language_English" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
+  <data name="Language_French" xml:space="preserve">
+    <value>Français</value>
+  </data>
+  <data name="Language_Spanish" xml:space="preserve">
+    <value>Espagnol</value>
+  </data>
+
+  <!-- Hero Section with Personal Buddy Focus -->
+  <data name="Index_Hero_Title" xml:space="preserve">
+    <value>Imagine avoir un compagnon personnel</value>
+  </data>
+  <data name="Index_Hero_Description" xml:space="preserve">
+    <value>...qui te connaît comme ton meilleur ami. Qui sait quand tu es productif, ce qui te motive. Qui t'aide à utiliser ton temps pour que tu sois satisfait le soir.</value>
+  </data>
+  <data name="Index_Hero_LearnMore" xml:space="preserve">
+    <value>Comment ça marche ?</value>
+  </data>
+  <data name="Index_Hero_BetaAccess" xml:space="preserve">
+    <value>Rencontrer ton compagnon</value>
+  </data>
+
+  <!-- Personal Three Pillars Focus -->
+  <data name="Index_Features_Title" xml:space="preserve">
+    <value>Plus qu'un logiciel – un nouveau vivre-ensemble</value>
+  </data>
+  <data name="Index_Features_Description" xml:space="preserve">
+    <value>Nous créons un espace pour tes idées. Trois piliers soutiennent notre communauté : Créer, Transmettre et la Place de marché.</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Créer – Laisser émerger les idées</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Que tu testes un nouveau concept d'apprentissage, développes une app ou aies une vision pour le tourisme durable – ici tu trouveras l'espace, le matériel et les personnes qui t'accompagnent.</value>
+  </data>
+  <data name="Index_Features_Innovation_Title" xml:space="preserve">
+    <value>Transmettre – Partager le savoir</value>
+  </data>
+  <data name="Index_Features_Innovation_Description" xml:space="preserve">
+    <value>Le savoir n'est pas enseigné chez nous, il est partagé. De l'artisan expérimenté à la jeune entrepreneuse – tous transmettent ce qu'ils savent. Sans pression de notes, avec de vraies rencontres.</value>
+  </data>
+  <data name="Index_Features_Community_Title" xml:space="preserve">
+    <value>Place de marché – Repenser le travail</value>
+  </data>
+  <data name="Index_Features_Community_Description" xml:space="preserve">
+    <value>Travaille de manière autodéterminée, mais pas seul. Ici tu peux programmer et peindre, enseigner le matin et faire de la musique le soir. Ton identité peut être multidimensionnelle.</value>
+  </data>
+
+  <!-- 23% Principle & BGE Integration -->
+  <data name="Index_Stats_CommunityMembers" xml:space="preserve">
+    <value>Contribution solidaire</value>
+  </data>
+  <data name="Index_Stats_RealizedProjects" xml:space="preserve">
+    <value>Reste avec toi</value>
+  </data>
+  <data name="Index_Stats_SavedHours" xml:space="preserve">
+    <value>Possibilités</value>
+  </data>
+
+  <!-- Personal CTA -->
+  <data name="Index_CTA_Title" xml:space="preserve">
+    <value>Que peux-tu apporter ?</value>
+  </data>
+  <data name="Index_CTA_Description" xml:space="preserve">
+    <value>Une idée. Du temps. Une conversation. Un don. Ton talent ou ton histoire. Qu'obtiens-tu ? Un espace. Une résonance. Une structure. De l'humanité. Peut-être même un nouveau sens.</value>
+  </data>
+  <data name="Index_CTA_SecureBeta" xml:space="preserve">
+    <value>Viens nous voir. Écris-nous.</value>
+  </data>
+  <data name="Index_CTA_BookConsultation" xml:space="preserve">
+    <value>Ou commence simplement.</value>
+  </data>
+
+  <!-- Personal Mission & Vision -->
+  <data name="Hero_MainSlogan" xml:space="preserve">
+    <value>Plus qu'un logiciel – un compagnon pour la vie.</value>
+  </data>
+  <data name="Hero_Subtitle" xml:space="preserve">
+    <value>Spinner.Net est ton compagnon IA personnel qui te comprend, protège ton temps et t'aide à vivre la vie que tu veux.</value>
+  </data>
+  <data name="About_Vision_Text" xml:space="preserve">
+    <value>La Filature est plus qu'un lieu – c'est un modèle de cohabitation, de travail, d'apprentissage et de croissance spirituelle. Au centre se trouve l'être humain dans sa totalité – pas seulement comme employé, mais comme être sensible, pensant et créatif.</value>
+  </data>
+  <data name="About_Mission_Text" xml:space="preserve">
+    <value>Nous créons l'espace, le temps et la confiance pour que les gens puissent s'épanouir, réaliser des idées et façonner la communauté. Un lieu pour toutes les générations, cultures et situations de vie – porté par l'idée : Qui porte aujourd'hui, sera porté demain.</value>
+  </data>
+
+  <!-- 23% & BGE with Trust Focus -->
+  <data name="Support_23Percent_Description" xml:space="preserve">
+    <value>Le nombre 23 symbolise une participation volontaire et responsable dans une communauté. Plus les gens agissent, plus les gens peuvent être portés. Il ne s'agit pas de contrôle, mais de confiance – le capital central de la Filature.</value>
+  </data>
+  <data name="Support_BGE_Description" xml:space="preserve">
+    <value>Les personnes portées par le revenu de base n'ont aucune obligation. Elles reçoivent du temps et de l'espace pour se retrouver. Qui a été porté, porte plus tard les autres. Une chaîne de confiance.</value>
+  </data>
+
+  <!-- Contact Page -->
+  <data name="Contact_Hero_Title" xml:space="preserve">
+    <value>Parlons ensemble</value>
+  </data>
+  <data name="Contact_Hero_Description" xml:space="preserve">
+    <value>Avez-vous des questions, des idées ou voulez-vous juste dire bonjour ? Nous avons hâte d'avoir de vos nouvelles !</value>
+  </data>
+
+  <!-- Beta Page -->
+  <data name="Beta_Hero_Title" xml:space="preserve">
+    <value>Programme Bêta</value>
+  </data>
+  <data name="Beta_Hero_Subtitle" xml:space="preserve">
+    <value>Devenez testeur bêta du futur</value>
+  </data>
+  <data name="Beta_Hero_Description" xml:space="preserve">
+    <value>Obtenez un accès exclusif à notre plateforme et aidez-nous à perfectionner la Filature de Bamberg.</value>
+  </data>
+  <data name="Beta_Benefits_Title" xml:space="preserve">
+    <value>Pourquoi devenir testeur bêta ?</value>
+  </data>
+  <data name="Beta_Benefits_Subtitle" xml:space="preserve">
+    <value>Découvrez les avantages du programme bêta</value>
+  </data>
+
+  <!-- About Page -->
+  <data name="About_Hero_Title" xml:space="preserve">
+    <value>À propos de la Filature de Bamberg</value>
+  </data>
+  <data name="About_Hero_Subtitle" xml:space="preserve">
+    <value>Une nouvelle façon de vivre, travailler et apprendre</value>
+  </data>
+  <data name="About_Hero_Description" xml:space="preserve">
+    <value>Nous créons l'espace, le temps et la confiance pour que les gens puissent développer des idées, les réaliser et façonner la communauté.</value>
+  </data>
+  <data name="About_Team_Peter_Title" xml:space="preserve">
+    <value>Peter Paul Clinton</value>
+  </data>
+  <data name="About_Team_Peter_Role" xml:space="preserve">
+    <value>Fondateur &amp; PDG</value>
+  </data>
+  <data name="About_Team_Peter_Placeholder" xml:space="preserve">
+    <value>Visionnaire et entrepreneur passionné par les concepts éducatifs innovants et le développement communautaire.</value>
+  </data>
+  <data name="About_Vision_Title" xml:space="preserve">
+    <value>Notre Vision</value>
+  </data>
+  <data name="About_Mission_Title" xml:space="preserve">
+    <value>Notre Mission</value>
+  </data>
+  <data name="About_Values_Title" xml:space="preserve">
+    <value>Nos Valeurs</value>
+  </data>
+  <data name="About_Team_Title" xml:space="preserve">
+    <value>Notre Équipe</value>
+  </data>
+
+  <!-- Contact Page Placeholders -->
+  <data name="Contact_General_Title" xml:space="preserve">
+    <value>Demandes générales</value>
+  </data>
+  <data name="Contact_Beta_Title" xml:space="preserve">
+    <value>Demander l'accès Bêta</value>
+  </data>
+  <data name="Contact_Form_Title" xml:space="preserve">
+    <value>Envoyer un message</value>
+  </data>
+  <data name="Contact_Form_Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Contact_Form_Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Contact_Form_Subject" xml:space="preserve">
+    <value>Sujet</value>
+  </data>
+  <data name="Contact_Form_Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Contact_Form_Send" xml:space="preserve">
+    <value>Envoyer le message</value>
+  </data>
+  <data name="Contact_FAQ_What_Title" xml:space="preserve">
+    <value>Qu'est-ce que la Filature de Bamberg ?</value>
+  </data>
+  <data name="Contact_FAQ_What_Answer" xml:space="preserve">
+    <value>La Filature de Bamberg est un projet communautaire innovant qui crée un espace pour le développement créatif, l'éducation et l'innovation sociale.</value>
+  </data>
+
+  <!-- Beta Page Placeholders -->
+  <data name="Beta_Apply_Button" xml:space="preserve">
+    <value>Postuler maintenant</value>
+  </data>
+  <data name="Beta_Demo_Button" xml:space="preserve">
+    <value>Demander une démo</value>
+  </data>
+  <data name="Beta_Exclusive_Title" xml:space="preserve">
+    <value>Accès exclusif</value>
+  </data>
+  <data name="Beta_Exclusive_Description" xml:space="preserve">
+    <value>Soyez parmi les premiers à découvrir notre plateforme innovante.</value>
+  </data>
+  <data name="Beta_Influence_Title" xml:space="preserve">
+    <value>Avoir une influence</value>
+  </data>
+  <data name="Beta_Influence_Description" xml:space="preserve">
+    <value>Façonnez l'avenir de la Filature de Bamberg avec vos retours.</value>
+  </data>
+  <data name="Beta_Community_Title" xml:space="preserve">
+    <value>Accès communauté</value>
+  </data>
+  <data name="Beta_Community_Description" xml:space="preserve">
+    <value>Rejoignez une communauté exclusive d'innovateurs et de visionnaires.</value>
+  </data>
+  <data name="Beta_Included_Title" xml:space="preserve">
+    <value>Qu'est-ce qui est inclus ?</value>
+  </data>
+  <data name="Beta_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Zeitsparkasse™</value>
+  </data>
+  <data name="Beta_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Système révolutionnaire de banque de temps pour un échange de valeurs durable.</value>
+  </data>
+  <data name="Beta_AI_Title" xml:space="preserve">
+    <value>Assistants IA</value>
+  </data>
+  <data name="Beta_AI_Description" xml:space="preserve">
+    <value>Compagnons IA personnels qui vous soutiennent dans vos projets et objectifs.</value>
+  </data>
+  <data name="Beta_Labs_Title" xml:space="preserve">
+    <value>Laboratoires d'innovation</value>
+  </data>
+  <data name="Beta_Labs_Description" xml:space="preserve">
+    <value>Accès aux outils et espaces de travail les plus modernes pour vos projets.</value>
+  </data>
+
+  <!-- Support Page Placeholders -->
+  <data name="Support_Hero_Subtitle" xml:space="preserve">
+    <value>Aide rapide pour toutes vos questions</value>
+  </data>
+  <data name="Support_QuickHelp_Title" xml:space="preserve">
+    <value>Aide rapide</value>
+  </data>
+  <data name="Support_FAQ_Title" xml:space="preserve">
+    <value>Questions fréquemment posées</value>
+  </data>
+  <data name="Support_TechSupport_Title" xml:space="preserve">
+    <value>Support technique</value>
+  </data>
+  <data name="Support_Community_Title" xml:space="preserve">
+    <value>Support communautaire</value>
+  </data>
+  <data name="Support_Emergency_Title" xml:space="preserve">
+    <value>Support d'urgence</value>
+  </data>
+  <data name="Support_Emergency_Button" xml:space="preserve">
+    <value>Aide immédiate</value>
+  </data>
+  <data name="Support_Categories_Title" xml:space="preserve">
+    <value>Catégories de support</value>
+  </data>
+  <data name="Support_Contact_Title" xml:space="preserve">
+    <value>Contacter le support</value>
+  </data>
+
+  <!-- Support Page -->
+  <data name="Support_Hero_Title" xml:space="preserve">
+    <value>Centre de Support</value>
+  </data>
+  <data name="Support_Hero_Description" xml:space="preserve">
+    <value>Nous sommes là pour vous aider</value>
+  </data>
+
+</root>

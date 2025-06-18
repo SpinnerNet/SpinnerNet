@@ -1,0 +1,382 @@
+@page "/"
+@page "/app"
+@using Microsoft.AspNetCore.Components.Authorization
+@using SpinnerNet.Personas.Services
+@using SpinnerNet.Shared.Models
+@using SpinnerNet.Shared.Models.CosmosDb
+@using SpinnerNet.Shared.Extensions
+@using SpinnerNet.Core.Features.Buddies
+@inject IPersonaService PersonaService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager Navigation
+@inject IMediator Mediator
+@inject ISnackbar Snackbar
+
+<PageTitle>Spinner.Net - Your Digital Companion Platform</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        @if (!hasCompletedOnboarding)
+        {
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-16">
+                <MudText Typo="Typo.h3" Align="Align.Center" Class="mb-8">
+                    Welcome to Spinner.Net! 🎉
+                </MudText>
+                <MudText Typo="Typo.h6" Align="Align.Center" Class="mb-8">
+                    Let's create your digital persona to get started
+                </MudText>
+                <OnboardingWizard OnCompleted="HandleOnboardingCompleted" />
+            </MudContainer>
+        }
+        else
+        {
+            <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                <!-- Welcome Header -->
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <MudAvatar Size="Size.Large" Color="Color.Primary">
+                        @(currentUser?.DisplayName?.FirstOrDefault().ToString().ToUpperInvariant() ?? "U")
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.h4">
+                            Welcome back, @currentUser?.DisplayName! 👋
+                        </MudText>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary">
+                            Your Zeitsparkasse platform • Building time value for the ZeitCoin economy
+                        </MudText>
+                    </div>
+                    <MudSpacer />
+                    <MudButtonGroup Variant="Variant.Outlined">
+                        <MudButton StartIcon="Icons.Material.Filled.Task" 
+                                  Color="@(currentView == ViewMode.Tasks ? Color.Primary : Color.Default)"
+                                  OnClick="@(() => currentView = ViewMode.Tasks)">
+                            Tasks
+                        </MudButton>
+                        <MudButton StartIcon="Icons.Material.Filled.Chat" 
+                                  Color="@(currentView == ViewMode.Chat ? Color.Primary : Color.Default)"
+                                  OnClick="@(() => currentView = ViewMode.Chat)">
+                            AI Buddy
+                        </MudButton>
+                        <MudButton StartIcon="Icons.Material.Filled.Analytics" 
+                                  Color="@(currentView == ViewMode.Analytics ? Color.Primary : Color.Default)"
+                                  OnClick="@(() => currentView = ViewMode.Analytics)">
+                            Analytics
+                        </MudButton>
+                    </MudButtonGroup>
+                </div>
+
+                @if (currentView == ViewMode.Tasks)
+                {
+                    <!-- Task Management View -->
+                    <TaskManager UserId="@currentUserId" 
+                                Language="@(activePersona?.BasicInfo.Languages.Preferred ?? "en")"
+                                Timezone="@GetUserTimezone()"
+                                OnTaskCreated="HandleTaskCreated" />
+                }
+                else if (currentView == ViewMode.Chat)
+                {
+                    <!-- AI Buddy Chat View -->
+                    @if (activeBuddy != null)
+                    {
+                        <AIBuddyChat UserId="@currentUserId"
+                                    BuddyId="@activeBuddy.BuddyId"
+                                    Buddy="@activeBuddy"
+                                    Language="@(activePersona?.BasicInfo.Languages.Preferred ?? "en")"
+                                    OnTaskCreated="HandleTaskCreatedFromChat" />
+                    }
+                    else
+                    {
+                        <!-- Create First Buddy -->
+                        <MudCard Elevation="3" Style="max-width: 600px; margin: 40px auto;">
+                            <MudCardContent style="text-align: center; padding: 40px;">
+                                <MudIcon Icon="Icons.Material.Filled.SmartToy" Size="Size.Large" Color="Color.Primary" />
+                                <MudText Typo="Typo.h5" Class="mt-4 mb-3">
+                                    Create Your AI Buddy
+                                </MudText>
+                                <MudText Typo="Typo.body1" Color="Color.Secondary" Class="mb-4">
+                                    Your AI buddy will help you manage tasks, provide insights, and assist with your daily productivity.
+                                </MudText>
+                                <MudButton Color="Color.Primary" 
+                                          Variant="Variant.Filled" 
+                                          Size="Size.Large"
+                                          StartIcon="Icons.Material.Filled.Add"
+                                          OnClick="CreateDefaultBuddy"
+                                          Disabled="@isCreatingBuddy">
+                                    @if (isCreatingBuddy)
+                                    {
+                                        <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                                        <span style="margin-left: 8px;">Creating...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Create AI Buddy</span>
+                                    }
+                                </MudButton>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                }
+                else if (currentView == ViewMode.Analytics)
+                {
+                    <!-- Analytics Dashboard -->
+                    <AnalyticsDashboard UserId="@currentUserId" />
+                }
+
+                <!-- Quick Stats Overview (Always Visible) -->
+                <MudCard Class="mt-6" Elevation="2">
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="12" md="3">
+                                <div style="text-align: center; padding: 16px;">
+                                    <MudIcon Icon="Icons.Material.Filled.Person" Size="Size.Large" Color="Color.Primary" />
+                                    <MudText Typo="Typo.h6" Class="mt-2">Digital Persona</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                        @activePersona?.BasicInfo.Languages.Preferred.ToUpperInvariant() • 
+                                        @activePersona?.TypeLeapConfig.UIComplexityLevel
+                                    </MudText>
+                                </div>
+                            </MudItem>
+                            <MudItem xs="12" md="3">
+                                <div style="text-align: center; padding: 16px;">
+                                    <MudIcon Icon="Icons.Material.Filled.SmartToy" Size="Size.Large" Color="Color.Success" />
+                                    <MudText Typo="Typo.h6" Class="mt-2">AI Buddy</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                        @(activeBuddy?.BasicInfo.Name ?? "Not created yet")
+                                    </MudText>
+                                </div>
+                            </MudItem>
+                            <MudItem xs="12" md="3">
+                                <div style="text-align: center; padding: 16px;">
+                                    <MudIcon Icon="Icons.Material.Filled.Timeline" Size="Size.Large" Color="Color.Info" />
+                                    <MudText Typo="Typo.h6" Class="mt-2">Time Banking</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                        Building ZeitCoin foundation
+                                    </MudText>
+                                </div>
+                            </MudItem>
+                            <MudItem xs="12" md="3">
+                                <div style="text-align: center; padding: 16px;">
+                                    <MudIcon Icon="Icons.Material.Filled.Security" Size="Size.Large" Color="Color.Warning" />
+                                    <MudText Typo="Typo.h6" Class="mt-2">Data Sovereignty</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                        Your data, your control
+                                    </MudText>
+                                </div>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                </MudCard>
+
+                <!-- Getting Started Tips -->
+                @if (showGettingStarted)
+                {
+                    <MudCard Class="mt-6" Elevation="2" Style="border-left: 4px solid #1976d2;">
+                        <MudCardContent>
+                            <div style="display: flex; align-items: flex-start; gap: 16px;">
+                                <MudIcon Icon="Icons.Material.Filled.Lightbulb" Color="Color.Primary" />
+                                <div style="flex: 1;">
+                                    <MudText Typo="Typo.h6" Class="mb-2">🚀 Getting Started with Zeitsparkasse</MudText>
+                                    <MudText Typo="Typo.body2" Class="mb-3">
+                                        Welcome to your time banking platform! Here's how to begin building your ZeitCoin foundation:
+                                    </MudText>
+                                    <MudList T="string">
+                                        <MudListItem T="string" Icon="@Icons.Material.Filled.Task">
+                                            <div>
+                                                <MudText Typo="Typo.subtitle2">Create your first task</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                                    Try natural language: "Remind me to call mom tomorrow at 3pm"
+                                                </MudText>
+                                            </div>
+                                        </MudListItem>
+                                        <MudListItem T="string" Icon="@Icons.Material.Filled.Chat">
+                                            <div>
+                                                <MudText Typo="Typo.subtitle2">Chat with your AI buddy</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                                    Get personalized assistance and productivity insights
+                                                </MudText>
+                                            </div>
+                                        </MudListItem>
+                                        <MudListItem T="string" Icon="@Icons.Material.Filled.Analytics">
+                                            <div>
+                                                <MudText Typo="Typo.subtitle2">Track your time patterns</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                                    Build the foundation for future ZeitCoin earnings
+                                                </MudText>
+                                            </div>
+                                        </MudListItem>
+                                    </MudList>
+                                </div>
+                                <MudIconButton Icon="Icons.Material.Filled.Close" 
+                                             OnClick="@(() => showGettingStarted = false)" 
+                                             Size="Size.Small" />
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                }
+            </MudContainer>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-16">
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="12" Class="text-center">
+                    <MudText Typo="Typo.h2" Class="mb-8">
+                        Welcome to Spinner.Net
+                    </MudText>
+                    <MudText Typo="Typo.h5" Class="mb-8">
+                        Your Digital Companion Platform
+                    </MudText>
+                    <MudText Typo="Typo.body1" Class="mb-8">
+                        Spinner.Net is the digital backbone connecting Creating, Teaching, and Exchange. 
+                        Build your digital persona, connect with AI companions, and access professional services 
+                        while maintaining complete control over your data.
+                    </MudText>
+                    <MudButton OnClick="@LoginDemo" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large" Class="mr-4">
+                        Get Started
+                    </MudButton>
+                    <MudButton OnClick="@LoginDemo" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Large">
+                        Sign In
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private enum ViewMode { Tasks, Chat, Analytics }
+    
+    private bool hasCompletedOnboarding = false;
+    private User? currentUser;
+    private string? currentUserId;
+    private UserPersona? activePersona;
+    private BuddyDocument? activeBuddy;
+    private ViewMode currentView = ViewMode.Tasks;
+    private bool showGettingStarted = true;
+    private bool isCreatingBuddy = false;
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            currentUserId = authState.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "demo-user-123";
+            
+            try
+            {
+                activePersona = await PersonaService.GetActivePersonaAsync(currentUserId);
+                hasCompletedOnboarding = activePersona != null;
+                
+                if (hasCompletedOnboarding && activePersona != null)
+                {
+                    currentUser = new User
+                    {
+                        Id = currentUserId,
+                        DisplayName = authState.User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value ?? "Demo User",
+                        HasCompletedOnboarding = true
+                    };
+
+                    await LoadUserBuddy();
+                }
+            }
+            catch (Exception ex)
+            {
+                // If persona service fails, show onboarding
+                hasCompletedOnboarding = false;
+                currentUser = new User
+                {
+                    Id = currentUserId,
+                    DisplayName = authState.User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value ?? "Demo User",
+                    HasCompletedOnboarding = false
+                };
+            }
+        }
+    }
+
+    private void LoginDemo()
+    {
+        Navigation.NavigateTo("/Account/Login");
+    }
+
+    private async System.Threading.Tasks.Task LoadUserBuddy()
+    {
+        // In a real implementation, this would query for existing buddies
+        // For now, we'll simulate that no buddy exists initially
+        activeBuddy = null;
+    }
+
+    private async System.Threading.Tasks.Task CreateDefaultBuddy()
+    {
+        if (isCreatingBuddy || string.IsNullOrEmpty(currentUserId) || activePersona == null) return;
+
+        try
+        {
+            isCreatingBuddy = true;
+            StateHasChanged();
+
+            var command = new CreateBuddy.Command
+            {
+                UserId = currentUserId,
+                PersonaId = activePersona.PersonaId,
+                BuddyType = "DailyCompanion",
+                Language = activePersona.BasicInfo.Languages.Preferred,
+                RequestedCapabilities = new List<string> { "task_management", "conversation", "productivity_insights" },
+                Customization = new CreateBuddy.BuddyCustomization
+                {
+                    Name = "Assistant",
+                    PersonalityArchetype = "helpful",
+                    CommunicationTone = "friendly",
+                    Formality = 0.3,
+                    Proactiveness = 0.7,
+                    UseEmojis = true
+                }
+            };
+
+            var result = await Mediator.Send(command);
+
+            if (result.Success && result.Buddy != null)
+            {
+                activeBuddy = result.Buddy;
+                currentView = ViewMode.Chat;
+                Snackbar.Add($"✓ Your AI buddy '{result.Buddy.BasicInfo.Name}' is ready to help!", Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add($"Error creating buddy: {result.ErrorMessage}", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to create buddy: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isCreatingBuddy = false;
+            StateHasChanged();
+        }
+    }
+
+    private async System.Threading.Tasks.Task HandleOnboardingCompleted()
+    {
+        hasCompletedOnboarding = true;
+        await OnInitializedAsync(); // Refresh data
+        StateHasChanged();
+    }
+
+    private async System.Threading.Tasks.Task HandleTaskCreated(TaskDocument task)
+    {
+        Snackbar.Add($"✓ Task created successfully!", Severity.Success);
+        // Optionally switch to analytics view to show the impact
+    }
+
+    private async System.Threading.Tasks.Task HandleTaskCreatedFromChat(string taskDescription)
+    {
+        Snackbar.Add($"✓ Task '{taskDescription}' created from chat!", Severity.Success);
+        // Optionally switch to tasks view to show the new task
+    }
+
+    private string GetUserTimezone()
+    {
+        // In a real implementation, this would come from user preferences
+        return "UTC";
+    }
+}

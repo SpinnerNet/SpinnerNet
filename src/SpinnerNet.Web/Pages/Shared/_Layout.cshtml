@@ -1,0 +1,294 @@
+@inject SpinnerNet.Shared.Localization.ILocalizationService LocalizationService
+
+<!DOCTYPE html>
+<html lang="@GetCurrentLanguage()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bamberger Spinnerei</title>
+    <meta name="description" content="@(ViewData["Description"] ?? "Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.")" />
+    <meta name="keywords" content="Bamberger Spinnerei, Innovation, Community, Zeitsparkasse, Time Banking" />
+    <meta name="author" content="@(ViewData["SiteAuthor"] ?? "Spinner.Net Team")" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)" />
+    <meta property="og:title" content="@ViewData["Title"] - Bamberger Spinnerei" />
+    <meta property="og:description" content="@(ViewData["Description"] ?? "Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.")" />
+    <meta property="og:image" content="@(Context.Request.Scheme)://@(Context.Request.Host)/images/bamberger-spinnerei-heart-logo.svg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)" />
+    <meta property="twitter:title" content="@ViewData["Title"] - Bamberger Spinnerei" />
+    <meta property="twitter:description" content="@(ViewData["Description"] ?? "Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.")" />
+    <meta property="twitter:image" content="@(Context.Request.Scheme)://@(Context.Request.Host)/images/bamberger-spinnerei-heart-logo.svg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/bamberger-spinnerei-heart-logo.svg" />
+    <link rel="apple-touch-icon" href="/images/bamberger-spinnerei-heart-logo.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link href="~/css/app.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-container">
+                <!-- Logo and Brand -->
+                <a href="/" class="navbar-brand">
+                    <img src="/images/bamberger-spinnerei-heart-logo.svg" alt="Bamberger Spinnerei Logo" class="navbar-logo" style="height: 50px; max-height: 50px; width: auto;" />
+                    <span class="navbar-title">Bamberger Spinnerei</span>
+                </a>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="navbar-toggle" type="button" onclick="toggleMobileMenu()">
+                    <span class="navbar-toggle-bar"></span>
+                    <span class="navbar-toggle-bar"></span>
+                    <span class="navbar-toggle-bar"></span>
+                </button>
+
+                <!-- Navigation Menu -->
+                <div class="navbar-menu" id="navbarMenu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/About" ? "active" : "")">
+                                @GetText("Nav_About", "Über uns")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/contact" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Contact" ? "active" : "")">
+                                @GetText("Nav_Contact", "Kontakt")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/beta" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Beta" ? "active" : "")">
+                                @GetText("Nav_Beta", "Beta-Zugang")
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Right side actions -->
+                    <div class="navbar-actions">
+                        <div class="language-selector">
+                            <select class="language-dropdown" onchange="changeLanguage(this.value)">
+                                <option value="de" @(GetCurrentLanguage() == "de" ? "selected" : "")>🇩🇪 DE</option>
+                                <option value="en" @(GetCurrentLanguage() == "en" ? "selected" : "")">🇬🇧 EN</option>
+                                <option value="fr" @(GetCurrentLanguage() == "fr" ? "selected" : "")">🇫🇷 FR</option>
+                                <option value="es" @(GetCurrentLanguage() == "es" ? "selected" : "")">🇪🇸 ES</option>
+                            </select>
+                        </div>
+                        <a href="@(ViewData["BlazorAppUrl"] ?? "/app")" class="btn btn-primary navbar-cta">@GetText("Nav_App", "Zur App")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Bamberger Spinnerei</h4>
+                    <p>@GetText("footer.mission", "Wir schaffen Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.")</p>
+                    <p>
+                        <strong>@GetText("footer.address", "Adresse:"):</strong><br>
+                        @GetText("footer.address.line1", "Bamberger Spinnerei")<br>
+                        @GetText("footer.address.line2", "Innovation & Community Hub")<br>
+                        @GetText("footer.address.line3", "96047 Bamberg, Deutschland")
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>@GetText("footer.services", "Leistungen")</h4>
+                    <ul class="footer-links">
+                        <li><a href="/about#zeitsparkasse">@GetText("footer.zeitsparkasse", "Zeitsparkasse™")</a></li>
+                        <li><a href="/about#innovation">@GetText("footer.innovation", "Innovation Labs")</a></li>
+                        <li><a href="/about#community">@GetText("footer.community", "Community Building")</a></li>
+                        <li><a href="/about#workshops">@GetText("footer.workshops", "Workshops & Events")</a></li>
+                        <li><a href="/beta">@GetText("footer.beta", "Beta Programm")</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>@GetText("footer.resources", "Ressourcen")</h4>
+                    <ul class="footer-links">
+                        <li><a href="/about#vision">@GetText("footer.vision", "Vision & Mission")</a></li>
+                        <li><a href="/about#team">@GetText("footer.team", "Team")</a></li>
+                        <li><a href="/support">@GetText("footer.support", "Support")</a></li>
+                        <li><a href="/contact">@GetText("footer.contact", "Kontakt")</a></li>
+                        <li><a href="/test">@GetText("footer.test", "Test Seite")</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>@GetText("footer.legal", "Rechtliches")</h4>
+                    <ul class="footer-links">
+                        <li><a href="/impressum">@GetText("footer.impressum", "Impressum")</a></li>
+                        <li><a href="/datenschutz">@GetText("footer.privacy", "Datenschutz")</a></li>
+                        <li><a href="/agb">@GetText("footer.terms", "AGB")</a></li>
+                        <li><a href="/cookies">@GetText("footer.cookies", "Cookie-Richtlinie")</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bamberger Spinnerei • @GetText("footer.created", "Powered by") <strong>@(ViewData["SiteAuthor"] ?? "Spinner.Net")</strong></p>
+                <p class="text-xs mt-2">@GetText("footer.subtitle", "Spin your idea. We give you time.")</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('navbarMenu');
+            const toggle = document.querySelector('.navbar-toggle');
+            
+            menu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navbar = document.querySelector('.navbar');
+            const menu = document.getElementById('navbarMenu');
+            const toggle = document.querySelector('.navbar-toggle');
+            
+            if (!navbar.contains(event.target)) {
+                menu.classList.remove('active');
+                toggle.classList.remove('active');
+            }
+        });
+
+        // Close mobile menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const menu = document.getElementById('navbarMenu');
+                const toggle = document.querySelector('.navbar-toggle');
+                menu.classList.remove('active');
+                toggle.classList.remove('active');
+            }
+        });
+
+        function changeLanguage(lang) {
+            // Store language preference
+            localStorage.setItem('preferred-language', lang);
+            
+            // Set cookie immediately for better persistence
+            document.cookie = `Culture=${lang}; expires=${new Date(Date.now() + 365*24*60*60*1000).toUTCString()}; path=/; SameSite=Lax`;
+            
+            // Update URL with language parameter
+            const url = new URL(window.location);
+            url.searchParams.set('lang', lang);
+            window.location.href = url.toString();
+        }
+        
+        // Apply saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language');
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            
+            if (urlLang && ['de', 'en', 'fr', 'es'].includes(urlLang)) {
+                const selector = document.querySelector('.language-dropdown');
+                if (selector) {
+                    selector.value = urlLang;
+                }
+            } else if (savedLang && ['de', 'en', 'fr', 'es'].includes(savedLang)) {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Add smooth scroll behavior for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+        // Add fade-in animation to elements as they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.section, .card, .feature');
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
+
+@functions {
+    private string GetCurrentLanguage()
+    {
+        // Check URL parameter first
+        if (Context.Request.Query.ContainsKey("lang"))
+        {
+            var langParam = Context.Request.Query["lang"].ToString();
+            if (!string.IsNullOrEmpty(langParam) && (langParam == "en" || langParam == "de" || langParam == "fr" || langParam == "es"))
+            {
+                return langParam;
+            }
+        }
+        
+        // Check cookie second
+        if (Context.Request.Cookies.ContainsKey("Culture"))
+        {
+            var cookieCulture = Context.Request.Cookies["Culture"];
+            if (!string.IsNullOrEmpty(cookieCulture) && (cookieCulture == "en" || cookieCulture == "de" || cookieCulture == "fr" || cookieCulture == "es"))
+            {
+                return cookieCulture;
+            }
+        }
+        
+        // Fallback to service current culture
+        return LocalizationService.CurrentCulture.TwoLetterISOLanguageName;
+    }
+    
+    private string GetText(string key, string defaultText)
+    {
+        var result = LocalizationService.GetString(key);
+        
+        // If the result is in the format [key], use the default text
+        if (result.StartsWith('[') && result.EndsWith(']'))
+        {
+            return defaultText;
+        }
+        
+        return result;
+    }
+}

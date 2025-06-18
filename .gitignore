@@ -1,0 +1,100 @@
+# Build outputs
+**/bin/
+**/obj/
+**/publish/
+**/out/
+
+# Log files and deployment artifacts
+**/LogFiles/
+**/*.log
+**/*.txt
+*.zip
+**/deployments/
+**/deployment/
+
+# Azure specific
+.azure/
+**/*.scm/
+
+# Local development files
+*.local.json
+*.user
+*.suo
+*.cache
+.vs/
+.vscode/settings.json
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+**/temp/
+**/tmp/
+**/.temp/
+**/.tmp/
+
+# Node modules (if any)
+**/node_modules/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# Package manager
+**/packages/
+**/.nuget/
+
+# Test results
+**/TestResults/
+**/*.trx
+**/*.coverage
+**/*.coveragexml
+
+# Rider
+.idea/
+
+# User-specific files
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/

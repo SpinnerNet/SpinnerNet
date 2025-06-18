@@ -1,0 +1,627 @@
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using SpinnerNet.Core.Data.CosmosDb;
+using SpinnerNet.Shared.Models.CosmosDb;
+using System.Text.Json.Serialization;
+
+namespace SpinnerNet.Core.Features.PersonaInterview;
+
+/// <summary>
+/// Vertical slice for completing persona interview and creating final persona
+/// Transforms interview responses into structured PersonaDocument with TypeLeap configuration
+/// </summary>
+public static class CompletePersonaInterview
+{
+    // 1. Command (Input)
+    public record Command : IRequest<Result>
+    {
+        [JsonPropertyName("sessionId")]
+        public string SessionId { get; init; } = string.Empty;
+
+        [JsonPropertyName("userId")]
+        public string UserId { get; init; } = string.Empty;
+
+        [JsonPropertyName("personaName")]
+        public string? PersonaName { get; init; }
+
+        [JsonPropertyName("userConfirmation")]
+        public bool UserConfirmation { get; init; } = true;
+
+        [JsonPropertyName("customizations")]
+        public PersonaCustomizations? Customizations { get; init; }
+    }
+
+    // 2. Result (Output)
+    public record Result
+    {
+        [JsonPropertyName("success")]
+        public bool Success { get; init; }
+
+        [JsonPropertyName("personaId")]
+        public string? PersonaId { get; init; }
+
+        [JsonPropertyName("persona")]
+        public PersonaDocument? Persona { get; init; }
+
+        [JsonPropertyName("interviewSummary")]
+        public InterviewSummary? InterviewSummary { get; init; }
+
+        [JsonPropertyName("recommendedBuddies")]
+        public List<BuddyRecommendation> RecommendedBuddies { get; init; } = new();
+
+        [JsonPropertyName("errorMessage")]
+        public string? ErrorMessage { get; init; }
+
+        public static Result SuccessResult(string personaId, PersonaDocument persona, InterviewSummary summary, List<BuddyRecommendation> buddies) =>
+            new() 
+            { 
+                Success = true, 
+                PersonaId = personaId, 
+                Persona = persona,
+                InterviewSummary = summary,
+                RecommendedBuddies = buddies
+            };
+
+        public static Result Failure(string errorMessage) =>
+            new() { Success = false, ErrorMessage = errorMessage };
+    }
+
+    // 3. Supporting Models
+    public record PersonaCustomizations
+    {
+        [JsonPropertyName("displayName")]
+        public string? DisplayName { get; init; }
+
+        [JsonPropertyName("uiComplexity")]
+        public string? UIComplexity { get; init; }
+
+        [JsonPropertyName("fontSize")]
+        public string? FontSize { get; init; }
+
+        [JsonPropertyName("colorTheme")]
+        public string? ColorTheme { get; init; }
+
+        [JsonPropertyName("additionalInterests")]
+        public List<string> AdditionalInterests { get; init; } = new();
+    }
+
+    public record InterviewSummary
+    {
+        [JsonPropertyName("duration")]
+        public TimeSpan Duration { get; init; }
+
+        [JsonPropertyName("questionsAnswered")]
+        public int QuestionsAnswered { get; init; }
+
+        [JsonPropertyName("completionPercentage")]
+        public double CompletionPercentage { get; init; }
+
+        [JsonPropertyName("extractedInterests")]
+        public List<string> ExtractedInterests { get; init; } = new();
+
+        [JsonPropertyName("detectedLanguages")]
+        public List<string> DetectedLanguages { get; init; } = new();
+
+        [JsonPropertyName("recommendedSettings")]
+        public Dictionary<string, object> RecommendedSettings { get; init; } = new();
+    }
+
+    public record BuddyRecommendation
+    {
+        [JsonPropertyName("type")]
+        public string Type { get; init; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; init; } = string.Empty;
+
+        [JsonPropertyName("description")]
+        public string Description { get; init; } = string.Empty;
+
+        [JsonPropertyName("personality")]
+        public string Personality { get; init; } = string.Empty;
+
+        [JsonPropertyName("specialties")]
+        public List<string> Specialties { get; init; } = new();
+
+        [JsonPropertyName("recommendationScore")]
+        public double RecommendationScore { get; init; }
+    }
+
+    // 4. Validator (Input Validation)
+    public class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.SessionId)
+                .NotEmpty().WithMessage("Session ID is required")
+                .MaximumLength(100).WithMessage("Session ID must not exceed 100 characters");
+
+            RuleFor(x => x.UserId)
+                .NotEmpty().WithMessage("User ID is required")
+                .MaximumLength(100).WithMessage("User ID must not exceed 100 characters");
+
+            RuleFor(x => x.PersonaName)
+                .MaximumLength(100).WithMessage("Persona name must not exceed 100 characters")
+                .When(x => !string.IsNullOrEmpty(x.PersonaName));
+
+            RuleFor(x => x.UserConfirmation)
+                .Equal(true).WithMessage("User confirmation is required to complete persona creation");
+        }
+    }
+
+    // 5. Handler (Business Logic + Data Access)
+    public class Handler : IRequestHandler<Command, Result>
+    {
+        private readonly ICosmosRepository<InterviewSessionDocument> _sessionRepository;
+        private readonly ICosmosRepository<PersonaDocument> _personaRepository;
+        private readonly ICosmosRepository<UserDocument> _userRepository;
+        private readonly ILogger<Handler> _logger;
+
+        public Handler(
+            ICosmosRepository<InterviewSessionDocument> sessionRepository,
+            ICosmosRepository<PersonaDocument> personaRepository,
+            ICosmosRepository<UserDocument> userRepository,
+            ILogger<Handler> logger)
+        {
+            _sessionRepository = sessionRepository;
+            _personaRepository = personaRepository;
+            _userRepository = userRepository;
+            _logger = logger;
+        }
+
+        public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                _logger.LogInformation("Completing persona interview for session: {SessionId}", request.SessionId);
+
+                // 1. Retrieve and validate interview session
+                var sessions = await _sessionRepository.QueryAsync(
+                    s => s.SessionId == request.SessionId && s.UserId == request.UserId,
+                    maxResults: 1,
+                    cancellationToken: cancellationToken);
+
+                if (!sessions.Any())
+                {
+                    _logger.LogWarning("Interview session not found: {SessionId}", request.SessionId);
+                    return Result.Failure("Interview session not found");
+                }
+
+                var session = sessions.First();
+
+                if (session.Status == InterviewStatus.Completed)
+                {
+                    _logger.LogWarning("Interview session already completed: {SessionId}", request.SessionId);
+                    return Result.Failure("Interview session has already been completed");
+                }
+
+                // 2. Get user document
+                var users = await _userRepository.QueryAsync(
+                    u => u.UserId == request.UserId,
+                    maxResults: 1,
+                    cancellationToken: cancellationToken);
+
+                if (!users.Any())
+                {
+                    return Result.Failure("User not found");
+                }
+
+                var user = users.First();
+
+                // 3. Create interview summary
+                var summary = CreateInterviewSummary(session);
+
+                // 4. Create persona document from interview data
+                var personaId = $"persona_{request.UserId}_{Guid.NewGuid():N}";
+                var persona = await CreatePersonaFromInterview(session, personaId, request, user, cancellationToken);
+
+                // 5. Generate buddy recommendations based on persona
+                var buddyRecommendations = GenerateBuddyRecommendations(persona, session.Language);
+
+                // 6. Save persona to database
+                await _personaRepository.CreateOrUpdateAsync(
+                    persona,
+                    request.UserId,
+                    cancellationToken);
+
+                // 7. Update interview session as completed
+                session.Status = InterviewStatus.Completed;
+                session.CompletedAt = DateTime.UtcNow;
+                await _sessionRepository.CreateOrUpdateAsync(
+                    session,
+                    request.UserId,
+                    cancellationToken);
+
+                // 8. Update user to mark persona creation as complete
+                user.LastLoginAt = DateTime.UtcNow;
+                await _userRepository.CreateOrUpdateAsync(
+                    user,
+                    request.UserId,
+                    cancellationToken);
+
+                _logger.LogInformation("Persona interview completed successfully: {PersonaId} for user: {UserId}", 
+                    personaId, request.UserId);
+
+                return Result.SuccessResult(personaId, persona, summary, buddyRecommendations);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error completing persona interview for session: {SessionId}", request.SessionId);
+                return Result.Failure("An error occurred completing the interview. Please try again.");
+            }
+        }
+
+        private InterviewSummary CreateInterviewSummary(InterviewSessionDocument session)
+        {
+            var duration = session.CompletedAt?.Subtract(session.StartedAt) ?? DateTime.UtcNow.Subtract(session.StartedAt);
+            var questionsAnswered = session.Responses.Count;
+            var totalPossibleQuestions = 8; // Estimated based on sections
+            var completionPercentage = Math.Min(100.0, (double)questionsAnswered / totalPossibleQuestions * 100);
+
+            return new InterviewSummary
+            {
+                Duration = duration,
+                QuestionsAnswered = questionsAnswered,
+                CompletionPercentage = completionPercentage,
+                ExtractedInterests = session.ExtractedPersonaInfo.Interests.ToList(),
+                DetectedLanguages = session.ExtractedPersonaInfo.Languages.Spoken.ToList(),
+                RecommendedSettings = new Dictionary<string, object>
+                {
+                    {"language", session.Language},
+                    {"estimatedAge", session.ExtractedPersonaInfo.Age},
+                    {"occupation", session.ExtractedPersonaInfo.Occupation ?? "Not specified"}
+                }
+            };
+        }
+
+        private async Task<PersonaDocument> CreatePersonaFromInterview(
+            InterviewSessionDocument session, 
+            string personaId, 
+            Command request,
+            UserDocument user,
+            CancellationToken cancellationToken)
+        {
+            var extractedInfo = session.ExtractedPersonaInfo;
+            var customizations = request.Customizations;
+
+            // Merge extracted info with user customizations
+            var displayName = customizations?.DisplayName ?? extractedInfo.DisplayName ?? user.DisplayName;
+            var interests = extractedInfo.Interests.ToList();
+            if (customizations?.AdditionalInterests.Any() == true)
+            {
+                interests.AddRange(customizations.AdditionalInterests.Except(interests));
+            }
+
+            // Create TypeLeap configuration based on extracted preferences and age
+            var typeLeapConfig = CreateTypeLeapConfiguration(extractedInfo, customizations, session.Language);
+
+            // Create learning preferences based on interview responses
+            var learningPrefs = CreateLearningPreferences(session.Responses, session.Language);
+
+            // Create privacy settings with user-friendly defaults
+            var privacySettings = CreatePrivacySettings(extractedInfo.Age);
+
+            var persona = new PersonaDocument
+            {
+                Id = $"persona_{personaId}",
+                UserId = request.UserId,
+                PersonaId = personaId,
+                IsDefault = true, // First persona is default
+                BasicInfo = new PersonaBasicInfo
+                {
+                    DisplayName = displayName,
+                    Age = extractedInfo.Age,
+                    CulturalBackground = extractedInfo.CulturalBackground ?? "Not specified",
+                    Occupation = extractedInfo.Occupation ?? "Not specified",
+                    Interests = interests,
+                    Languages = new LanguageInfo
+                    {
+                        MotherTongue = extractedInfo.Languages.MotherTongue,
+                        Preferred = session.Language,
+                        Spoken = extractedInfo.Languages.Spoken.ToList(),
+                        Proficiency = new Dictionary<string, string>
+                        {
+                            {session.Language, "native"}
+                        }
+                    }
+                },
+                TypeLeapConfig = typeLeapConfig,
+                LearningPreferences = learningPrefs,
+                PrivacySettings = privacySettings,
+                BuddyRelationships = new List<BuddyRelationship>(), // Will be populated when buddies are created
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            return await Task.FromResult(persona);
+        }
+
+        private TypeLeapConfiguration CreateTypeLeapConfiguration(
+            PersonaBasicInfo extractedInfo, 
+            PersonaCustomizations? customizations,
+            string language)
+        {
+            // Age-based UI adaptations
+            var uiComplexity = customizations?.UIComplexity ?? DetermineUIComplexityByAge(extractedInfo.Age);
+            var fontSize = customizations?.FontSize ?? DetermineFontSizeByAge(extractedInfo.Age);
+            var colorTheme = customizations?.ColorTheme ?? "Default";
+
+            // Age-specific adaptations
+            var ageAdaptations = new Dictionary<string, object>();
+            if (extractedInfo.Age > 0)
+            {
+                var age = extractedInfo.Age;
+                if (age >= 65)
+                {
+                    ageAdaptations["largerButtons"] = true;
+                    ageAdaptations["highContrast"] = true;
+                    ageAdaptations["reducedAnimations"] = true;
+                }
+                else if (age <= 25)
+                {
+                    ageAdaptations["enableAnimations"] = true;
+                    ageAdaptations["modernDesign"] = true;
+                    ageAdaptations["quickNavigation"] = true;
+                }
+            }
+
+            return new TypeLeapConfiguration
+            {
+                UIComplexityLevel = uiComplexity,
+                FontSizePreferences = fontSize,
+                ColorPreferences = colorTheme,
+                EnableAnimations = extractedInfo.Age <= 60,
+                NavigationStyle = uiComplexity == "Simple" ? "Simple" : "Standard",
+                AgeAdaptations = ageAdaptations
+            };
+        }
+
+        private string DetermineUIComplexityByAge(int? age)
+        {
+            if (!age.HasValue) return "Standard";
+
+            return age.Value switch
+            {
+                <= 16 => "Simple",
+                >= 65 => "Simple",
+                >= 18 and <= 35 => "Standard",
+                _ => "Standard"
+            };
+        }
+
+        private string DetermineFontSizeByAge(int? age)
+        {
+            if (!age.HasValue) return "Medium";
+
+            return age.Value switch
+            {
+                >= 65 => "Large",
+                >= 50 => "Medium",
+                <= 25 => "Medium",
+                _ => "Medium"
+            };
+        }
+
+        private LearningPreferences CreateLearningPreferences(
+            Dictionary<string, object> responses,
+            string language)
+        {
+            // Analyze responses to determine learning style
+            var learningStyle = "Visual"; // Default
+            var pacePreference = "SelfPaced"; // Default
+            var difficultyLevel = "Intermediate"; // Default
+
+            // Simple heuristics based on response patterns
+            var allResponses = string.Join(" ", responses.Values.Select(r => r.ToString()?.ToLowerInvariant() ?? ""));
+
+            if (allResponses.Contains("listen") || allResponses.Contains("hear") || allResponses.Contains("sound"))
+            {
+                learningStyle = "Auditory";
+            }
+            else if (allResponses.Contains("hands") || allResponses.Contains("try") || allResponses.Contains("practice"))
+            {
+                learningStyle = "Kinesthetic";
+            }
+            else if (allResponses.Contains("read") || allResponses.Contains("write") || allResponses.Contains("text"))
+            {
+                learningStyle = "ReadingWriting";
+            }
+
+            return new LearningPreferences
+            {
+                PreferredLearningStyle = learningStyle,
+                PacePreference = pacePreference,
+                DifficultyLevel = difficultyLevel
+            };
+        }
+
+        private PrivacySettings CreatePrivacySettings(int? age)
+        {
+            // Age-appropriate privacy defaults
+            var dataSharing = age switch
+            {
+                <= 18 => "None",
+                >= 65 => "Selective",
+                _ => "Selective"
+            };
+
+            var aiInteraction = age switch
+            {
+                <= 16 => "Basic",
+                >= 70 => "Basic",
+                _ => "Standard"
+            };
+
+            return new PrivacySettings
+            {
+                DataSharing = dataSharing,
+                AIInteraction = aiInteraction,
+                EmailAccess = "None", // User must explicitly grant
+                ConsentTimestamp = DateTime.UtcNow
+            };
+        }
+
+        private List<BuddyRecommendation> GenerateBuddyRecommendations(PersonaDocument persona, string language)
+        {
+            var recommendations = new List<BuddyRecommendation>();
+
+            // Recommend general companion buddy
+            recommendations.Add(new BuddyRecommendation
+            {
+                Type = "DailyCompanion",
+                Name = GetLocalizedBuddyName("companion", language),
+                Description = GetLocalizedBuddyDescription("companion", language),
+                Personality = "Friendly, helpful, encouraging",
+                Specialties = new List<string> { "daily_tasks", "reminders", "general_conversation" },
+                RecommendationScore = 0.9
+            });
+
+            // Recommend based on interests
+            if (persona.BasicInfo.Interests.Contains("reading") || persona.BasicInfo.Interests.Contains("learning"))
+            {
+                recommendations.Add(new BuddyRecommendation
+                {
+                    Type = "LearningMentor",
+                    Name = GetLocalizedBuddyName("mentor", language),
+                    Description = GetLocalizedBuddyDescription("mentor", language),
+                    Personality = "Wise, patient, knowledgeable",
+                    Specialties = new List<string> { "learning", "education", "skill_development" },
+                    RecommendationScore = 0.8
+                });
+            }
+
+            // Recommend based on age
+            if (persona.BasicInfo.Age <= 25)
+            {
+                recommendations.Add(new BuddyRecommendation
+                {
+                    Type = "StudyBuddy",
+                    Name = GetLocalizedBuddyName("study", language),
+                    Description = GetLocalizedBuddyDescription("study", language),
+                    Personality = "Energetic, motivating, fun",
+                    Specialties = new List<string> { "study_sessions", "goal_tracking", "motivation" },
+                    RecommendationScore = 0.7
+                });
+            }
+            else if (persona.BasicInfo.Age >= 50)
+            {
+                recommendations.Add(new BuddyRecommendation
+                {
+                    Type = "LifeOrganizer",
+                    Name = GetLocalizedBuddyName("organizer", language),
+                    Description = GetLocalizedBuddyDescription("organizer", language),
+                    Personality = "Calm, organized, reliable",
+                    Specialties = new List<string> { "life_organization", "health_reminders", "family_coordination" },
+                    RecommendationScore = 0.7
+                });
+            }
+
+            return recommendations.OrderByDescending(r => r.RecommendationScore).ToList();
+        }
+
+        private string GetLocalizedBuddyName(string type, string language)
+        {
+            var names = language switch
+            {
+                "de" => new Dictionary<string, string>
+                {
+                    {"companion", "Alex"}, {"mentor", "Dr. Weise"}, {"study", "Sam"}, {"organizer", "Clara"}
+                },
+                "es" => new Dictionary<string, string>
+                {
+                    {"companion", "Amigo"}, {"mentor", "Profesor Saber"}, {"study", "Estudiante"}, {"organizer", "Organizador"}
+                },
+                _ => new Dictionary<string, string>
+                {
+                    {"companion", "Buddy"}, {"mentor", "Mentor"}, {"study", "Scholar"}, {"organizer", "Planner"}
+                }
+            };
+
+            return names.GetValueOrDefault(type, "Assistant");
+        }
+
+        private string GetLocalizedBuddyDescription(string type, string language)
+        {
+            var descriptions = language switch
+            {
+                "de" => new Dictionary<string, string>
+                {
+                    {"companion", "Dein freundlicher täglicher Begleiter für alle Lebensbereiche"},
+                    {"mentor", "Ein weiser Mentor, der dir beim Lernen und bei der persönlichen Entwicklung hilft"},
+                    {"study", "Ein energischer Lernpartner, der dich beim Studieren motiviert"},
+                    {"organizer", "Ein ruhiger Organisator, der dir hilft, dein Leben zu strukturieren"}
+                },
+                "es" => new Dictionary<string, string>
+                {
+                    {"companion", "Tu compañero amigable para todos los aspectos de la vida"},
+                    {"mentor", "Un mentor sabio que te ayuda con el aprendizaje y desarrollo personal"},
+                    {"study", "Un compañero de estudio enérgico que te motiva"},
+                    {"organizer", "Un organizador tranquilo que te ayuda a estructurar tu vida"}
+                },
+                _ => new Dictionary<string, string>
+                {
+                    {"companion", "Your friendly daily companion for all aspects of life"},
+                    {"mentor", "A wise mentor to help with learning and personal development"},
+                    {"study", "An energetic study partner to keep you motivated"},
+                    {"organizer", "A calm organizer to help structure your life"}
+                }
+            };
+
+            return descriptions.GetValueOrDefault(type, "Your helpful AI assistant");
+        }
+    }
+
+    // 6. Endpoint (HTTP API)
+    [ApiController]
+    [Route("api/persona-interview")]
+    public class Endpoint : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public Endpoint(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        /// <summary>
+        /// Complete the persona interview and create the final persona
+        /// </summary>
+        /// <param name="command">Completion parameters</param>
+        /// <returns>Created persona and recommendations</returns>
+        [HttpPost("complete")]
+        [ProducesResponseType(typeof(Result), 201)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(Result), 404)]
+        public async Task<ActionResult<Result>> CompleteInterview([FromBody] Command command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (!result.Success)
+            {
+                if (result.ErrorMessage?.Contains("not found") == true)
+                {
+                    return NotFound(result);
+                }
+
+                return BadRequest(result);
+            }
+
+            return CreatedAtAction(
+                nameof(GetPersona.Endpoint.GetById), // Reference to future GetPersona slice
+                new { id = result.PersonaId },
+                result);
+        }
+    }
+}
+
+// Future reference for GetPersona slice (placeholder)
+public static class GetPersona
+{
+    public static class Endpoint
+    {
+        public static string GetById => "GetPersonaById";
+    }
+}

@@ -1,0 +1,328 @@
+@page
+@model SpinnerNet.Web.Pages.BetaModel
+@{
+    ViewData["Title"] = "Beta Programm";
+    ViewData["Description"] = "Beta-Zugang zur Bamberger Spinnerei - Teste die Zeitsparkasse™ und neue Features vor allen anderen. Jetzt für das Beta Programm anmelden.";
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="padding: var(--space-64) 0; background: linear-gradient(135deg, var(--color-accent) 0%, #ff8e53 100%);">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("Beta_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("Beta_Hero_Subtitle")</p>
+            <p class="lead">@Model.GetText("Beta_Hero_Description")</p>
+            
+            <div class="hero-actions">
+                <a href="#apply" class="btn btn-secondary btn-lg">@Model.GetText("Beta_Apply_Button")</a>
+                <a href="/app" class="btn btn-outline btn-lg" style="border-color: white; color: white;">@Model.GetText("Beta_Demo_Button")</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Beta Benefits Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Beta_Benefits_Title")</h2>
+            <p class="lead">@Model.GetText("Beta_Benefits_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>Early Access</strong><br>
+                            Interface showing exclusive beta features, new tools, and early access badge highlighting premium access to cutting-edge features.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Beta_Exclusive_Title")</h3>
+                        <p class="card-text">@Model.GetText("Beta_Exclusive_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>Direct Feedback</strong><br>
+                            Feedback interface with rating systems, comment boxes, and direct communication channels with the development team.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Beta_Influence_Title")</h3>
+                        <p class="card-text">@Model.GetText("Beta_Influence_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>Community Access</strong><br>
+                            Exclusive beta community forum with active discussions, networking opportunities, and insider knowledge sharing.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Beta_Community_Title")</h3>
+                        <p class="card-text">@Model.GetText("Beta_Community_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What's Included Section -->
+<section class="section" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Beta_Included_Title")</h2>
+            <p class="lead">@Model.GetText("Beta_Included_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: var(--color-accent);">💰</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Beta_Zeitsparkasse_Title")</h3>
+                        <p>@Model.GetText("Beta_Zeitsparkasse_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: var(--color-primary);">🧠</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Beta_AI_Title")</h3>
+                        <p>@Model.GetText("Beta_AI_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: var(--color-success);">🏗️</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Beta_Labs_Title")</h3>
+                        <p>@Model.GetText("Beta_Labs_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: var(--color-gray-600);">👥</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Beta_Community_Features_Title")</h3>
+                        <p>@Model.GetText("Beta_Community_Features_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Requirements Section -->
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2>Voraussetzungen</h2>
+                <p class="lead">Was du für das Beta-Programm mitbringen solltest</p>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h3>Technische Anforderungen</h3>
+                    <ul class="text-large" style="line-height: var(--line-height-relaxed);">
+                        <li>Moderne Browser (Chrome 100+, Firefox 100+, Safari 15+)</li>
+                        <li>Stabile Internetverbindung für Web-App</li>
+                        <li>Optional: Smartphone für mobile App (Android 10+, iOS 14+)</li>
+                        <li>Grundkenntnisse im Umgang mit digitalen Plattformen</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-bottom: var(--space-32);">
+                    <h3>Persönliche Anforderungen</h3>
+                    <ul class="text-large" style="line-height: var(--line-height-relaxed);">
+                        <li>Interesse an Innovation und Community Building</li>
+                        <li>Bereitschaft, konstruktives Feedback zu geben</li>
+                        <li>Zeit für regelmäßige Nutzung (min. 2-3 Stunden/Woche)</li>
+                        <li>Offenheit für neue Konzepte wie Zeit-Banking</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Beta-Teilnahme Commitment</h3>
+                    <ul class="text-large" style="line-height: var(--line-height-relaxed);">
+                        <li>Teilnahme für mindestens 3 Monate</li>
+                        <li>Monatliches Feedback über Nutzererfahrung</li>
+                        <li>Teilnahme an 1-2 Video-Calls pro Monat</li>
+                        <li>Bereitschaft zur Weiterempfehlung bei positivem Erlebnis</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div style="background: var(--color-accent); padding: var(--space-32); border-radius: var(--radius-lg); color: white; text-align: center;">
+                    <h3 style="color: white; margin-bottom: var(--space-24);">Beta Stats</h3>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <div style="font-size: var(--font-size-48); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8);">50</div>
+                        <div style="opacity: 0.9;">Aktuelle Beta-Tester</div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <div style="font-size: var(--font-size-48); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8);">200</div>
+                        <div style="opacity: 0.9;">Plätze verfügbar</div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <div style="font-size: var(--font-size-48); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8);">6</div>
+                        <div style="opacity: 0.9;">Monate bis Launch</div>
+                    </div>
+                    
+                    <a href="#apply" class="btn btn-secondary btn-lg" style="width: 100%;">Jetzt bewerben</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Application Form Section -->
+<section class="section" id="apply" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Beta-Bewerbung</h2>
+            <p class="lead">Fülle das Formular aus, um dich für das Beta-Programm zu bewerben</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-8" style="margin: 0 auto;">
+                <form method="post" style="background: white; padding: var(--space-40); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                    <div class="row">
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">Vorname *</label>
+                            <input type="text" name="firstName" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" />
+                        </div>
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">Nachname *</label>
+                            <input type="text" name="lastName" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" />
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">E-Mail *</label>
+                            <input type="email" name="email" required 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" />
+                        </div>
+                        <div class="col-6" style="margin-bottom: var(--space-24);">
+                            <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">Telefon (optional)</label>
+                            <input type="tel" name="phone" 
+                                   style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);" />
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">Beruflicher Hintergrund</label>
+                        <select name="background" 
+                                style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);">
+                            <option value="">Wähle deinen Bereich</option>
+                            <option value="tech">Technologie / IT</option>
+                            <option value="design">Design / Kreativität</option>
+                            <option value="business">Business / Management</option>
+                            <option value="education">Bildung / Wissenschaft</option>
+                            <option value="social">Soziales / NGO</option>
+                            <option value="freelance">Freelancer / Selbstständig</option>
+                            <option value="student">Student / Auszubildender</option>
+                            <option value="other">Sonstiges</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">Warum möchtest du Beta-Tester werden? *</label>
+                        <textarea name="motivation" rows="5" required 
+                                  style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16); resize: vertical;" 
+                                  placeholder="Beschreibe deine Motivation und was dich besonders interessiert..."></textarea>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-24);">
+                        <label style="display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-semibold);">Verfügbare Zeit pro Woche</label>
+                        <select name="timeCommitment" 
+                                style="width: 100%; padding: var(--space-12); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-size: var(--font-size-16);">
+                            <option value="">Wählen Sie eine Option</option>
+                            <option value="2-3">2-3 Stunden</option>
+                            <option value="4-6">4-6 Stunden</option>
+                            <option value="7-10">7-10 Stunden</option>
+                            <option value="10+">Mehr als 10 Stunden</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-32);">
+                        <label style="display: flex; align-items: center; gap: var(--space-8); margin-bottom: var(--space-12);">
+                            <input type="checkbox" name="terms" value="true" required />
+                            <span>Ich akzeptiere die Beta-Teilnahmebedingungen und Datenschutzrichtlinien *</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: var(--space-8);">
+                            <input type="checkbox" name="updates" value="true" />
+                            <span>Ich möchte Updates über das Beta-Programm und neue Features erhalten</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Beta-Bewerbung senden</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Next Steps Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Wie geht es weiter?</h2>
+            <p class="lead">Der Ablauf nach deiner Bewerbung</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">1</div>
+                    <h4>Bewerbung prüfen</h4>
+                    <p>Wir prüfen deine Bewerbung binnen 3-5 Werktagen und melden uns bei dir.</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">2</div>
+                    <h4>Kurzes Gespräch</h4>
+                    <p>15-minütiges Kennenlerngespräch per Video-Call zur Abstimmung der Erwartungen.</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">3</div>
+                    <h4>Zugang erhalten</h4>
+                    <p>Du erhältst deine persönlichen Beta-Zugangsdaten und eine Einführung in die Plattform.</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-gray-600); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">4</div>
+                    <h4>Testen & Feedback</h4>
+                    <p>Du nutzt die Plattform aktiv und gibst uns wertvolles Feedback für Verbesserungen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,308 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using SpinnerNet.Personas.Services
+@using SpinnerNet.Shared.DTOs
+@using MudBlazor
+@inject IPersonaService PersonaService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ISnackbar Snackbar
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h5">Create Your Digital Persona - Step @currentStep of 4</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudStepper @ref="stepper">
+            
+            <!-- Step 1: Basic Information -->
+            <MudStep Title="Basic Information">
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="onboardingRequest.DisplayName" 
+                                     Label="What should we call you?" 
+                                     Required="true" 
+                                     RequiredError="Display name is required" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="onboardingRequest.Age" 
+                                        Label="Your Age" 
+                                        Required="true" 
+                                        Min="13" 
+                                        Max="120" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="onboardingRequest.DateOfBirth" 
+                                      Label="Date of Birth (Optional)" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="onboardingRequest.CulturalBackground" 
+                                     Label="Cultural Background (Optional)" />
+                    </MudItem>
+                </MudGrid>
+            </MudStep>
+
+            <!-- Step 2: Language & Location -->
+            <MudStep Title="Language & Location">
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.PrimaryLanguage" 
+                                  Label="Primary Language" 
+                                  Required="true">
+                            <MudSelectItem Value="@("en")">English</MudSelectItem>
+                            <MudSelectItem Value="@("de")">Deutsch</MudSelectItem>
+                            <MudSelectItem Value="@("es")">Español</MudSelectItem>
+                            <MudSelectItem Value="@("fr")">Français</MudSelectItem>
+                            <MudSelectItem Value="@("it")">Italiano</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.TimeZone" 
+                                  Label="Time Zone" 
+                                  Required="true">
+                            <MudSelectItem Value="@("UTC")">UTC</MudSelectItem>
+                            <MudSelectItem Value="@("Europe/Berlin")">Central Europe (Berlin)</MudSelectItem>
+                            <MudSelectItem Value="@("America/New_York")">Eastern Time (New York)</MudSelectItem>
+                            <MudSelectItem Value="@("America/Los_Angeles")">Pacific Time (Los Angeles)</MudSelectItem>
+                            <MudSelectItem Value="@("Asia/Tokyo")">Japan (Tokyo)</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mb-3">Your Interests & Passions</MudText>
+                        <MudGrid>
+                            @foreach (var interest in availableInterests)
+                            {
+                                <MudItem xs="6" md="4">
+                                    <MudCheckBox T="bool" @bind-Value="@selectedInterests[interest]" 
+                                                Label="@interest" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudItem>
+                </MudGrid>
+            </MudStep>
+
+            <!-- Step 3: Preferences -->
+            <MudStep Title="Preferences">
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.LearningStyle" 
+                                  Label="How do you prefer to learn?">
+                            <MudSelectItem Value="@("Visual")">Visual (images, diagrams)</MudSelectItem>
+                            <MudSelectItem Value="@("Auditory")">Auditory (listening, discussion)</MudSelectItem>
+                            <MudSelectItem Value="@("Kinesthetic")">Hands-on (doing, practicing)</MudSelectItem>
+                            <MudSelectItem Value="@("Reading")">Reading & Writing</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.CommunicationStyle" 
+                                  Label="Communication Style">
+                            <MudSelectItem Value="@("Friendly")">Friendly & Casual</MudSelectItem>
+                            <MudSelectItem Value="@("Professional")">Professional</MudSelectItem>
+                            <MudSelectItem Value="@("Formal")">Formal</MudSelectItem>
+                            <MudSelectItem Value="@("Enthusiastic")">Enthusiastic</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.UIComplexity" 
+                                  Label="Interface Complexity">
+                            <MudSelectItem Value="@("Simple")">Simple & Clean</MudSelectItem>
+                            <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                            <MudSelectItem Value="@("Advanced")">Advanced (more features)</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.ColorScheme" 
+                                  Label="Color Preferences">
+                            <MudSelectItem Value="@("Default")">Default</MudSelectItem>
+                            <MudSelectItem Value="@("Bright")">Bright & Vibrant</MudSelectItem>
+                            <MudSelectItem Value="@("Professional")">Professional</MudSelectItem>
+                            <MudSelectItem Value="@("HighContrast")">High Contrast</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudCheckBox T="bool" @bind-Value="onboardingRequest.EnableAnimations" 
+                                    Label="Enable UI animations" />
+                    </MudItem>
+                </MudGrid>
+            </MudStep>
+
+            <!-- Step 4: Privacy & AI Companions -->
+            <MudStep Title="Privacy & AI">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mb-3">Data Privacy</MudText>
+                        <MudRadioGroup T="string" @bind-Value="onboardingRequest.PrivacyLevel">
+                            <MudRadio T="string" Value="@("Minimal")" Color="Color.Primary">
+                                <MudText><strong>Minimal:</strong> Share data freely for better experience</MudText>
+                            </MudRadio>
+                            <MudRadio T="string" Value="@("Balanced")" Color="Color.Primary">
+                                <MudText><strong>Balanced:</strong> Selective sharing with explicit consent</MudText>
+                            </MudRadio>
+                            <MudRadio T="string" Value="@("Maximum")" Color="Color.Primary">
+                                <MudText><strong>Maximum:</strong> Strict privacy, minimal data sharing</MudText>
+                            </MudRadio>
+                        </MudRadioGroup>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Class="mb-3">AI Companions</MudText>
+                        <MudCheckBox T="bool" @bind-Value="onboardingRequest.EnableProactiveAssistance" 
+                                    Label="Enable AI companions to proactively help you" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="onboardingRequest.CompanionPersonality" 
+                                  Label="Preferred AI Companion Personality">
+                            <MudSelectItem Value="@("Helpful")">Helpful & Supportive</MudSelectItem>
+                            <MudSelectItem Value="@("Professional")">Professional & Efficient</MudSelectItem>
+                            <MudSelectItem Value="@("Friendly")">Friendly & Conversational</MudSelectItem>
+                            <MudSelectItem Value="@("Inspiring")">Inspiring & Motivational</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
+            </MudStep>
+        </MudStepper>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Disabled="@(currentStep == 1)" 
+                   OnClick="MovePrevious" 
+                   Variant="Variant.Text">
+            Previous
+        </MudButton>
+        <MudSpacer />
+        @if (currentStep < 4)
+        {
+            <MudButton OnClick="MoveNext" 
+                       Variant="Variant.Filled" 
+                       Color="Color.Primary"
+                       Disabled="@(!IsCurrentStepValid())">
+                Next
+            </MudButton>
+        }
+        else
+        {
+            <MudButton OnClick="CompleteOnboarding" 
+                       Variant="Variant.Filled" 
+                       Color="Color.Success"
+                       Disabled="@(!IsCurrentStepValid() || isProcessing)">
+                @if (isProcessing)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                    <MudText Class="ms-2">Creating...</MudText>
+                }
+                else
+                {
+                    <MudText>Complete Setup</MudText>
+                }
+            </MudButton>
+        }
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter] public EventCallback OnCompleted { get; set; }
+
+    private MudStepper stepper = null!;
+    private int currentStep = 1;
+    private bool isProcessing = false;
+
+    private OnboardingRequest onboardingRequest = new()
+    {
+        PrimaryLanguage = "en",
+        TimeZone = "UTC",
+        LearningStyle = "Visual",
+        CommunicationStyle = "Friendly",
+        UIComplexity = "Standard",
+        ColorScheme = "Default",
+        EnableAnimations = true,
+        PrivacyLevel = "Balanced",
+        EnableProactiveAssistance = true,
+        CompanionPersonality = "Helpful"
+    };
+
+    private readonly string[] availableInterests = {
+        "Photography", "Art & Design", "Technology", "Business", "Teaching",
+        "Travel", "Cooking", "Music", "Sports", "Reading", "Gaming",
+        "Health & Fitness", "Nature", "Science", "History", "Languages"
+    };
+
+    private Dictionary<string, bool> selectedInterests = new();
+
+    protected override void OnInitialized()
+    {
+        foreach (var interest in availableInterests)
+        {
+            selectedInterests[interest] = false;
+        }
+
+        // Manual step tracking
+    }
+
+    private bool IsCurrentStepValid()
+    {
+        return currentStep switch
+        {
+            1 => !string.IsNullOrWhiteSpace(onboardingRequest.DisplayName) && onboardingRequest.Age >= 13,
+            2 => !string.IsNullOrWhiteSpace(onboardingRequest.PrimaryLanguage),
+            3 => true, // All fields have defaults
+            4 => true, // All fields have defaults
+            _ => false
+        };
+    }
+
+    private async System.Threading.Tasks.Task CompleteOnboarding()
+    {
+        if (isProcessing) return;
+
+        try
+        {
+            isProcessing = true;
+            
+            // Get selected interests
+            onboardingRequest.Interests = selectedInterests
+                .Where(kvp => kvp.Value)
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userId = authState.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId != null)
+            {
+                var persona = await PersonaService.CreatePersonaFromOnboardingAsync(userId, onboardingRequest);
+                
+                Snackbar.Add("Your digital persona has been created successfully! 🎉", Severity.Success);
+                await OnCompleted.InvokeAsync();
+            }
+            else
+            {
+                Snackbar.Add("Error: Could not identify user", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error creating persona: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+
+    private void MovePrevious()
+    {
+        if (currentStep > 1)
+        {
+            currentStep--;
+            StateHasChanged();
+        }
+    }
+
+    private void MoveNext()
+    {
+        if (currentStep < 4 && IsCurrentStepValid())
+        {
+            currentStep++;
+            StateHasChanged();
+        }
+    }
+}

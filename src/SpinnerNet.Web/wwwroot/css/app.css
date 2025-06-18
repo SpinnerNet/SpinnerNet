@@ -1,0 +1,843 @@
+/* Bamberger Spinnerei - World Vision Exact Layout Structure */
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== VARIABLES ===== */
+:root {
+    /* Colors - World Vision inspired */
+    --color-primary: #2c5aa0;
+    --color-primary-dark: #1e3f73;
+    --color-secondary: #f4f4f4;
+    --color-accent: #ff6b35;
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    
+    /* Neutral colors */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-50: #fafafa;
+    --color-gray-100: #f5f5f5;
+    --color-gray-200: #eeeeee;
+    --color-gray-300: #e0e0e0;
+    --color-gray-400: #bdbdbd;
+    --color-gray-500: #9e9e9e;
+    --color-gray-600: #757575;
+    --color-gray-700: #424242;
+    --color-gray-800: #212121;
+    --color-gray-900: #0d0d0d;
+    
+    /* Typography */
+    --font-family: 'Arial Rounded MT Bold', 'Arial Rounded MT', Arial, sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Font sizes - World Vision scale */
+    --font-size-12: 0.75rem;   /* 12px */
+    --font-size-14: 0.875rem;  /* 14px */
+    --font-size-16: 1rem;      /* 16px - base */
+    --font-size-18: 1.125rem;  /* 18px */
+    --font-size-20: 1.25rem;   /* 20px */
+    --font-size-24: 1.5rem;    /* 24px */
+    --font-size-28: 1.75rem;   /* 28px */
+    --font-size-32: 2rem;      /* 32px */
+    --font-size-36: 2.25rem;   /* 36px */
+    --font-size-48: 3rem;      /* 48px */
+    
+    /* Line heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Spacing - World Vision grid */
+    --space-4: 0.25rem;   /* 4px */
+    --space-8: 0.5rem;    /* 8px */
+    --space-12: 0.75rem;  /* 12px */
+    --space-16: 1rem;     /* 16px */
+    --space-20: 1.25rem;  /* 20px */
+    --space-24: 1.5rem;   /* 24px */
+    --space-32: 2rem;     /* 32px */
+    --space-40: 2.5rem;   /* 40px */
+    --space-48: 3rem;     /* 48px */
+    --space-64: 4rem;     /* 64px */
+    --space-80: 5rem;     /* 80px */
+    --space-96: 6rem;     /* 96px */
+    --space-128: 8rem;    /* 128px */
+    
+    /* Container sizes - World Vision structure */
+    --container-sm: 540px;
+    --container-md: 720px;
+    --container-lg: 960px;
+    --container-xl: 1140px;
+    --container-xxl: 1320px;
+    
+    /* Breakpoints */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Border radius */
+    --radius-sm: 0.125rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+}
+
+/* ===== BASE STYLES ===== */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--color-gray-800);
+    background-color: var(--color-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-16);
+}
+
+h1 { font-size: var(--font-size-48); }
+h2 { font-size: var(--font-size-36); }
+h3 { font-size: var(--font-size-28); }
+h4 { font-size: var(--font-size-24); }
+h5 { font-size: var(--font-size-20); }
+h6 { font-size: var(--font-size-18); }
+
+p {
+    margin-bottom: var(--space-16);
+    line-height: var(--line-height-relaxed);
+}
+
+.lead {
+    font-size: var(--font-size-20);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-gray-700);
+}
+
+.text-small {
+    font-size: var(--font-size-14);
+}
+
+.text-large {
+    font-size: var(--font-size-18);
+}
+
+/* ===== WORLD VISION LAYOUT SYSTEM ===== */
+
+/* Container - exact World Vision structure */
+.container-fluid {
+    width: 100%;
+    padding-right: var(--space-16);
+    padding-left: var(--space-16);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container {
+    width: 100%;
+    padding-right: var(--space-16);
+    padding-left: var(--space-16);
+    margin-right: auto;
+    margin-left: auto;
+    max-width: var(--container-xl);
+}
+
+.container-sm { max-width: var(--container-sm); }
+.container-md { max-width: var(--container-md); }
+.container-lg { max-width: var(--container-lg); }
+.container-xl { max-width: var(--container-xl); }
+.container-xxl { max-width: var(--container-xxl); }
+
+/* World Vision Grid System */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: calc(-0.5 * var(--space-24));
+    margin-left: calc(-0.5 * var(--space-24));
+}
+
+.col {
+    flex: 1 0 0%;
+    padding-right: calc(var(--space-24) * 0.5);
+    padding-left: calc(var(--space-24) * 0.5);
+}
+
+.col-1 { flex: 0 0 auto; width: 8.33333333%; }
+.col-2 { flex: 0 0 auto; width: 16.66666667%; }
+.col-3 { flex: 0 0 auto; width: 25%; }
+.col-4 { flex: 0 0 auto; width: 33.33333333%; }
+.col-5 { flex: 0 0 auto; width: 41.66666667%; }
+.col-6 { flex: 0 0 auto; width: 50%; }
+.col-7 { flex: 0 0 auto; width: 58.33333333%; }
+.col-8 { flex: 0 0 auto; width: 66.66666667%; }
+.col-9 { flex: 0 0 auto; width: 75%; }
+.col-10 { flex: 0 0 auto; width: 83.33333333%; }
+.col-11 { flex: 0 0 auto; width: 91.66666667%; }
+.col-12 { flex: 0 0 auto; width: 100%; }
+
+/* Add gutters to all cols */
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+.col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+    padding-right: calc(var(--space-24) * 0.5);
+    padding-left: calc(var(--space-24) * 0.5);
+}
+
+/* ===== NAVIGATION - Responsive World Vision Style ===== */
+.navbar {
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-gray-200);
+    padding: var(--space-12) 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Logo and Brand */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-gray-900);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-20);
+    z-index: 1001;
+}
+
+.navbar-logo {
+    height: 32px;
+    width: auto;
+    margin-right: var(--space-8);
+}
+
+.navbar-title {
+    font-size: var(--font-size-18);
+    color: var(--color-gray-900);
+}
+
+/* Mobile Menu Toggle */
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-8);
+    z-index: 1001;
+}
+
+.navbar-toggle-bar {
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-gray-700);
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggle.active .navbar-toggle-bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar-toggle.active .navbar-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggle.active .navbar-toggle-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Navigation Menu */
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-48);
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: var(--space-32);
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-16);
+    padding: var(--space-8) var(--space-16);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-primary);
+    background-color: var(--color-gray-50);
+}
+
+/* Right side actions */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+}
+
+.navbar-cta {
+    white-space: nowrap;
+}
+
+/* Language Selector */
+.language-selector {
+    position: relative;
+}
+
+.language-dropdown {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    padding: var(--space-8) var(--space-12);
+    font-size: var(--font-size-14);
+    cursor: pointer;
+    color: var(--color-gray-700);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    min-width: 80px;
+}
+
+.language-dropdown:hover {
+    border-color: var(--color-gray-400);
+}
+
+/* ===== BUTTONS - World Vision Style ===== */
+.btn {
+    display: inline-block;
+    padding: var(--space-12) var(--space-24);
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-300);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+}
+
+.btn-lg {
+    padding: var(--space-16) var(--space-32);
+    font-size: var(--font-size-18);
+    min-width: 160px;
+}
+
+.btn-sm {
+    padding: var(--space-8) var(--space-16);
+    font-size: var(--font-size-14);
+    min-width: 100px;
+}
+
+/* ===== HERO SECTION - World Vision Style ===== */
+.hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%);
+    color: var(--color-white);
+    padding: var(--space-96) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><g fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"><circle cx="30" cy="30" r="20"/><circle cx="30" cy="30" r="10"/></g></svg>') repeat;
+    opacity: 0.4;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    color: var(--color-white);
+    font-size: var(--font-size-48);
+    margin-bottom: var(--space-24);
+    font-weight: var(--font-weight-bold);
+}
+
+.hero .lead {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--font-size-24);
+    margin-bottom: var(--space-48);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--space-16);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===== SECTIONS - World Vision Layout ===== */
+.section {
+    padding: var(--space-80) 0;
+}
+
+.section-sm {
+    padding: var(--space-48) 0;
+}
+
+.section-lg {
+    padding: var(--space-128) 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-64);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-header h2 {
+    margin-bottom: var(--space-24);
+}
+
+.section-header .lead {
+    margin-bottom: 0;
+}
+
+/* ===== CARDS - World Vision Style ===== */
+.card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-img {
+    width: 100%;
+    height: 240px;
+    background-color: var(--color-gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray-500);
+    font-size: var(--font-size-14);
+    text-align: center;
+    padding: var(--space-24);
+    border-bottom: 1px solid var(--color-gray-200);
+    position: relative;
+}
+
+.card-img-placeholder {
+    background: linear-gradient(45deg, var(--color-gray-100) 25%, transparent 25%), 
+                linear-gradient(-45deg, var(--color-gray-100) 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, var(--color-gray-100) 75%), 
+                linear-gradient(-45deg, transparent 75%, var(--color-gray-100) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.card-body {
+    padding: var(--space-24);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: var(--font-size-20);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-16);
+    color: var(--color-gray-900);
+}
+
+.card-text {
+    color: var(--color-gray-700);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-24);
+    flex: 1;
+}
+
+.card-footer {
+    padding: var(--space-16) var(--space-24);
+    background-color: var(--color-gray-50);
+    border-top: 1px solid var(--color-gray-200);
+    margin-top: auto;
+}
+
+/* ===== STATISTICS SECTION ===== */
+.stats-section {
+    background-color: var(--color-gray-50);
+    padding: var(--space-64) 0;
+}
+
+.stat-item {
+    text-align: center;
+    padding: var(--space-24);
+}
+
+.stat-number {
+    display: block;
+    font-size: var(--font-size-48);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-8);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: var(--font-size-16);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ===== FEATURES SECTION ===== */
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-24);
+    margin-bottom: var(--space-48);
+}
+
+.feature-icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-size: var(--font-size-24);
+    font-weight: var(--font-weight-bold);
+}
+
+.feature-content h3 {
+    margin-bottom: var(--space-12);
+    color: var(--color-gray-900);
+}
+
+.feature-content p {
+    color: var(--color-gray-700);
+    margin-bottom: 0;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background-color: var(--color-gray-800);
+    color: var(--color-white);
+    padding: var(--space-64) 0 var(--space-32) 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-40);
+    margin-bottom: var(--space-48);
+}
+
+.footer-section h4 {
+    color: var(--color-white);
+    margin-bottom: var(--space-24);
+    font-size: var(--font-size-18);
+}
+
+.footer-section p,
+.footer-section a {
+    color: var(--color-gray-300);
+    text-decoration: none;
+    line-height: var(--line-height-relaxed);
+}
+
+.footer-section a:hover {
+    color: var(--color-white);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: var(--space-8);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--color-gray-600);
+    padding-top: var(--space-32);
+    text-align: center;
+    color: var(--color-gray-400);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1199.98px) {
+    .container { max-width: var(--container-lg); }
+}
+
+@media (max-width: 991.98px) {
+    .container { max-width: var(--container-md); }
+    
+    .hero h1 { font-size: var(--font-size-36); }
+    .hero .lead { font-size: var(--font-size-20); }
+    
+    .section { padding: var(--space-64) 0; }
+    .section-lg { padding: var(--space-80) 0; }
+    
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .container { 
+        max-width: var(--container-sm);
+        padding-left: var(--space-12);
+        padding-right: var(--space-12);
+    }
+    
+    .row {
+        margin-left: calc(-0.5 * var(--space-12));
+        margin-right: calc(-0.5 * var(--space-12));
+    }
+    
+    .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+        flex: 0 0 auto;
+        width: 100%;
+        padding-left: calc(var(--space-12) * 0.5);
+        padding-right: calc(var(--space-12) * 0.5);
+        margin-bottom: var(--space-24);
+    }
+
+    /* Mobile Navbar */
+    .navbar-toggle {
+        display: flex;
+    }
+    
+    .navbar-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--color-white);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-32);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-100%);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        padding: var(--space-32);
+    }
+    
+    .navbar-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        gap: var(--space-24);
+        margin: 0;
+        text-align: center;
+    }
+    
+    .nav-link {
+        font-size: var(--font-size-18);
+        padding: var(--space-16) var(--space-24);
+    }
+    
+    .navbar-actions {
+        flex-direction: column;
+        gap: var(--space-16);
+        margin-top: var(--space-32);
+    }
+    
+    .navbar-cta {
+        width: 200px;
+        text-align: center;
+    }
+    
+    .hero {
+        padding: var(--space-64) 0;
+        text-align: center;
+    }
+    
+    .hero h1 { font-size: var(--font-size-32); }
+    .hero .lead { font-size: var(--font-size-18); }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-12);
+    }
+    
+    .hero-actions .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .section { padding: var(--space-48) 0; }
+    .section-header { margin-bottom: var(--space-48); }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-32);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .container {
+        padding-left: var(--space-8);
+        padding-right: var(--space-8);
+    }
+    
+    .hero { padding: var(--space-48) 0; }
+    .section { padding: var(--space-32) 0; }
+    
+    h1 { font-size: var(--font-size-28); }
+    h2 { font-size: var(--font-size-24); }
+    h3 { font-size: var(--font-size-20); }
+}
+
+/* ===== UTILITIES ===== */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-8); }
+.mb-2 { margin-bottom: var(--space-16); }
+.mb-3 { margin-bottom: var(--space-24); }
+.mb-4 { margin-bottom: var(--space-32); }
+.mb-5 { margin-bottom: var(--space-48); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-8); }
+.mt-2 { margin-top: var(--space-16); }
+.mt-3 { margin-top: var(--space-24); }
+.mt-4 { margin-top: var(--space-32); }
+.mt-5 { margin-top: var(--space-48); }
+
+.d-none { display: none; }
+.d-block { display: block; }
+.d-flex { display: flex; }
+
+
+/* ===== ACCESSIBILITY ===== */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Focus styles */
+.btn:focus,
+.nav-link:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}

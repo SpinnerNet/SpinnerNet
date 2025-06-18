@@ -1,0 +1,275 @@
+@page
+@model SpinnerNet.Web.Pages.AboutModel
+@{
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="padding: var(--space-64) 0; background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%);">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("About_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("About_Hero_Subtitle")</p>
+            <p class="lead">@Model.GetText("About_Hero_Description")</p>
+        </div>
+    </div>
+</section>
+
+<!-- Vision & Mission Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("About_VisionMission_Title")</h2>
+            <p class="lead">@Model.GetText("About_VisionMission_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_Vision_Placeholder")</strong><br>
+                            @Model.GetText("About_Vision_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("About_Vision_Title")</h3>
+                        <p class="card-text">@Model.GetText("About_Vision_Text")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_Mission_Placeholder")</strong><br>
+                            @Model.GetText("About_Mission_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("About_Mission_Title")</h3>
+                        <p class="card-text">@Model.GetText("About_Mission_Text")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Three Pillars Section -->
+<section class="section" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("About_Pillars_Title")</h2>
+            <p class="lead">@Model.GetText("About_Pillars_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #ff6b35 0%, #ff8e53 100%);">
+                        <strong>S</strong>
+                    </div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("About_Pillar_Spin_Title")</h3>
+                        <p>@Model.GetText("About_Pillar_Spin_Text")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%);">
+                        <strong>C</strong>
+                    </div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("About_Pillar_Connect_Title")</h3>
+                        <p>@Model.GetText("About_Pillar_Connect_Text")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--color-success) 0%, #34ce57 100%);">
+                        <strong>M</strong>
+                    </div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("About_Pillar_Marketplace_Title")</h3>
+                        <p>@Model.GetText("About_Pillar_Marketplace_Text")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Zeitsparkasse Section -->
+<section class="section" id="zeitsparkasse">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("About_Zeitsparkasse_Title")</h2>
+            <p class="lead">@Model.GetText("About_Zeitsparkasse_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-8">
+                <h3>@Model.GetText("About_Zeitsparkasse_What_Title")</h3>
+                <p class="lead">@Model.GetText("About_Zeitsparkasse_What_Text")</p>
+                
+                <h4 class="mt-4">@Model.GetText("About_Zeitsparkasse_How_Title")</h4>
+                <ul class="text-large" style="line-height: var(--line-height-relaxed);">
+                    <li>@Model.GetText("About_Zeitsparkasse_ZeitCoin")</li>
+                    <li>@Model.GetText("About_Zeitsparkasse_TimeCredit")</li>
+                    <li>@Model.GetText("About_Zeitsparkasse_AutoConvert")</li>
+                    <li>@Model.GetText("About_Zeitsparkasse_Community")</li>
+                </ul>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_Zeitsparkasse_App_Placeholder")</strong><br>
+                            @Model.GetText("About_Zeitsparkasse_App_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Model.GetText("About_Zeitsparkasse_Card_Title")</h4>
+                        <p class="card-text">@Model.GetText("About_Zeitsparkasse_Card_Text")</p>
+                        <a href="/beta" class="btn btn-primary">@Model.GetText("About_Zeitsparkasse_BetaTest")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="section" style="background-color: var(--color-gray-50);" id="team">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("About_Team_Title")</h2>
+            <p class="lead">@Model.GetText("About_Team_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_Team_Peter_Placeholder")</strong><br>
+                            @Model.GetText("About_Team_Peter_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Model.GetText("About_Team_Peter_Placeholder")</h4>
+                        <p class="text-small" style="color: var(--color-primary); font-weight: var(--font-weight-semibold);">@Model.GetText("About_Team_Peter_Role")</p>
+                        <p class="card-text">@Model.GetText("About_Team_Peter_Bio")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_Team_Community_Placeholder")</strong><br>
+                            @Model.GetText("About_Team_Community_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Model.GetText("About_Team_Community_Placeholder")</h4>
+                        <p class="text-small" style="color: var(--color-primary); font-weight: var(--font-weight-semibold);">@Model.GetText("About_Team_Community_Role")</p>
+                        <p class="card-text">@Model.GetText("About_Team_Community_Bio")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder">
+                        <div style="text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_Team_Tech_Placeholder")</strong><br>
+                            @Model.GetText("About_Team_Tech_PlaceholderDesc")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Model.GetText("About_Team_Tech_Placeholder")</h4>
+                        <p class="text-small" style="color: var(--color-primary); font-weight: var(--font-weight-semibold);">@Model.GetText("About_Team_Tech_Role")</p>
+                        <p class="card-text">@Model.GetText("About_Team_Tech_Bio")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("About_Values_Title")</h2>
+            <p class="lead">@Model.GetText("About_Values_Subtitle")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">⏰</div>
+                    <h4>@Model.GetText("About_Values_Time_Title")</h4>
+                    <p>@Model.GetText("About_Values_Time_Text")</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">🤝</div>
+                    <h4>@Model.GetText("About_Values_Trust_Title")</h4>
+                    <p>@Model.GetText("About_Values_Trust_Text")</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">🌟</div>
+                    <h4>@Model.GetText("About_Values_Innovation_Title")</h4>
+                    <p>@Model.GetText("About_Values_Innovation_Text")</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--color-gray-600); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-24); color: white; font-size: var(--font-size-32); font-weight: var(--font-weight-bold);">🏛️</div>
+                    <h4>@Model.GetText("About_Values_Community_Title")</h4>
+                    <p>@Model.GetText("About_Values_Community_Text")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section" style="background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%); color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2 style="color: white; margin-bottom: var(--space-24);">@Model.GetText("About_CTA_Title")</h2>
+                <p class="lead" style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-32);">
+                    @Model.GetText("About_CTA_Text")
+                </p>
+                <div style="display: flex; gap: var(--space-16); flex-wrap: wrap;">
+                    <a href="/contact" class="btn btn-secondary btn-lg">@Model.GetText("About_CTA_Contact")</a>
+                    <a href="/beta" class="btn btn-outline btn-lg" style="border-color: white; color: white;">@Model.GetText("About_CTA_Beta")</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div style="text-align: center;">
+                    <div class="card-img card-img-placeholder" style="background-color: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3); height: 280px;">
+                        <div style="color: rgba(255,255,255,0.8); text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("About_CTA_Growth_Placeholder")</strong><br>
+                            @Model.GetText("About_CTA_Growth_PlaceholderDesc")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

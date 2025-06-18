@@ -1,0 +1,533 @@
+@using SpinnerNet.Core.Features.Analytics
+@using SpinnerNet.Shared.Extensions
+@using MudBlazor
+@using Microsoft.AspNetCore.Components.Authorization
+@inject IMediator Mediator
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <!-- Header -->
+    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+        <MudIcon Icon="Icons.Material.Filled.Analytics" Size="Size.Large" Color="Color.Primary" />
+        <div>
+            <MudText Typo="Typo.h4">Zeitsparkasse Analytics</MudText>
+            <MudText Typo="Typo.subtitle1" Color="Color.Secondary">
+                Your time banking foundation • Building toward ZeitCoin economy
+            </MudText>
+        </div>
+        <MudSpacer />
+        <MudSelect @bind-Value="selectedTimeRange" 
+                   Variant="Variant.Outlined" 
+                   Label="Time Range">
+            <MudSelectItem Value="GetUserAnalytics.TimeRange.Last7Days">Last 7 Days</MudSelectItem>
+            <MudSelectItem Value="GetUserAnalytics.TimeRange.Last30Days">Last 30 Days</MudSelectItem>
+            <MudSelectItem Value="GetUserAnalytics.TimeRange.Last90Days">Last 90 Days</MudSelectItem>
+            <MudSelectItem Value="GetUserAnalytics.TimeRange.ThisYear">This Year</MudSelectItem>
+        </MudSelect>
+        <MudButton StartIcon="Icons.Material.Filled.Refresh" 
+                   OnClick="RefreshAnalytics" 
+                   Variant="Variant.Outlined"
+                   Disabled="@isLoading">
+            Refresh
+        </MudButton>
+    </div>
+
+    @if (isLoading)
+    {
+        <div style="display: flex; justify-content: center; margin: 40px 0;">
+            <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+            <MudText Typo="Typo.h6" Style="margin-left: 16px;">
+                Analyzing your productivity patterns...
+            </MudText>
+        </div>
+    }
+    else if (analytics != null)
+    {
+        <!-- Key Metrics Cards -->
+        <MudGrid>
+            <!-- Core Productivity Metrics -->
+            <MudItem xs="12" md="3">
+                <MudCard Elevation="3">
+                    <MudCardContent style="text-align: center; padding: 24px;">
+                        <MudIcon Icon="Icons.Material.Filled.Task" Size="Size.Large" Color="Color.Primary" />
+                        <MudText Typo="Typo.h4" Class="mt-2">@analytics.CompletedTasks</MudText>
+                        <MudText Typo="Typo.subtitle2" Color="Color.Secondary">Completed Tasks</MudText>
+                        <MudText Typo="Typo.caption">
+                            @($"{analytics.CompletionRate:F1}% completion rate")
+                        </MudText>
+                        <MudProgressLinear Value="analytics.CompletionRate" Color="GetCompletionRateColor(analytics.CompletionRate)" Class="mt-2" />
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" md="3">
+                <MudCard Elevation="3">
+                    <MudCardContent style="text-align: center; padding: 24px;">
+                        <MudIcon Icon="Icons.Material.Filled.Schedule" Size="Size.Large" Color="Color.Success" />
+                        <MudText Typo="Typo.h4" Class="mt-2">@($"{analytics.TotalTimeSpentHours:F1}h")</MudText>
+                        <MudText Typo="Typo.subtitle2" Color="Color.Secondary">Time Invested</MudText>
+                        <MudText Typo="Typo.caption">
+                            @($"Avg {analytics.AverageTaskDurationMinutes:F0}min per task")
+                        </MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- ZeitCoin Foundation Metrics -->
+            @if (zeitCoinMetrics != null)
+            {
+                <MudItem xs="12" md="3">
+                    <MudCard Elevation="3" Style="background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%); color: white;">
+                        <MudCardContent style="text-align: center; padding: 24px;">
+                            <MudIcon Icon="Icons.Material.Filled.MonetizationOn" Size="Size.Large" Color="Color.Surface" />
+                            <MudText Typo="Typo.h4" Class="mt-2" Style="color: white;">@zeitCoinMetrics.TotalPointsEarned</MudText>
+                            <MudText Typo="Typo.subtitle2" Style="color: rgba(255,255,255,0.9);">ZeitCoin Points</MudText>
+                            <MudText Typo="Typo.caption" Style="color: rgba(255,255,255,0.8);">
+                                @($"{zeitCoinMetrics.EligibilityRate:F1}% of tasks eligible")
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" md="3">
+                    <MudCard Elevation="3">
+                        <MudCardContent style="text-align: center; padding: 24px;">
+                            <MudIcon Icon="Icons.Material.Filled.TrendingUp" Size="Size.Large" Color="Color.Info" />
+                            <MudText Typo="Typo.h4" Class="mt-2">@zeitCoinMetrics.ProjectedMonthlyEarnings</MudText>
+                            <MudText Typo="Typo.subtitle2" Color="Color.Secondary">Monthly Projection</MudText>
+                            <MudText Typo="Typo.caption">
+                                @($"Value Score: {zeitCoinMetrics.ValueCreationScore:F1}/10")
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+
+        <!-- Productivity Insights -->
+        @if (productivityInsights.Any())
+        {
+            <MudCard Class="mt-6" Elevation="2">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">
+                            <MudIcon Icon="Icons.Material.Filled.Lightbulb" Class="mr-2" />
+                            Productivity Insights
+                        </MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        @foreach (var insight in productivityInsights.Take(4))
+                        {
+                            <MudItem xs="12" md="6">
+                                <MudAlert Severity="GetInsightSeverity(insight.Impact)" 
+                                         Icon="@GetInsightIcon(insight.Type)" 
+                                         Class="mb-2">
+                                    <MudText Typo="Typo.subtitle2" Style="font-weight: 600;">@insight.Title</MudText>
+                                    <MudText Typo="Typo.body2">@insight.Description</MudText>
+                                    @if (insight.Actionable)
+                                    {
+                                        <MudButton Size="Size.Small" 
+                                                  Variant="Variant.Text" 
+                                                  Color="Color.Primary" 
+                                                  StartIcon="Icons.Material.Filled.PlayArrow"
+                                                  Class="mt-1"
+                                                  OnClick="@(() => TakeAction(insight))">
+                                            Take Action
+                                        </MudButton>
+                                    }
+                                </MudAlert>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        }
+
+        <!-- Charts and Detailed Analytics -->
+        <MudGrid Class="mt-6">
+            <!-- Category Breakdown -->
+            <MudItem xs="12" md="6">
+                <MudCard Elevation="2">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Time Distribution by Category</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        @if (analytics.CategoryBreakdown.Any())
+                        {
+                            @foreach (var category in analytics.CategoryBreakdown.Take(6))
+                            {
+                                var percentage = analytics.TotalTimeSpentHours > 0 ? 
+                                    (category.Value.TotalTimeHours / analytics.TotalTimeSpentHours * 100) : 0;
+                                
+                                <div style="margin-bottom: 16px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                        <MudText Typo="Typo.body2">
+                                            <MudChip T="string" Size="Size.Small" Color="GetCategoryColor(category.Key)">
+                                                @category.Key.ToTitleCase()
+                                            </MudChip>
+                                        </MudText>
+                                        <MudText Typo="Typo.body2">@($"{category.Value.TotalTimeHours:F1}h ({percentage:F1}%)")</MudText>
+                                    </div>
+                                    <MudProgressLinear Value="percentage" Color="GetCategoryColor(category.Key)" />
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{category.Value.CompletedCount}/{category.Value.TaskCount} completed • {category.Value.CompletionRate:F1}% rate")
+                                    </MudText>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <MudText Typo="Typo.body2" Color="Color.Secondary" Class="text-center">
+                                No category data available yet. Complete some tasks to see insights!
+                            </MudText>
+                        }
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Time Patterns -->
+            @if (timePatterns != null)
+            {
+                <MudItem xs="12" md="6">
+                    <MudCard Elevation="2">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h6">Your Productivity Patterns</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            @if (timePatterns.MostProductiveHours.Any())
+                            {
+                                <div style="margin-bottom: 16px;">
+                                    <MudText Typo="Typo.subtitle2" Class="mb-2">⏰ Peak Hours</MudText>
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        @foreach (var hour in timePatterns.MostProductiveHours)
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Color="Color.Primary">
+                                                @($"{hour}:00-{hour+1}:00")
+                                            </MudChip>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            @if (timePatterns.MostProductiveDays.Any())
+                            {
+                                <div style="margin-bottom: 16px;">
+                                    <MudText Typo="Typo.subtitle2" Class="mb-2">📅 Best Days</MudText>
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        @foreach (var day in timePatterns.MostProductiveDays)
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Color="Color.Success">@day</MudChip>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            <div style="margin-bottom: 16px;">
+                                <MudText Typo="Typo.subtitle2" Class="mb-2">🎯 Work-Life Balance</MudText>
+                                <MudProgressLinear Value="timePatterns.WorkLifeBalance.BalanceScore" 
+                                                  Color="GetBalanceScoreColor(timePatterns.WorkLifeBalance.BalanceScore)" />
+                                <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mt-1">
+                                    @($"Balance Score: {timePatterns.WorkLifeBalance.BalanceScore:F1}/100")
+                                </MudText>
+                                <div style="margin-top: 8px;">
+                                    <MudText Typo="Typo.caption">
+                                        Work: @($"{timePatterns.WorkLifeBalance.WorkHoursPercentage:F1}%") • 
+                                        Personal: @($"{timePatterns.WorkLifeBalance.PersonalHoursPercentage:F1}%") • 
+                                        Health: @($"{timePatterns.WorkLifeBalance.HealthHoursPercentage:F1}%")
+                                    </MudText>
+                                </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+
+        <!-- Recommendations -->
+        @if (recommendations.Any())
+        {
+            <MudCard Class="mt-6" Elevation="2">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">
+                            <MudIcon Icon="Icons.Material.Filled.Recommend" Class="mr-2" />
+                            AI Recommendations
+                        </MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        @foreach (var recommendation in recommendations.Take(3))
+                        {
+                            <MudItem xs="12" md="4">
+                                <MudCard Elevation="1" Style="height: 100%;">
+                                    <MudCardContent>
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                            <MudChip T="string" Size="Size.Small" 
+                                                    Color="GetPriorityColor(recommendation.Priority)">
+                                                @recommendation.Priority.ToUpperInvariant()
+                                            </MudChip>
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                                @recommendation.Category.ToTitleCase()
+                                            </MudText>
+                                        </div>
+                                        <MudText Typo="Typo.subtitle2" Style="font-weight: 600;" Class="mb-2">
+                                            @recommendation.Title
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3">
+                                            @recommendation.Description
+                                        </MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Success">
+                                            💡 Impact: @recommendation.PotentialImpact
+                                        </MudText>
+                                        <br />
+                                        <MudText Typo="Typo.caption" Color="Color.Info">
+                                            ⏱️ Time: @recommendation.TimeToImplement
+                                        </MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        }
+
+        <!-- ZeitCoin Economy Foundation -->
+        @if (zeitCoinMetrics != null)
+        {
+            <MudCard Class="mt-6" Elevation="2" Style="border: 2px solid #ffd700;">
+                <MudCardHeader Style="background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%); color: white;">
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6" Style="color: white;">
+                            <MudIcon Icon="Icons.Material.Filled.MonetizationOn" Class="mr-2" Style="color: white;" />
+                            ZeitCoin Economy Foundation
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: rgba(255,255,255,0.9);">
+                            Building your time-to-value baseline for the future cryptocurrency economy
+                        </MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="12" md="4">
+                            <div style="text-align: center; padding: 16px;">
+                                <MudText Typo="Typo.h5" Color="Color.Primary">@($"{zeitCoinMetrics.TimeToValueBaseline:F2}")</MudText>
+                                <MudText Typo="Typo.subtitle2">Time-to-Value Baseline</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    Foundation metric for ZeitCoin algorithm
+                                </MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <div style="text-align: center; padding: 16px;">
+                                <MudText Typo="Typo.h5" Color="Color.Success">@($"{zeitCoinMetrics.EfficiencyBaseline:F2}")</MudText>
+                                <MudText Typo="Typo.subtitle2">Efficiency Baseline</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    Your productivity signature
+                                </MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <div style="text-align: center; padding: 16px;">
+                                <MudText Typo="Typo.h5" Color="Color.Warning">@($"{zeitCoinMetrics.OptimizationPotential:F1}%")</MudText>
+                                <MudText Typo="Typo.subtitle2">Optimization Potential</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    Room for ZeitCoin earning improvement
+                                </MudText>
+                            </div>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        }
+    }
+    else if (!isLoading)
+    {
+        <MudCard Class="mt-6" Elevation="2">
+            <MudCardContent style="text-align: center; padding: 40px;">
+                <MudIcon Icon="Icons.Material.Filled.Analytics" Size="Size.Large" Color="Color.Secondary" />
+                <MudText Typo="Typo.h6" Class="mt-4" Color="Color.Secondary">
+                    No Analytics Data Available
+                </MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mt-2">
+                    Complete some tasks to see your productivity insights and ZeitCoin foundation metrics!
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    }
+</MudContainer>
+
+@code {
+    [Parameter] public string? UserId { get; set; }
+
+    private GetUserAnalytics.TimeRange selectedTimeRange = GetUserAnalytics.TimeRange.Last30Days;
+    private bool isLoading = false;
+    
+    private GetUserAnalytics.UserAnalytics? analytics;
+    private GetUserAnalytics.ZeitCoinMetrics? zeitCoinMetrics;
+    private List<GetUserAnalytics.ProductivityInsight> productivityInsights = new();
+    private GetUserAnalytics.TimePatterns? timePatterns;
+    private List<GetUserAnalytics.AnalyticsRecommendation> recommendations = new();
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(UserId))
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            UserId = authState.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        await LoadAnalytics();
+    }
+
+    private async System.Threading.Tasks.Task RefreshAnalytics(GetUserAnalytics.TimeRange newRange)
+    {
+        selectedTimeRange = newRange;
+        await LoadAnalytics();
+    }
+    
+    private async System.Threading.Tasks.Task RefreshAnalytics()
+    {
+        await LoadAnalytics();
+    }
+
+    private async System.Threading.Tasks.Task LoadAnalytics()
+    {
+        if (string.IsNullOrEmpty(UserId)) return;
+
+        try
+        {
+            isLoading = true;
+            StateHasChanged();
+
+            var command = new GetUserAnalytics.Command
+            {
+                UserId = UserId,
+                TimeRange = selectedTimeRange,
+                IncludeZeitCoinMetrics = true,
+                IncludeProductivityInsights = true,
+                IncludeTimePatterns = true
+            };
+
+            var result = await Mediator.Send(command);
+
+            if (result.Success)
+            {
+                analytics = result.Analytics;
+                zeitCoinMetrics = result.ZeitCoinMetrics;
+                productivityInsights = result.ProductivityInsights;
+                timePatterns = result.TimePatterns;
+                recommendations = result.Recommendations;
+            }
+            else
+            {
+                Snackbar.Add($"Error loading analytics: {result.ErrorMessage}", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load analytics: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async System.Threading.Tasks.Task TakeAction(GetUserAnalytics.ProductivityInsight insight)
+    {
+        Snackbar.Add($"Taking action on: {insight.Title} (Feature coming soon!)", Severity.Info);
+        // TODO: Implement specific actions based on insight type
+    }
+
+    private Color GetCompletionRateColor(double rate)
+    {
+        return rate switch
+        {
+            >= 80 => Color.Success,
+            >= 60 => Color.Info,
+            >= 40 => Color.Warning,
+            _ => Color.Error
+        };
+    }
+
+    private Color GetCategoryColor(string category)
+    {
+        return category.ToLowerInvariant() switch
+        {
+            "work" => Color.Primary,
+            "health" => Color.Success,
+            "family" => Color.Secondary,
+            "personal" => Color.Info,
+            "shopping" => Color.Warning,
+            "home" => Color.Dark,
+            "finance" => Color.Tertiary,
+            _ => Color.Default
+        };
+    }
+
+    private Color GetBalanceScoreColor(double score)
+    {
+        return score switch
+        {
+            >= 80 => Color.Success,
+            >= 60 => Color.Info,
+            >= 40 => Color.Warning,
+            _ => Color.Error
+        };
+    }
+
+    private Severity GetInsightSeverity(string impact)
+    {
+        return impact switch
+        {
+            "high" => Severity.Error,
+            "medium" => Severity.Warning,
+            "low" => Severity.Info,
+            _ => Severity.Normal
+        };
+    }
+
+    private string GetInsightIcon(string type)
+    {
+        return type switch
+        {
+            "completion_rate" => Icons.Material.Filled.CheckCircle,
+            "time_estimation" => Icons.Material.Filled.Schedule,
+            "zeitcoin_eligibility" => Icons.Material.Filled.MonetizationOn,
+            "work_life_balance" => Icons.Material.Filled.Balance,
+            _ => Icons.Material.Filled.Lightbulb
+        };
+    }
+
+    private Color GetPriorityColor(string priority)
+    {
+        return priority switch
+        {
+            "high" => Color.Error,
+            "medium" => Color.Warning,
+            "low" => Color.Info,
+            _ => Color.Default
+        };
+    }
+}
+
+<style>
+    .mud-progress-linear {
+        height: 8px;
+        border-radius: 4px;
+    }
+    
+    .mud-chip {
+        margin: 2px;
+    }
+</style>

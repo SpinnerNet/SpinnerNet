@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Navigation -->
+  <data name="Nav_Home" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="Nav_Support" xml:space="preserve">
+    <value>Soporte</value>
+  </data>
+  <data name="Nav_Contact" xml:space="preserve">
+    <value>Contacto</value>
+  </data>
+  <data name="Nav_Beta" xml:space="preserve">
+    <value>Acceso Beta</value>
+  </data>
+  <data name="Nav_App" xml:space="preserve">
+    <value>Ir a la app</value>
+  </data>
+  <data name="Language_German" xml:space="preserve">
+    <value>Alemán</value>
+  </data>
+  <data name="Language_English" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="Language_French" xml:space="preserve">
+    <value>Francés</value>
+  </data>
+  <data name="Language_Spanish" xml:space="preserve">
+    <value>Español</value>
+  </data>
+
+  <!-- Hero Section with Personal Buddy Focus -->
+  <data name="Index_Hero_Title" xml:space="preserve">
+    <value>Imagina tener un compañero personal</value>
+  </data>
+  <data name="Index_Hero_Description" xml:space="preserve">
+    <value>...que te conoce como tu mejor amigo. Que sabe cuándo eres productivo, qué te motiva. Que te ayuda a usar tu tiempo para que estés satisfecho por la noche.</value>
+  </data>
+  <data name="Index_Hero_LearnMore" xml:space="preserve">
+    <value>¿Cómo funciona?</value>
+  </data>
+  <data name="Index_Hero_BetaAccess" xml:space="preserve">
+    <value>Conoce a tu compañero</value>
+  </data>
+
+  <!-- Personal Three Pillars Focus -->
+  <data name="Index_Features_Title" xml:space="preserve">
+    <value>Más que software – una nueva forma de convivir</value>
+  </data>
+  <data name="Index_Features_Description" xml:space="preserve">
+    <value>Creamos un espacio para tus ideas. Tres pilares sostienen nuestra comunidad: Crear, Transmitir y el Mercado.</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Crear – Dejar emerger las ideas</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Ya sea que pruebes un nuevo concepto de aprendizaje, desarrolles una app o tengas una visión para el turismo sostenible – aquí encuentras el espacio, el material y las personas que te acompañan.</value>
+  </data>
+  <data name="Index_Features_Innovation_Title" xml:space="preserve">
+    <value>Transmitir – Compartir el conocimiento</value>
+  </data>
+  <data name="Index_Features_Innovation_Description" xml:space="preserve">
+    <value>El conocimiento no se enseña aquí, se comparte. Desde el artesano experimentado hasta la joven empresaria – todos transmiten lo que saben. Sin presión de notas, con encuentros reales.</value>
+  </data>
+  <data name="Index_Features_Community_Title" xml:space="preserve">
+    <value>Mercado – Repensar el trabajo</value>
+  </data>
+  <data name="Index_Features_Community_Description" xml:space="preserve">
+    <value>Trabaja de manera autodeterminada, pero no solo. Aquí puedes programar y pintar, enseñar por la mañana y hacer música por la noche. Tu identidad puede ser multidimensional.</value>
+  </data>
+
+  <!-- 23% Principle & BGE Integration -->
+  <data name="Index_Stats_CommunityMembers" xml:space="preserve">
+    <value>Contribución solidaria</value>
+  </data>
+  <data name="Index_Stats_RealizedProjects" xml:space="preserve">
+    <value>Se queda contigo</value>
+  </data>
+  <data name="Index_Stats_SavedHours" xml:space="preserve">
+    <value>Posibilidades</value>
+  </data>
+
+  <!-- Personal CTA -->
+  <data name="Index_CTA_Title" xml:space="preserve">
+    <value>¿Qué puedes aportar?</value>
+  </data>
+  <data name="Index_CTA_Description" xml:space="preserve">
+    <value>Una idea. Tiempo. Una conversación. Una donación. Tu talento o tu historia. ¿Qué obtienes? Un espacio. Una resonancia. Una estructura. Humanidad. Tal vez incluso un nuevo sentido.</value>
+  </data>
+  <data name="Index_CTA_SecureBeta" xml:space="preserve">
+    <value>Ven a vernos. Escríbenos.</value>
+  </data>
+  <data name="Index_CTA_BookConsultation" xml:space="preserve">
+    <value>O simplemente comienza.</value>
+  </data>
+
+  <!-- Personal Mission & Vision -->
+  <data name="Hero_MainSlogan" xml:space="preserve">
+    <value>Más que software – un compañero para la vida.</value>
+  </data>
+  <data name="Hero_Subtitle" xml:space="preserve">
+    <value>Spinner.Net es tu compañero IA personal que te comprende, protege tu tiempo y te ayuda a vivir la vida que quieres.</value>
+  </data>
+  <data name="About_Vision_Text" xml:space="preserve">
+    <value>La Hilandería es más que un lugar – es un modelo de convivencia, trabajo, aprendizaje y crecimiento espiritual. En el centro está el ser humano en su totalidad – no solo como empleado, sino como ser sensible, pensante y creativo.</value>
+  </data>
+  <data name="About_Mission_Text" xml:space="preserve">
+    <value>Creamos el espacio, el tiempo y la confianza para que las personas puedan florecer, realizar ideas y dar forma a la comunidad. Un lugar para todas las generaciones, culturas y situaciones de vida – sostenido por la idea: Quien sostiene hoy, será sostenido mañana.</value>
+  </data>
+
+  <!-- 23% & BGE with Trust Focus -->
+  <data name="Support_23Percent_Description" xml:space="preserve">
+    <value>El número 23 simboliza una participación voluntaria y responsable en una comunidad. Cuanta más gente actúa, más gente puede ser sostenida. No se trata de control, sino de confianza – el capital central de la Hilandería.</value>
+  </data>
+  <data name="Support_BGE_Description" xml:space="preserve">
+    <value>Las personas sostenidas por la renta básica no tienen obligaciones. Reciben tiempo y espacio para encontrarse a sí mismas. Quien ha sido sostenido, más tarde sostiene a otros. Una cadena de confianza.</value>
+  </data>
+
+  <!-- Contact Page -->
+  <data name="Contact_Hero_Title" xml:space="preserve">
+    <value>Hablemos juntos</value>
+  </data>
+  <data name="Contact_Hero_Description" xml:space="preserve">
+    <value>¿Tienes preguntas, ideas o solo quieres saludar? ¡Esperamos tener noticias tuyas!</value>
+  </data>
+
+  <!-- Beta Page -->
+  <data name="Beta_Hero_Title" xml:space="preserve">
+    <value>Programa Beta</value>
+  </data>
+  <data name="Beta_Hero_Subtitle" xml:space="preserve">
+    <value>Conviértete en tester beta del futuro</value>
+  </data>
+  <data name="Beta_Hero_Description" xml:space="preserve">
+    <value>Obtén acceso exclusivo a nuestra plataforma y ayúdanos a perfeccionar la Hilandería de Bamberg.</value>
+  </data>
+  <data name="Beta_Benefits_Title" xml:space="preserve">
+    <value>¿Por qué convertirse en tester beta?</value>
+  </data>
+  <data name="Beta_Benefits_Subtitle" xml:space="preserve">
+    <value>Descubre las ventajas del programa beta</value>
+  </data>
+
+  <!-- Support Page -->
+  <data name="Support_Hero_Title" xml:space="preserve">
+    <value>Centro de Soporte</value>
+  </data>
+  <data name="Support_Hero_Description" xml:space="preserve">
+    <value>Estamos aquí para ayudar</value>
+  </data>
+
+</root>

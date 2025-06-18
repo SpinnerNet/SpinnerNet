@@ -1,0 +1,711 @@
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using SpinnerNet.Core.Data.CosmosDb;
+using SpinnerNet.Shared.Models;
+using SpinnerNet.Shared.Models.CosmosDb;
+using System.Text.Json.Serialization;
+
+namespace SpinnerNet.Core.Features.PersonaInterview;
+
+/// <summary>
+/// Vertical slice for processing interview responses and generating next questions
+/// Handles conversational AI flow to extract persona information from user responses
+/// </summary>
+public static class ProcessInterviewResponse
+{
+    // 1. Command (Input)
+    public record Command : IRequest<Result>
+    {
+        [JsonPropertyName("sessionId")]
+        public string SessionId { get; init; } = string.Empty;
+
+        [JsonPropertyName("userId")]
+        public string UserId { get; init; } = string.Empty;
+
+        [JsonPropertyName("questionId")]
+        public string QuestionId { get; init; } = string.Empty;
+
+        [JsonPropertyName("response")]
+        public string Response { get; init; } = string.Empty;
+
+        [JsonPropertyName("responseMetadata")]
+        public ResponseMetadata? ResponseMetadata { get; init; }
+    }
+
+    // 2. Result (Output)
+    public record Result
+    {
+        [JsonPropertyName("success")]
+        public bool Success { get; init; }
+
+        [JsonPropertyName("nextQuestion")]
+        public InterviewQuestion? NextQuestion { get; init; }
+
+        [JsonPropertyName("isComplete")]
+        public bool IsComplete { get; init; }
+
+        [JsonPropertyName("extractedInfo")]
+        public ExtractedInfo? ExtractedInfo { get; init; }
+
+        [JsonPropertyName("progress")]
+        public InterviewProgress? Progress { get; init; }
+
+        [JsonPropertyName("errorMessage")]
+        public string? ErrorMessage { get; init; }
+
+        public static Result SuccessResult(InterviewQuestion? nextQuestion, bool isComplete, ExtractedInfo? info, InterviewProgress progress) =>
+            new() 
+            { 
+                Success = true, 
+                NextQuestion = nextQuestion, 
+                IsComplete = isComplete,
+                ExtractedInfo = info,
+                Progress = progress
+            };
+
+        public static Result Failure(string errorMessage) =>
+            new() { Success = false, ErrorMessage = errorMessage };
+    }
+
+    // 3. Supporting Models
+    public record ResponseMetadata
+    {
+        [JsonPropertyName("responseTime")]
+        public DateTime ResponseTime { get; init; } = DateTime.UtcNow;
+
+        [JsonPropertyName("confidence")]
+        public double Confidence { get; init; } = 1.0;
+
+        [JsonPropertyName("skipped")]
+        public bool Skipped { get; init; } = false;
+    }
+
+    public record ExtractedInfo
+    {
+        [JsonPropertyName("interests")]
+        public List<string> Interests { get; set; } = new();
+
+        [JsonPropertyName("occupation")]
+        public string? Occupation { get; set; }
+
+        [JsonPropertyName("culturalBackground")]
+        public string? CulturalBackground { get; set; }
+
+        [JsonPropertyName("age")]
+        public int? Age { get; set; }
+
+        [JsonPropertyName("languages")]
+        public List<string> Languages { get; set; } = new();
+
+        [JsonPropertyName("learningStyle")]
+        public string? LearningStyle { get; set; }
+
+        [JsonPropertyName("uiPreferences")]
+        public Dictionary<string, object> UIPreferences { get; set; } = new();
+    }
+
+    // 4. Validator (Input Validation)
+    public class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.SessionId)
+                .NotEmpty().WithMessage("Session ID is required")
+                .MaximumLength(100).WithMessage("Session ID must not exceed 100 characters");
+
+            RuleFor(x => x.UserId)
+                .NotEmpty().WithMessage("User ID is required")
+                .MaximumLength(100).WithMessage("User ID must not exceed 100 characters");
+
+            RuleFor(x => x.QuestionId)
+                .NotEmpty().WithMessage("Question ID is required")
+                .MaximumLength(50).WithMessage("Question ID must not exceed 50 characters");
+
+            RuleFor(x => x.Response)
+                .NotEmpty().WithMessage("Response is required")
+                .When(x => x.ResponseMetadata?.Skipped != true)
+                .MaximumLength(2000).WithMessage("Response must not exceed 2000 characters");
+        }
+    }
+
+    // 5. Handler (Business Logic + Data Access)
+    public class Handler : IRequestHandler<Command, Result>
+    {
+        private readonly ICosmosRepository<InterviewSessionDocument> _sessionRepository;
+        private readonly ILogger<Handler> _logger;
+
+        public Handler(
+            ICosmosRepository<InterviewSessionDocument> sessionRepository,
+            ILogger<Handler> logger)
+        {
+            _sessionRepository = sessionRepository;
+            _logger = logger;
+        }
+
+        public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                _logger.LogInformation("Processing interview response for session: {SessionId}", request.SessionId);
+
+                // 1. Retrieve interview session
+                var sessions = await _sessionRepository.QueryAsync(
+                    s => s.SessionId == request.SessionId && s.UserId == request.UserId,
+                    maxResults: 1,
+                    cancellationToken: cancellationToken);
+
+                if (!sessions.Any())
+                {
+                    _logger.LogWarning("Interview session not found: {SessionId}", request.SessionId);
+                    return Result.Failure("Interview session not found");
+                }
+
+                var session = sessions.First();
+
+                if (session.Status != InterviewStatus.InProgress)
+                {
+                    _logger.LogWarning("Interview session not in progress: {SessionId}, Status: {Status}", 
+                        request.SessionId, session.Status);
+                    return Result.Failure("Interview session is not active");
+                }
+
+                // 2. Store the response
+                session.Responses[request.QuestionId] = new
+                {
+                    response = request.Response,
+                    metadata = request.ResponseMetadata,
+                    timestamp = DateTime.UtcNow
+                };
+
+                // 3. Extract information from response using AI
+                var extractedInfo = await ExtractInformationFromResponse(
+                    request.Response, 
+                    request.QuestionId, 
+                    session.Language,
+                    cancellationToken);
+
+                // 4. Update extracted persona information
+                UpdateExtractedPersonaInfo(session.ExtractedPersonaInfo, extractedInfo, request.QuestionId);
+
+                // 5. Determine next question or completion
+                var (nextQuestion, isComplete) = await DetermineNextStep(session, extractedInfo, cancellationToken);
+
+                // 6. Update session progress
+                UpdateSessionProgress(session, request.QuestionId, isComplete);
+
+                // 7. Save updated session
+                await _sessionRepository.CreateOrUpdateAsync(
+                    session,
+                    request.UserId,
+                    cancellationToken);
+
+                _logger.LogInformation("Interview response processed successfully for session: {SessionId}, IsComplete: {IsComplete}", 
+                    request.SessionId, isComplete);
+
+                return Result.SuccessResult(nextQuestion, isComplete, extractedInfo, session.Progress);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing interview response for session: {SessionId}", request.SessionId);
+                return Result.Failure("An error occurred processing your response. Please try again.");
+            }
+        }
+
+        private async Task<ExtractedInfo> ExtractInformationFromResponse(
+            string response, 
+            string questionId, 
+            string language,
+            CancellationToken cancellationToken)
+        {
+            // In a full implementation, this would use AI to extract structured information
+            // For now, we'll use simple pattern matching and keyword extraction
+            
+            var extractedInfo = new ExtractedInfo();
+            var responseLower = response.ToLowerInvariant();
+
+            // Extract based on question type
+            if (questionId.StartsWith("welcome"))
+            {
+                extractedInfo = ExtractInterestsAndHobbies(responseLower, language);
+            }
+            else if (questionId.StartsWith("basics"))
+            {
+                extractedInfo = ExtractOccupationAndAge(responseLower, language);
+            }
+            else if (questionId.StartsWith("culture"))
+            {
+                extractedInfo = ExtractCulturalInfo(responseLower, language);
+            }
+            else if (questionId.StartsWith("preferences"))
+            {
+                extractedInfo = ExtractUIPreferences(responseLower, language);
+            }
+
+            return await System.Threading.Tasks.Task.FromResult(extractedInfo);
+        }
+
+        private ExtractedInfo ExtractInterestsAndHobbies(string response, string language)
+        {
+            var interests = new List<string>();
+            
+            // Interest keywords by language
+            var interestKeywords = language switch
+            {
+                "de" => new Dictionary<string, string>
+                {
+                    {"musik", "music"}, {"sport", "sports"}, {"lesen", "reading"}, 
+                    {"reisen", "travel"}, {"kochen", "cooking"}, {"filme", "movies"},
+                    {"kunst", "art"}, {"fotografie", "photography"}, {"garten", "gardening"}
+                },
+                "es" => new Dictionary<string, string>
+                {
+                    {"música", "music"}, {"deporte", "sports"}, {"leer", "reading"},
+                    {"viajar", "travel"}, {"cocinar", "cooking"}, {"películas", "movies"},
+                    {"arte", "art"}, {"fotografía", "photography"}, {"jardinería", "gardening"}
+                },
+                _ => new Dictionary<string, string>
+                {
+                    {"music", "music"}, {"sport", "sports"}, {"read", "reading"},
+                    {"travel", "travel"}, {"cook", "cooking"}, {"movie", "movies"},
+                    {"art", "art"}, {"photo", "photography"}, {"garden", "gardening"}
+                }
+            };
+
+            foreach (var keyword in interestKeywords)
+            {
+                if (response.Contains(keyword.Key))
+                {
+                    interests.Add(keyword.Value);
+                }
+            }
+
+            return new ExtractedInfo { Interests = interests };
+        }
+
+        private ExtractedInfo ExtractOccupationAndAge(string response, string language)
+        {
+            var extractedInfo = new ExtractedInfo();
+
+            // Extract occupation patterns
+            var occupationPatterns = language switch
+            {
+                "de" => new[] { "ich arbeite als", "ich bin", "beruf", "studiere" },
+                "es" => new[] { "trabajo como", "soy", "estudio" },
+                _ => new[] { "i work as", "i am a", "i'm a", "i study", "my job" }
+            };
+
+            foreach (var pattern in occupationPatterns)
+            {
+                var index = response.IndexOf(pattern);
+                if (index >= 0)
+                {
+                    var afterPattern = response.Substring(index + pattern.Length).Trim();
+                    var words = afterPattern.Split(' ').Take(3);
+                    extractedInfo.Occupation = string.Join(" ", words).Trim();
+                    break;
+                }
+            }
+
+            // Extract age if mentioned
+            var ageMatch = System.Text.RegularExpressions.Regex.Match(response, @"\b(\d{1,2})\s*(year|jahr|año)");
+            if (ageMatch.Success && int.TryParse(ageMatch.Groups[1].Value, out var age))
+            {
+                if (age >= 13 && age <= 120) // Reasonable age bounds
+                {
+                    extractedInfo.Age = age;
+                }
+            }
+
+            return extractedInfo;
+        }
+
+        private ExtractedInfo ExtractCulturalInfo(string response, string language)
+        {
+            var extractedInfo = new ExtractedInfo();
+            var languages = new List<string>();
+
+            // Language detection patterns
+            var languagePatterns = new Dictionary<string, string>
+            {
+                {"english", "en"}, {"german", "de"}, {"deutsch", "de"}, {"spanish", "es"}, 
+                {"español", "es"}, {"french", "fr"}, {"français", "fr"}, {"italian", "it"},
+                {"chinese", "zh"}, {"japanese", "ja"}, {"korean", "ko"}, {"portuguese", "pt"},
+                {"russian", "ru"}, {"arabic", "ar"}, {"hindi", "hi"}
+            };
+
+            foreach (var pattern in languagePatterns)
+            {
+                if (response.Contains(pattern.Key))
+                {
+                    languages.Add(pattern.Value);
+                }
+            }
+
+            extractedInfo.Languages = languages;
+
+            // Extract cultural background keywords
+            var culturalKeywords = new[] { "culture", "country", "background", "from", "heritage" };
+            foreach (var keyword in culturalKeywords)
+            {
+                var index = response.IndexOf(keyword);
+                if (index >= 0)
+                {
+                    var afterKeyword = response.Substring(index + keyword.Length).Trim();
+                    var words = afterKeyword.Split(' ').Take(2);
+                    extractedInfo.CulturalBackground = string.Join(" ", words).Trim();
+                    break;
+                }
+            }
+
+            return extractedInfo;
+        }
+
+        private ExtractedInfo ExtractUIPreferences(string response, string language)
+        {
+            var extractedInfo = new ExtractedInfo();
+            var uiPrefs = new Dictionary<string, object>();
+
+            // Extract UI complexity preference
+            if (response.Contains("simple") || response.Contains("easy") || response.Contains("basic"))
+            {
+                uiPrefs["complexity"] = "Simple";
+            }
+            else if (response.Contains("advanced") || response.Contains("detailed") || response.Contains("full"))
+            {
+                uiPrefs["complexity"] = "Advanced";
+            }
+            else
+            {
+                uiPrefs["complexity"] = "Standard";
+            }
+
+            // Extract font size preference
+            if (response.Contains("large") || response.Contains("big") || response.Contains("bigger"))
+            {
+                uiPrefs["fontSize"] = "Large";
+            }
+            else if (response.Contains("small") || response.Contains("smaller"))
+            {
+                uiPrefs["fontSize"] = "Small";
+            }
+            else
+            {
+                uiPrefs["fontSize"] = "Medium";
+            }
+
+            extractedInfo.UIPreferences = uiPrefs;
+            return extractedInfo;
+        }
+
+        private void UpdateExtractedPersonaInfo(PersonaBasicInfo personaInfo, ExtractedInfo extractedInfo, string questionId)
+        {
+            // Update persona info with extracted data
+            if (extractedInfo.Interests.Any())
+            {
+                personaInfo.Interests.AddRange(extractedInfo.Interests.Except(personaInfo.Interests));
+            }
+
+            if (!string.IsNullOrEmpty(extractedInfo.Occupation))
+            {
+                personaInfo.Occupation = extractedInfo.Occupation;
+            }
+
+            if (!string.IsNullOrEmpty(extractedInfo.CulturalBackground))
+            {
+                personaInfo.CulturalBackground = extractedInfo.CulturalBackground;
+            }
+
+            if (extractedInfo.Age.HasValue)
+            {
+                personaInfo.Age = extractedInfo.Age.Value;
+            }
+
+            if (extractedInfo.Languages.Any())
+            {
+                personaInfo.Languages.Spoken.AddRange(extractedInfo.Languages.Except(personaInfo.Languages.Spoken));
+            }
+        }
+
+        private async Task<(InterviewQuestion? nextQuestion, bool isComplete)> DetermineNextStep(
+            InterviewSessionDocument session, 
+            ExtractedInfo extractedInfo,
+            CancellationToken cancellationToken)
+        {
+            // Determine if we have enough information or need more questions
+            var currentSection = session.CurrentSection;
+            var hasMinimumInfo = HasMinimumPersonaInfo(session.ExtractedPersonaInfo);
+
+            if (hasMinimumInfo && session.Progress.CompletedSections.Count >= 3)
+            {
+                // Complete the interview
+                session.Status = InterviewStatus.Completed;
+                session.CompletedAt = DateTime.UtcNow;
+                return (null, true);
+            }
+
+            // Generate next question based on current progress
+            var nextQuestion = await GenerateNextQuestion(session, cancellationToken);
+            return (nextQuestion, false);
+        }
+
+        private bool HasMinimumPersonaInfo(PersonaBasicInfo personaInfo)
+        {
+            return !string.IsNullOrEmpty(personaInfo.DisplayName) &&
+                   personaInfo.Interests.Any() &&
+                   !string.IsNullOrEmpty(personaInfo.Languages.Preferred);
+        }
+
+        private async Task<InterviewQuestion> GenerateNextQuestion(
+            InterviewSessionDocument session,
+            CancellationToken cancellationToken)
+        {
+            // Progress to next section or next question in current section
+            var nextSection = GetNextSection(session.CurrentSection, session.Progress.CompletedSections);
+            
+            if (nextSection != session.CurrentSection)
+            {
+                session.CurrentSection = nextSection;
+                session.Progress.CurrentQuestionIndex = 0;
+                session.Progress.CompletedSections.Add(session.CurrentSection);
+            }
+            else
+            {
+                session.Progress.CurrentQuestionIndex++;
+            }
+
+            return await System.Threading.Tasks.Task.FromResult(GenerateQuestionForSection(nextSection, session.Progress.CurrentQuestionIndex, session.Language));
+        }
+
+        private string GetNextSection(string currentSection, List<string> completedSections)
+        {
+            var sections = new[] { "welcome", "basics", "culture", "preferences" };
+            
+            foreach (var section in sections)
+            {
+                if (!completedSections.Contains(section))
+                {
+                    return section;
+                }
+            }
+
+            return "preferences"; // Default to preferences if all completed
+        }
+
+        private InterviewQuestion GenerateQuestionForSection(string section, int questionIndex, string language)
+        {
+            return section switch
+            {
+                "basics" => new InterviewQuestion
+                {
+                    Id = $"basics_{questionIndex:D2}",
+                    Question = GetLocalizedBasicsQuestion(language, questionIndex),
+                    Context = "Let's learn more about your background and what you do.",
+                    ExpectedResponseType = "text",
+                    Suggestions = GetLocalizedBasicsSuggestions(language),
+                    IsOptional = false
+                },
+                "culture" => new InterviewQuestion
+                {
+                    Id = $"culture_{questionIndex:D2}",
+                    Question = GetLocalizedCultureQuestion(language, questionIndex),
+                    Context = "Understanding your cultural background helps me communicate better with you.",
+                    ExpectedResponseType = "text",
+                    Suggestions = GetLocalizedCultureSuggestions(language),
+                    IsOptional = true
+                },
+                "preferences" => new InterviewQuestion
+                {
+                    Id = $"preferences_{questionIndex:D2}",
+                    Question = GetLocalizedPreferencesQuestion(language, questionIndex),
+                    Context = "Let's customize the interface to work best for you.",
+                    ExpectedResponseType = "text",
+                    Suggestions = GetLocalizedPreferencesSuggestions(language),
+                    IsOptional = true
+                },
+                _ => new InterviewQuestion
+                {
+                    Id = $"followup_{questionIndex:D2}",
+                    Question = GetLocalizedFollowupQuestion(language),
+                    Context = "Thanks for sharing! Is there anything else you'd like me to know about you?",
+                    ExpectedResponseType = "text",
+                    Suggestions = new List<string> { "That's all for now", "I have more to share" },
+                    IsOptional = true
+                }
+            };
+        }
+
+        private void UpdateSessionProgress(InterviewSessionDocument session, string questionId, bool isComplete)
+        {
+            if (isComplete)
+            {
+                session.Progress.EstimatedTimeRemainingMinutes = 0;
+            }
+            else
+            {
+                var completedSections = session.Progress.CompletedSections.Count;
+                var totalSections = session.Progress.TotalSections;
+                var remainingSections = Math.Max(0, totalSections - completedSections);
+                session.Progress.EstimatedTimeRemainingMinutes = remainingSections * 2;
+            }
+
+            // UpdatedAt will be set automatically
+        }
+
+        private string GetLocalizedBasicsQuestion(string language, int index)
+        {
+            var questions = language switch
+            {
+                "de" => new[] 
+                {
+                    "Was für Arbeit machst du, oder was studierst du?",
+                    "Wie alt bist du ungefähr? (Du musst nicht genau sein)",
+                    "Erzähl mir mehr über deinen Alltag - was machst du normalerweise?"
+                },
+                "es" => new[]
+                {
+                    "¿En qué trabajas o qué estudias?",
+                    "¿Cuántos años tienes aproximadamente? (No tienes que ser exacto)",
+                    "Cuéntame más sobre tu día a día - ¿qué haces normalmente?"
+                },
+                _ => new[]
+                {
+                    "What kind of work do you do, or what are you studying?",
+                    "How old are you approximately? (You don't need to be exact)",
+                    "Tell me more about your daily routine - what do you typically do?"
+                }
+            };
+
+            return questions[Math.Min(index, questions.Length - 1)];
+        }
+
+        private List<string> GetLocalizedBasicsSuggestions(string language)
+        {
+            return language switch
+            {
+                "de" => new List<string> { "Ich arbeite in...", "Ich studiere...", "Ich bin Rentner", "Ich bin Student" },
+                "es" => new List<string> { "Trabajo en...", "Estudio...", "Soy jubilado", "Soy estudiante" },
+                _ => new List<string> { "I work in...", "I study...", "I'm retired", "I'm a student" }
+            };
+        }
+
+        private string GetLocalizedCultureQuestion(string language, int index)
+        {
+            var questions = language switch
+            {
+                "de" => new[]
+                {
+                    "Aus welchem Land kommst du ursprünglich?",
+                    "Welche Sprachen sprichst du?"
+                },
+                "es" => new[]
+                {
+                    "¿De qué país eres originalmente?",
+                    "¿Qué idiomas hablas?"
+                },
+                _ => new[]
+                {
+                    "What country are you originally from?",
+                    "What languages do you speak?"
+                }
+            };
+
+            return questions[Math.Min(index, questions.Length - 1)];
+        }
+
+        private List<string> GetLocalizedCultureSuggestions(string language)
+        {
+            return language switch
+            {
+                "de" => new List<string> { "Deutschland", "Österreich", "Schweiz", "Andere" },
+                "es" => new List<string> { "España", "México", "Argentina", "Otro" },
+                _ => new List<string> { "United States", "United Kingdom", "Canada", "Other" }
+            };
+        }
+
+        private string GetLocalizedPreferencesQuestion(string language, int index)
+        {
+            var questions = language switch
+            {
+                "de" => new[]
+                {
+                    "Bevorzugst du einfache oder detaillierte Benutzeroberflächen?",
+                    "Wie lernst du am liebsten - durch Lesen, Hören oder Ausprobieren?"
+                },
+                "es" => new[]
+                {
+                    "¿Prefieres interfaces simples o detalladas?",
+                    "¿Cómo prefieres aprender - leyendo, escuchando o probando?"
+                },
+                _ => new[]
+                {
+                    "Do you prefer simple or detailed user interfaces?",
+                    "How do you prefer to learn - by reading, listening, or trying things out?"
+                }
+            };
+
+            return questions[Math.Min(index, questions.Length - 1)];
+        }
+
+        private List<string> GetLocalizedPreferencesSuggestions(string language)
+        {
+            return language switch
+            {
+                "de" => new List<string> { "Einfach und klar", "Detailliert mit vielen Optionen", "Irgendwo dazwischen" },
+                "es" => new List<string> { "Simple y claro", "Detallado con muchas opciones", "Algo intermedio" },
+                _ => new List<string> { "Simple and clean", "Detailed with lots of options", "Something in between" }
+            };
+        }
+
+        private string GetLocalizedFollowupQuestion(string language)
+        {
+            return language switch
+            {
+                "de" => "Gibt es noch etwas, was du mir über dich erzählen möchtest?",
+                "es" => "¿Hay algo más que te gustaría contarme sobre ti?",
+                _ => "Is there anything else you'd like to tell me about yourself?"
+            };
+        }
+    }
+
+    // 6. Endpoint (HTTP API)
+    [ApiController]
+    [Route("api/persona-interview")]
+    public class Endpoint : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public Endpoint(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        /// <summary>
+        /// Process an interview response and get the next question
+        /// </summary>
+        /// <param name="command">Response processing parameters</param>
+        /// <returns>Next question or completion status</returns>
+        [HttpPost("process-response")]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(Result), 404)]
+        public async Task<ActionResult<Result>> ProcessResponse([FromBody] Command command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (!result.Success)
+            {
+                if (result.ErrorMessage?.Contains("not found") == true)
+                {
+                    return NotFound(result);
+                }
+
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+    }
+}

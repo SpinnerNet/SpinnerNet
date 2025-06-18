@@ -1,0 +1,98 @@
+@page "/Account/Register"
+@model SpinnerNet.Web.Areas.Account.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register - Spinner.Net";
+}
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <base href="~/" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png"/>
+</head>
+
+<body style="margin: 0; font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    
+    <div style="background: white; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); padding: 48px; max-width: 400px; width: 100%; margin: 20px;">
+        
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <img src="images/bamberger-spinnerei-heart-logo.svg" alt="Bamberger Spinnerei" style="height: 48px; margin-right: 12px;" />
+            </div>
+            <h1 style="margin: 0; font-size: 28px; font-weight: 300; color: #1976d2; margin-bottom: 8px;">Join Spinner.Net</h1>
+            <p style="margin: 0; color: #666; font-size: 16px;">Create your account to start building your digital persona</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div style="background: #ffebee; border: 1px solid #f44336; border-radius: 8px; padding: 16px; margin-bottom: 24px; color: #d32f2f;">
+                @Model.ErrorMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div style="background: #e8f5e8; border: 1px solid #4caf50; border-radius: 8px; padding: 16px; margin-bottom: 24px; color: #2e7d32;">
+                @Model.SuccessMessage
+            </div>
+        }
+
+        <form method="post">
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Email address</label>
+                <input asp-for="Input.Email" 
+                       type="email" 
+                       placeholder="Enter your email"
+                       style="width: 100%; padding: 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; box-sizing: border-box;" 
+                       onfocus="this.style.borderColor='#1976d2'" 
+                       onblur="this.style.borderColor='#e0e0e0'" />
+                <span asp-validation-for="Input.Email" style="color: #f44336; font-size: 14px;"></span>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Password</label>
+                <input asp-for="Input.Password" 
+                       type="password" 
+                       placeholder="Create a password"
+                       style="width: 100%; padding: 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; box-sizing: border-box;" 
+                       onfocus="this.style.borderColor='#1976d2'" 
+                       onblur="this.style.borderColor='#e0e0e0'" />
+                <span asp-validation-for="Input.Password" style="color: #f44336; font-size: 14px;"></span>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" 
+                       type="password" 
+                       placeholder="Confirm your password"
+                       style="width: 100%; padding: 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; box-sizing: border-box;" 
+                       onfocus="this.style.borderColor='#1976d2'" 
+                       onblur="this.style.borderColor='#e0e0e0'" />
+                <span asp-validation-for="Input.ConfirmPassword" style="color: #f44336; font-size: 14px;"></span>
+            </div>
+
+            <button type="submit" 
+                    style="width: 100%; background: #1976d2; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; margin-bottom: 24px;"
+                    onmouseover="this.style.backgroundColor='#1565c0'"
+                    onmouseout="this.style.backgroundColor='#1976d2'">
+                Create Account
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e0e0e0;">
+            <p style="margin: 0; color: #666; font-size: 14px;">
+                Already have an account? <a href="/Account/Login" style="color: #1976d2; text-decoration: none; font-weight: 500;">Sign in here</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+</body>
+</html>

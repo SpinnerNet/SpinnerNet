@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Spinner.Net - AI Time Companion</title>
+    <base href="/" />
+    
+    <!-- MudBlazor CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    
+    <!-- Bootstrap and custom CSS -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="SpinnerNet.Maui.styles.css" />
+    <link rel="icon" href="data:,">
+</head>
+
+<body>
+    <div class="status-bar-safe-area"></div>
+
+    <div id="app">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center;">
+            <div style="margin-bottom: 20px;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="3" stroke="#512bd4" stroke-width="2"/>
+                    <path d="M12 9V3M12 21v-6M9 12H3M21 12h-6" stroke="#512bd4" stroke-width="2"/>
+                </svg>
+            </div>
+            <h3 style="color: #512bd4; font-family: Roboto, sans-serif;">Spinner.Net</h3>
+            <p style="color: #666; font-family: Roboto, sans-serif;">Loading your AI time companion...</p>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        <div style="background: lightgray; padding: 20px; border-radius: 4px; margin: 20px;">
+            <h4>An unhandled error has occurred.</h4>
+            <p>Please check your internet connection and try again.</p>
+            <a href="" class="reload" style="background: #512bd4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-right: 10px;">Reload</a>
+            <a class="dismiss" style="background: #666; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">🗙</a>
+        </div>
+    </div>
+
+    <!-- MudBlazor JavaScript -->
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
+
+</body>
+
+</html>

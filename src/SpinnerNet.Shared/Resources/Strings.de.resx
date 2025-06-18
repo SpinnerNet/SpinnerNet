@@ -1,0 +1,1093 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Navigation -->
+  <data name="Nav_Home" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>Über uns</value>
+  </data>
+  <data name="Nav_Support" xml:space="preserve">
+    <value>Unterstützen</value>
+  </data>
+  <data name="Nav_Contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="Nav_Beta" xml:space="preserve">
+    <value>Beta-Zugang</value>
+  </data>
+  <data name="Nav_App" xml:space="preserve">
+    <value>Zur App</value>
+  </data>
+  <data name="Nav_Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+
+  <!-- Hero Section -->
+  <data name="Hero_MainSlogan" xml:space="preserve">
+    <value>Spinn deine Idee. Wir geben dir Zeit.</value>
+  </data>
+  <data name="Hero_Subtitle" xml:space="preserve">
+    <value>Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen sich entfalten, Ideen verwirklichen und Gemeinschaft gestalten können.</value>
+  </data>
+  <data name="Hero_GetStarted" xml:space="preserve">
+    <value>Jetzt starten</value>
+  </data>
+  <data name="Hero_LearnMore" xml:space="preserve">
+    <value>Mehr erfahren</value>
+  </data>
+
+  <!-- Three Pillars -->
+  <data name="Pillars_Title" xml:space="preserve">
+    <value>Unsere drei Säulen</value>
+  </data>
+  <data name="Pillar_Spinnen_Title" xml:space="preserve">
+    <value>Spinnen</value>
+  </data>
+  <data name="Pillar_Spinnen_Subtitle" xml:space="preserve">
+    <value>Raum für Kreativität &amp; Entwicklung</value>
+  </data>
+  <data name="Pillar_Spinnen_Description" xml:space="preserve">
+    <value>Hier entstehen Ideen, Projekte und soziale Innovationen. Kreativräume und Werkstätten für Kunst, Umwelt, Technik und Bildung.</value>
+  </data>
+  <data name="Pillar_Vermitteln_Title" xml:space="preserve">
+    <value>Vermitteln</value>
+  </data>
+  <data name="Pillar_Vermitteln_Subtitle" xml:space="preserve">
+    <value>Wissen, Erfahrung &amp; Lernen weitergeben</value>
+  </data>
+  <data name="Pillar_Vermitteln_Description" xml:space="preserve">
+    <value>Kurse und Workshops für alle Altersgruppen. Patenschaften zwischen Generationen. Sprachen, Kultur und lebensnahes Lernen.</value>
+  </data>
+  <data name="Pillar_Marktplatz_Title" xml:space="preserve">
+    <value>Marktplatz</value>
+  </data>
+  <data name="Pillar_Marktplatz_Subtitle" xml:space="preserve">
+    <value>Austausch &amp; Unterstützung</value>
+  </data>
+  <data name="Pillar_Marktplatz_Description" xml:space="preserve">
+    <value>Flexible Arbeitsmodelle und gemeinwohlorientierte Projekte. Umsetzung der 23%-Regel zur solidarischen Finanzierung.</value>
+  </data>
+
+  <!-- About Section -->
+  <data name="About_Title" xml:space="preserve">
+    <value>Über die Bamberger Spinnerei</value>
+  </data>
+  <data name="About_Vision_Title" xml:space="preserve">
+    <value>Unsere Vision</value>
+  </data>
+  <data name="About_Vision_Text" xml:space="preserve">
+    <value>Wir glauben an eine Gesellschaft, in der jeder Mensch Zeit, Vertrauen und Raum zur Entfaltung verdient. Die Bamberger Spinnerei ist eine gemeinnützige Initiative im Aufbau, die einen neuen Rahmen für kreatives, soziales und sinnerfülltes Handeln schafft – unabhängig von Alter, Herkunft oder Bildung.</value>
+  </data>
+  <data name="About_Mission_Title" xml:space="preserve">
+    <value>Unsere Mission</value>
+  </data>
+  <data name="About_Mission_Text" xml:space="preserve">
+    <value>Wir bauen eine offene Plattform für Bildung, Begegnung und Beteiligung auf – getragen von Gemeinschaft und Zeit. Digitale Räume für Projektarbeit, Wissensaustausch und soziale Innovation.</value>
+  </data>
+
+  <!-- Support Section -->
+  <data name="Support_Title" xml:space="preserve">
+    <value>Unsere Mission unterstützen</value>
+  </data>
+  <data name="Support_23Percent_Title" xml:space="preserve">
+    <value>Das 23%-Prinzip</value>
+  </data>
+  <data name="Support_23Percent_Description" xml:space="preserve">
+    <value>Wer durch die Spinnerei Einkünfte erzielt, gibt 23% in den gemeinsamen Topf. Die verbleibenden 77% bleiben frei verfügbar. Das schafft solidarische Finanzierung, die Fairness, Selbstbestimmung und nachhaltige Strukturentwicklung ermöglicht.</value>
+  </data>
+  <data name="Support_BGE_Title" xml:space="preserve">
+    <value>Bedingungsloses Grundeinkommen</value>
+  </data>
+  <data name="Support_BGE_Description" xml:space="preserve">
+    <value>Aus dem gemeinsamen Topf finanzieren wir ein Grundeinkommen, das Menschen einen sicheren Raum für Orientierung, kreative Entfaltung oder Neustart ermöglicht – ohne Existenzangst und Leistungsdruck.</value>
+  </data>
+  <data name="Support_Donate" xml:space="preserve">
+    <value>Unterstützen</value>
+  </data>
+
+  <!-- Beta Section -->
+  <data name="Beta_Title" xml:space="preserve">
+    <value>Spinner.Net Beta erleben</value>
+  </data>
+  <data name="Beta_Description" xml:space="preserve">
+    <value>Erhalte frühen Zugang zu unserer digitalen Plattform. Erstelle KI-Buddys, verwalte Aufgaben und vernetze dich mit der Gemeinschaft.</value>
+  </data>
+  <data name="Beta_Features_Title" xml:space="preserve">
+    <value>Beta-Funktionen</value>
+  </data>
+  <data name="Beta_Feature_AI" xml:space="preserve">
+    <value>KI-Buddy-Assistenten</value>
+  </data>
+  <data name="Beta_Feature_Tasks" xml:space="preserve">
+    <value>Aufgabenverwaltung mit Zeitsparkasse</value>
+  </data>
+  <data name="Beta_Feature_Community" xml:space="preserve">
+    <value>Gemeinschaftsverbindung</value>
+  </data>
+  <data name="Beta_AccessButton" xml:space="preserve">
+    <value>Beta-Zugang anfragen</value>
+  </data>
+  <data name="Beta_Hero_Title" xml:space="preserve">
+    <value>Beta Programm</value>
+  </data>
+  <data name="Beta_Hero_Subtitle" xml:space="preserve">
+    <value>Werde Beta-Tester der Zukunft</value>
+  </data>
+  <data name="Beta_Hero_Description" xml:space="preserve">
+    <value>Erhalte exklusiven Zugang zu unserer Plattform und hilf uns dabei, die Bamberger Spinnerei zu perfektionieren.</value>
+  </data>
+  <data name="Beta_Benefits_Title" xml:space="preserve">
+    <value>Warum Beta-Tester werden?</value>
+  </data>
+  <data name="Beta_Benefits_Subtitle" xml:space="preserve">
+    <value>Entdecke die Vorteile des Beta-Programms</value>
+  </data>
+
+  <!-- Contact Section -->
+  <data name="Contact_Title" xml:space="preserve">
+    <value>Kontakt aufnehmen</value>
+  </data>
+  <data name="Contact_Description" xml:space="preserve">
+    <value>Hast du Fragen oder möchtest du mitmachen? Wir freuen uns auf deine Nachricht.</value>
+  </data>
+  <data name="Contact_Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Contact_Newsletter" xml:space="preserve">
+    <value>Newsletter abonnieren</value>
+  </data>
+
+  <!-- Common -->
+  <data name="Common_LearnMore" xml:space="preserve">
+    <value>Mehr erfahren</value>
+  </data>
+  <data name="Common_GetStarted" xml:space="preserve">
+    <value>Jetzt starten</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="Language_German" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
+  <data name="Language_English" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
+  <data name="Language_French" xml:space="preserve">
+    <value>Französisch</value>
+  </data>
+  <data name="Language_Spanish" xml:space="preserve">
+    <value>Spanisch</value>
+  </data>
+
+  <!-- Index Page Content -->
+  <data name="Index_Hero_Title" xml:space="preserve">
+    <value>Bamberger Spinnerei</value>
+  </data>
+  <data name="Index_Hero_Slogan" xml:space="preserve">
+    <value>Spin your idea. We give you time.</value>
+  </data>
+  <data name="Index_Hero_Description" xml:space="preserve">
+    <value>Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.</value>
+  </data>
+  <data name="Index_Hero_LearnMore" xml:space="preserve">
+    <value>Wie funktioniert das?</value>
+  </data>
+  <data name="Index_Hero_BetaAccess" xml:space="preserve">
+    <value>Beta Zugang</value>
+  </data>
+  <data name="Index_Hero_ToApp" xml:space="preserve">
+    <value>Zur App</value>
+  </data>
+
+  <!-- Index Features Section -->
+  <data name="Index_Features_Title" xml:space="preserve">
+    <value>Mehr als Software – ein neues Miteinander</value>
+  </data>
+  <data name="Index_Features_Description" xml:space="preserve">
+    <value>Wir schaffen Raum für deine Ideen. Drei Säulen tragen unsere Gemeinschaft: Spinnen, Vermitteln und der Marktplatz.</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Spinnen – Ideen entstehen lassen</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Ob du ein neues Lernkonzept testest, eine App entwickelst oder eine Vision für nachhaltigen Tourismus hast – hier findest du Raum, Material und Menschen, die dich begleiten.</value>
+  </data>
+  <data name="Index_Features_Innovation_Title" xml:space="preserve">
+    <value>Vermitteln – Wissen weitergeben</value>
+  </data>
+  <data name="Index_Features_Innovation_Description" xml:space="preserve">
+    <value>Wissen wird bei uns nicht gelehrt, sondern geteilt. Vom erfahrenen Handwerker bis zur jungen Unternehmerin – alle geben weiter, was sie können. Ohne Notendruck, mit echten Begegnungen.</value>
+  </data>
+  <data name="Index_Features_Community_Title" xml:space="preserve">
+    <value>Marktplatz – Arbeit neu denken</value>
+  </data>
+  <data name="Index_Features_Community_Description" xml:space="preserve">
+    <value>Arbeite selbstbestimmt, aber nicht allein. Hier kannst du vormittags programmieren und malen, mittags unterrichten und abends musizieren. Deine Identität darf vielschichtig sein.</value>
+  </data>
+
+  <!-- Index Stats Section -->
+  <data name="Index_Stats_CommunityMembers" xml:space="preserve">
+    <value>Solidarischer Beitrag</value>
+  </data>
+  <data name="Index_Stats_RealizedProjects" xml:space="preserve">
+    <value>Bleibt bei dir</value>
+  </data>
+  <data name="Index_Stats_SavedHours" xml:space="preserve">
+    <value>Möglichkeiten</value>
+  </data>
+
+  <!-- Index CTA Section -->
+  <data name="Index_CTA_Title" xml:space="preserve">
+    <value>Was kannst du einbringen?</value>
+  </data>
+  <data name="Index_CTA_Description" xml:space="preserve">
+    <value>Eine Idee. Zeit. Ein Gespräch. Eine Spende. Dein Talent oder deine Geschichte. Was bekommst du? Einen Raum. Resonanz. Struktur. Menschlichkeit. Vielleicht sogar einen neuen Sinn.</value>
+  </data>
+  <data name="Index_CTA_SecureBeta" xml:space="preserve">
+    <value>Mehr erfahren</value>
+  </data>
+  <data name="Index_CTA_BookConsultation" xml:space="preserve">
+    <value>Lab buchen</value>
+  </data>
+
+  <!-- How It Works Section -->
+  <data name="Index_HowItWorks_Title" xml:space="preserve">
+    <value>So funktioniert's</value>
+  </data>
+  <data name="Index_HowItWorks_Description" xml:space="preserve">
+    <value>Drei einfache Schritte zu deiner Innovation und Gemeinschaftsteilhabe</value>
+  </data>
+  <data name="Index_HowItWorks_Step1_Title" xml:space="preserve">
+    <value>Registrieren &amp; Profil erstellen</value>
+  </data>
+  <data name="Index_HowItWorks_Step1_Description" xml:space="preserve">
+    <value>Erstelle dein persönliches Profil und erzähle uns von deinen Interessen, Fähigkeiten und Zielen. Das hilft uns, die perfekte Community für dich zu finden.</value>
+  </data>
+  <data name="Index_HowItWorks_Step2_Title" xml:space="preserve">
+    <value>Vernetzen &amp; Kollaborieren</value>
+  </data>
+  <data name="Index_HowItWorks_Step2_Description" xml:space="preserve">
+    <value>Tritt unserer lebendigen Community bei, finde Gleichgesinnte und starte gemeinsame Projekte. Teile dein Wissen und lerne von anderen.</value>
+  </data>
+  <data name="Index_HowItWorks_Step3_Title" xml:space="preserve">
+    <value>Ideen verwirklichen &amp; Zeit teilen</value>
+  </data>
+  <data name="Index_HowItWorks_Step3_Description" xml:space="preserve">
+    <value>Nutze die Zeitsparkasse™ um deine Zeit zu investieren und zu teilen. Verwirkliche deine Ideen mit der Unterstützung der Community.</value>
+  </data>
+
+  <!-- Steps -->
+  <data name="Index_Step1_Title" xml:space="preserve">
+    <value>Registrieren &amp; Profil erstellen</value>
+  </data>
+  <data name="Index_Step1_Description" xml:space="preserve">
+    <value>Erstelle dein persönliches Profil, definiere deine Fähigkeiten und Interessen. Wähle, ob du Zeit geben oder empfangen möchtest.</value>
+  </data>
+  <data name="Index_Step2_Title" xml:space="preserve">
+    <value>Vernetzen &amp; Projekte finden</value>
+  </data>
+  <data name="Index_Step2_Description" xml:space="preserve">
+    <value>Finde passende Projekte, Teams oder Mentoren. Nutze unsere KI-gestützte Matching-Technologie für optimale Verbindungen.</value>
+  </data>
+  <data name="Index_Step3_Title" xml:space="preserve">
+    <value>Zeit tauschen &amp; wachsen</value>
+  </data>
+  <data name="Index_Step3_Description" xml:space="preserve">
+    <value>Tausche Zeit gegen Zeit, sammle ZeitCoins und baue dein Netzwerk auf. Gemeinsam erschaffen wir mehr.</value>
+  </data>
+
+  <!-- Contact Page -->
+  <data name="Contact_Hero_Title" xml:space="preserve">
+    <value>Sprechen wir miteinander</value>
+  </data>
+  <data name="Contact_Hero_Subtitle" xml:space="preserve">
+    <value>Kontakt aufnehmen</value>
+  </data>
+  <data name="Contact_Hero_Description" xml:space="preserve">
+    <value>Hast du Fragen, Ideen oder möchtest du einfach nur Hallo sagen? Wir freuen uns darauf, von dir zu hören!</value>
+  </data>
+  <data name="Contact_Info_Title" xml:space="preserve">
+    <value>Kontaktinformationen</value>
+  </data>
+  <data name="Contact_Info_Subtitle" xml:space="preserve">
+    <value>So erreichst du uns</value>
+  </data>
+  <data name="Contact_General_Placeholder" xml:space="preserve">
+    <value>Allgemeine Anfragen</value>
+  </data>
+  <data name="Contact_General_PlaceholderDesc" xml:space="preserve">
+    <value>Für Fragen rund um die Bamberger Spinnerei</value>
+  </data>
+  <data name="Contact_Beta_Placeholder" xml:space="preserve">
+    <value>Beta-Zugang</value>
+  </data>
+  <data name="Contact_Beta_PlaceholderDesc" xml:space="preserve">
+    <value>Interesse am Beta-Programm von Spinner.Net</value>
+  </data>
+  <data name="Contact_Consultation_Placeholder" xml:space="preserve">
+    <value>Beratung</value>
+  </data>
+  <data name="Contact_Consultation_PlaceholderDesc" xml:space="preserve">
+    <value>Persönliche Beratung und Unterstützung</value>
+  </data>
+
+  <!-- About Page -->
+  <data name="About_Hero_Title" xml:space="preserve">
+    <value>Du bist nicht allein</value>
+  </data>
+  <data name="About_Hero_Subtitle" xml:space="preserve">
+    <value>Gemeinsam sind wir stärker als jedes System</value>
+  </data>
+  <data name="About_Hero_Description" xml:space="preserve">
+    <value>Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit du deine Ideen entwickelst, verwirklichst und echte Gemeinschaft erlebst.</value>
+  </data>
+  <data name="About_Team_Peter_Title" xml:space="preserve">
+    <value>Peter Paul Clinton</value>
+  </data>
+  <data name="About_Team_Peter_Role" xml:space="preserve">
+    <value>Mitbegründer der Gemeinschaft</value>
+  </data>
+  <data name="About_Team_Peter_Placeholder" xml:space="preserve">
+    <value>Glaubt daran, dass jeder Mensch das Recht auf Zeit, Vertrauen und Raum zur Entfaltung hat. Baut mit dir zusammen eine Welt, in der Gemeinschaft mehr zählt als Gewinn.</value>
+  </data>
+  <data name="About_Values_Title" xml:space="preserve">
+    <value>Unsere Werte</value>
+  </data>
+  <data name="About_Team_Title" xml:space="preserve">
+    <value>Unser Team</value>
+  </data>
+
+  <!-- Additional About Page Placeholders -->
+  <data name="About_CTA_Beta" xml:space="preserve">
+    <value>Beta-Zugang beantragen</value>
+  </data>
+  <data name="About_CTA_Contact" xml:space="preserve">
+    <value>Kontakt aufnehmen</value>
+  </data>
+  <data name="About_CTA_Title" xml:space="preserve">
+    <value>Bereit mitzumachen?</value>
+  </data>
+  <data name="About_CTA_Text" xml:space="preserve">
+    <value>Werde Teil unserer Gemeinschaft und gestalte die Zukunft der Bamberger Spinnerei mit. Du kannst sofort starten oder dich erstmal unverbindlich informieren.</value>
+  </data>
+  <data name="About_Pillars_Title" xml:space="preserve">
+    <value>Unsere drei Säulen</value>
+  </data>
+  <data name="About_Pillars_Subtitle" xml:space="preserve">
+    <value>Auf diesen Grundlagen baut unsere Gemeinschaft auf</value>
+  </data>
+  <data name="About_Pillar_Spin_Title" xml:space="preserve">
+    <value>Spinnen – Ideen entwickeln</value>
+  </data>
+  <data name="About_Pillar_Spin_Text" xml:space="preserve">
+    <value>Hier entstehen neue Projekte, Lösungen und Innovationen. Kreativräume und Werkstätten für Kunst, Umwelt, Technik und soziale Entwicklung.</value>
+  </data>
+  <data name="About_Pillar_Connect_Title" xml:space="preserve">
+    <value>Vermitteln – Wissen teilen</value>
+  </data>
+  <data name="About_Pillar_Connect_Text" xml:space="preserve">
+    <value>Wissen wird geteilt, nicht gelehrt. Erfahrungen werden weitergegeben, Fähigkeiten ausgetauscht. Generationen lernen voneinander und miteinander.</value>
+  </data>
+  <data name="About_Pillar_Marketplace_Title" xml:space="preserve">
+    <value>Marktplatz – Gemeinsam wirtschaften</value>
+  </data>
+  <data name="About_Pillar_Marketplace_Text" xml:space="preserve">
+    <value>Zeit als Währung, Solidarität als Prinzip. Das 23%-Modell ermöglicht faire Teilhabe und nachhaltiges Wirtschaften für alle.</value>
+  </data>
+  <data name="About_VisionMission_Title" xml:space="preserve">
+    <value>Vision &amp; Mission</value>
+  </data>
+  <data name="About_VisionMission_Subtitle" xml:space="preserve">
+    <value>Wofür wir stehen und was wir erreichen wollen</value>
+  </data>
+  <data name="About_Vision_Placeholder" xml:space="preserve">
+    <value>Unsere Vision</value>
+  </data>
+  <data name="About_Vision_PlaceholderDesc" xml:space="preserve">
+    <value>Eine Gesellschaft, in der jeder Mensch Zeit, Vertrauen und Raum zur Entfaltung hat – unabhängig von wirtschaftlichen Zwängen.</value>
+  </data>
+  <data name="About_Mission_Placeholder" xml:space="preserve">
+    <value>Unsere Mission</value>
+  </data>
+  <data name="About_Mission_PlaceholderDesc" xml:space="preserve">
+    <value>Wir schaffen digitale und physische Räume für Begegnung, Austausch und gemeinschaftliches Wirtschaften – getragen von Zeit und Vertrauen.</value>
+  </data>
+  <data name="About_Values_Subtitle" xml:space="preserve">
+    <value>Diese Prinzipien leiten unser Handeln</value>
+  </data>
+  <data name="About_Values_Community_Title" xml:space="preserve">
+    <value>Gemeinschaft</value>
+  </data>
+  <data name="About_Values_Community_Text" xml:space="preserve">
+    <value>Du bist nicht allein. Gemeinsam sind wir stärker als jedes System. Echte Verbindungen entstehen durch Vertrauen und gegenseitige Unterstützung.</value>
+  </data>
+  <data name="About_Values_Time_Title" xml:space="preserve">
+    <value>Zeit</value>
+  </data>
+  <data name="About_Values_Time_Text" xml:space="preserve">
+    <value>Zeit ist unser wertvollstes Gut. Wir achten deine Zeit, teilen unsere Zeit und schaffen gemeinsam Zeit für das, was wirklich zählt.</value>
+  </data>
+  <data name="About_Values_Trust_Title" xml:space="preserve">
+    <value>Vertrauen</value>
+  </data>
+  <data name="About_Values_Trust_Text" xml:space="preserve">
+    <value>Vertrauen ist die Basis aller Beziehungen. Wir schaffen transparente Strukturen und verlässliche Grundlagen für Zusammenarbeit.</value>
+  </data>
+  <data name="About_Values_Innovation_Title" xml:space="preserve">
+    <value>Innovation</value>
+  </data>
+  <data name="About_Values_Innovation_Text" xml:space="preserve">
+    <value>Wir denken neu, probieren aus und lernen aus Fehlern. Innovation entsteht durch Mut zur Veränderung und offenen Austausch.</value>
+  </data>
+  <data name="About_Team_Subtitle" xml:space="preserve">
+    <value>Die Menschen hinter der Bamberger Spinnerei</value>
+  </data>
+  <data name="About_Team_Peter_Bio" xml:space="preserve">
+    <value>Gründer und Visionär der Bamberger Spinnerei. Glaubt an eine Welt, in der Gemeinschaft und Zeit wichtiger sind als Gewinn. Entwickelt mit Leidenschaft digitale Lösungen für menschliche Probleme.</value>
+  </data>
+  <data name="About_Team_Peter_PlaceholderDesc" xml:space="preserve">
+    <value>Mitbegründer der Gemeinschaft</value>
+  </data>
+
+  <!-- Zeitsparkasse Section -->
+  <data name="About_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Die Zeitsparkasse™</value>
+  </data>
+  <data name="About_Zeitsparkasse_Subtitle" xml:space="preserve">
+    <value>Zeit als Währung – Solidarität als Prinzip</value>
+  </data>
+  <data name="About_Zeitsparkasse_What_Title" xml:space="preserve">
+    <value>Was ist die Zeitsparkasse?</value>
+  </data>
+  <data name="About_Zeitsparkasse_What_Text" xml:space="preserve">
+    <value>Ein revolutionäres System, das Zeit zur Währung macht. Du hilfst anderen und sammelst ZeitCoins. Wenn du Hilfe brauchst, löst du TimeCredits ein. So entsteht fairer Austausch ohne Geld.</value>
+  </data>
+  <data name="About_Zeitsparkasse_How_Title" xml:space="preserve">
+    <value>Wie funktioniert es?</value>
+  </data>
+  <data name="About_Zeitsparkasse_ZeitCoin" xml:space="preserve">
+    <value>ZeitCoin sammeln: Hilf anderen und verdiene Zeit-Währung</value>
+  </data>
+  <data name="About_Zeitsparkasse_TimeCredit" xml:space="preserve">
+    <value>TimeCredit einlösen: Nutze deine gesammelte Zeit für Unterstützung</value>
+  </data>
+  <data name="About_Zeitsparkasse_AutoConvert" xml:space="preserve">
+    <value>Automatischer Tausch: Das System gleicht Schwankungen aus</value>
+  </data>
+  <data name="About_Zeitsparkasse_Community" xml:space="preserve">
+    <value>Gemeinschaftsschutz: Alle profitieren von stabilen Werten</value>
+  </data>
+  <data name="About_Zeitsparkasse_BetaTest" xml:space="preserve">
+    <value>Beta-Test starten</value>
+  </data>
+  <data name="About_Zeitsparkasse_Card_Title" xml:space="preserve">
+    <value>Zeitsparkasse-Karte</value>
+  </data>
+  <data name="About_Zeitsparkasse_Card_Text" xml:space="preserve">
+    <value>Deine physische Karte für Time-Banking im echten Leben. Zahle mit Zeit statt mit Geld.</value>
+  </data>
+  <data name="About_Zeitsparkasse_App_Placeholder" xml:space="preserve">
+    <value>Mobile App</value>
+  </data>
+  <data name="About_Zeitsparkasse_App_PlaceholderDesc" xml:space="preserve">
+    <value>Verwalte deine ZeitCoins und TimeCredits direkt auf dem Smartphone</value>
+  </data>
+
+  <!-- Team Members -->
+  <data name="About_Team_Tech_Placeholder" xml:space="preserve">
+    <value>Tech-Team</value>
+  </data>
+  <data name="About_Team_Tech_PlaceholderDesc" xml:space="preserve">
+    <value>Entwicklung &amp; Innovation</value>
+  </data>
+  <data name="About_Team_Tech_Role" xml:space="preserve">
+    <value>Technische Entwicklung</value>
+  </data>
+  <data name="About_Team_Tech_Bio" xml:space="preserve">
+    <value>Unser Tech-Team entwickelt die digitale Infrastruktur für die Zeitsparkasse und die Community-Plattform. Mit modernsten Technologien schaffen wir sichere und benutzerfreundliche Lösungen.</value>
+  </data>
+  <data name="About_Team_Community_Placeholder" xml:space="preserve">
+    <value>Community-Team</value>
+  </data>
+  <data name="About_Team_Community_PlaceholderDesc" xml:space="preserve">
+    <value>Gemeinschaft &amp; Vernetzung</value>
+  </data>
+  <data name="About_Team_Community_Role" xml:space="preserve">
+    <value>Community Building</value>
+  </data>
+  <data name="About_Team_Community_Bio" xml:space="preserve">
+    <value>Unser Community-Team sorgt dafür, dass sich alle wohlfühlen und Teil der Gemeinschaft werden können. Wir organisieren Events, moderieren Austausch und unterstützen bei ersten Schritten.</value>
+  </data>
+  <data name="About_CTA_Growth_Placeholder" xml:space="preserve">
+    <value>Gemeinsam wachsen</value>
+  </data>
+  <data name="About_CTA_Growth_PlaceholderDesc" xml:space="preserve">
+    <value>Werde Teil einer Bewegung, die Zeit und Gemeinschaft über Profit stellt</value>
+  </data>
+
+  <!-- Contact Page Placeholders -->
+  <data name="Contact_General_Title" xml:space="preserve">
+    <value>Allgemeine Anfragen</value>
+  </data>
+  <data name="Contact_Beta_Title" xml:space="preserve">
+    <value>Beta-Zugang beantragen</value>
+  </data>
+  <data name="Contact_Form_Title" xml:space="preserve">
+    <value>Nachricht senden</value>
+  </data>
+  <data name="Contact_Form_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Contact_Form_Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Contact_Form_Subject" xml:space="preserve">
+    <value>Betreff</value>
+  </data>
+  <data name="Contact_Form_Message" xml:space="preserve">
+    <value>Nachricht</value>
+  </data>
+  <data name="Contact_Form_Send" xml:space="preserve">
+    <value>Nachricht senden</value>
+  </data>
+  <data name="Contact_FAQ_What_Title" xml:space="preserve">
+    <value>Was ist die Bamberger Spinnerei?</value>
+  </data>
+  <data name="Contact_FAQ_What_Answer" xml:space="preserve">
+    <value>Die Bamberger Spinnerei ist ein innovatives Gemeinschaftsprojekt, das Raum für kreative Entwicklung, Bildung und soziale Innovation schafft.</value>
+  </data>
+
+  <!-- Beta Page Placeholders -->
+  <data name="Beta_Apply_Button" xml:space="preserve">
+    <value>Jetzt mitmachen</value>
+  </data>
+  <data name="Beta_Demo_Button" xml:space="preserve">
+    <value>Gemeinsam entdecken</value>
+  </data>
+  <data name="Beta_Exclusive_Title" xml:space="preserve">
+    <value>Pionier-Gemeinschaft</value>
+  </data>
+  <data name="Beta_Exclusive_Description" xml:space="preserve">
+    <value>Werde Teil der ersten, die unsere Gemeinschaftsplattform mitgestalten und erleben.</value>
+  </data>
+  <data name="Beta_Influence_Title" xml:space="preserve">
+    <value>Mitgestalten</value>
+  </data>
+  <data name="Beta_Influence_Description" xml:space="preserve">
+    <value>Deine Stimme zählt - gemeinsam erschaffen wir die Zukunft der Bamberger Spinnerei.</value>
+  </data>
+  <data name="Beta_Community_Title" xml:space="preserve">
+    <value>Echte Gemeinschaft</value>
+  </data>
+  <data name="Beta_Community_Description" xml:space="preserve">
+    <value>Werde Teil einer Gemeinschaft, die sich gegenseitig unterstützt und gemeinsam wächst.</value>
+  </data>
+  <data name="Beta_Included_Title" xml:space="preserve">
+    <value>Was ist enthalten?</value>
+  </data>
+  <data name="Beta_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Zeitsparkasse™</value>
+  </data>
+  <data name="Beta_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Revolutionäres Time-Banking System für nachhaltigen Werteaustausch.</value>
+  </data>
+  <data name="Beta_AI_Title" xml:space="preserve">
+    <value>KI-Assistenten</value>
+  </data>
+  <data name="Beta_AI_Description" xml:space="preserve">
+    <value>Persönliche KI-Buddys, die dich bei Projekten und Zielen unterstützen.</value>
+  </data>
+  <data name="Beta_Labs_Title" xml:space="preserve">
+    <value>Innovation Werkstatt</value>
+  </data>
+  <data name="Beta_Labs_Description" xml:space="preserve">
+    <value>Zugang zu modernsten Werkzeugen und Arbeitsräumen für deine Projekte.</value>
+  </data>
+
+  <!-- Additional Beta Page Placeholders -->
+  <data name="Beta_Community_Features_Description" xml:space="preserve">
+    <value>Vernetze dich mit Gleichgesinnten, teile deine Erfahrungen und wachse gemeinsam mit der Community. Unsere Plattform ermöglicht echte Verbindungen und gegenseitige Unterstützung.</value>
+  </data>
+  <data name="Beta_Community_Features_Title" xml:space="preserve">
+    <value>Community-Features</value>
+  </data>
+  <data name="Beta_Included_Subtitle" xml:space="preserve">
+    <value>Alle Features des Beta-Programms im Überblick</value>
+  </data>
+
+  <!-- Support Page Placeholders -->
+  <data name="Support_Hero_Subtitle" xml:space="preserve">
+    <value>Schnelle Hilfe für alle Ihre Fragen</value>
+  </data>
+  <data name="Support_QuickHelp_Title" xml:space="preserve">
+    <value>Schnelle Hilfe</value>
+  </data>
+  <data name="Support_FAQ_Title" xml:space="preserve">
+    <value>Häufig gestellte Fragen</value>
+  </data>
+  <data name="Support_TechSupport_Title" xml:space="preserve">
+    <value>Technischer Support</value>
+  </data>
+  <data name="Support_Community_Title" xml:space="preserve">
+    <value>Community Support</value>
+  </data>
+  <data name="Support_Emergency_Title" xml:space="preserve">
+    <value>Notfall-Support</value>
+  </data>
+  <data name="Support_Emergency_Button" xml:space="preserve">
+    <value>Sofortige Hilfe</value>
+  </data>
+  <data name="Support_Categories_Title" xml:space="preserve">
+    <value>Support-Kategorien</value>
+  </data>
+  <data name="Support_Contact_Title" xml:space="preserve">
+    <value>Support kontaktieren</value>
+  </data>
+
+  <!-- Additional Contact Page Missing Keys -->
+  <data name="Contact_General_Text" xml:space="preserve">
+    <value>Du hast Fragen zu unserem Gemeinschaftsprojekt oder möchtest mehr über die Bamberger Spinnerei erfahren? Schreib uns - wir freuen uns auf den Austausch!</value>
+  </data>
+  <data name="Contact_General_Email" xml:space="preserve">
+    <value>hallo@bamberger-spinnerei.org</value>
+  </data>
+  <data name="Contact_General_Send" xml:space="preserve">
+    <value>Nachricht senden</value>
+  </data>
+  <data name="Contact_Beta_Text" xml:space="preserve">
+    <value>Du möchtest Teil unserer Beta-Gemeinschaft werden? Bewirb dich hier und gestalte mit uns die Zukunft von Spinner.Net mit!</value>
+  </data>
+  <data name="Contact_Beta_Email" xml:space="preserve">
+    <value>beta@bamberger-spinnerei.org</value>
+  </data>
+  <data name="Contact_Beta_Send" xml:space="preserve">
+    <value>Zur Beta-Gemeinschaft</value>
+  </data>
+  <data name="Contact_Consultation_Text" xml:space="preserve">
+    <value>Du brauchst persönliche Beratung oder hast spezielle Fragen? Lass uns zusammen einen Termin finden - gemeinsam finden wir Antworten.</value>
+  </data>
+  <data name="Contact_Consultation_Email" xml:space="preserve">
+    <value>gemeinsam@bamberger-spinnerei.org</value>
+  </data>
+  <data name="Contact_Consultation_Send" xml:space="preserve">
+    <value>Gespräch vereinbaren</value>
+  </data>
+
+  <!-- Additional Contact Form Placeholders -->
+  <data name="Contact_Form_Subtitle" xml:space="preserve">
+    <value>Schreib uns deine Nachricht - wir antworten persönlich</value>
+  </data>
+  <data name="Contact_Form_NamePlaceholder" xml:space="preserve">
+    <value>Wie können wir dich ansprechen?</value>
+  </data>
+  <data name="Contact_Form_EmailPlaceholder" xml:space="preserve">
+    <value>deine@email.de</value>
+  </data>
+  <data name="Contact_Form_SubjectPlaceholder" xml:space="preserve">
+    <value>Worum geht's?</value>
+  </data>
+  <data name="Contact_Form_MessagePlaceholder" xml:space="preserve">
+    <value>Erzähl uns, was dich beschäftigt oder wie wir dir helfen können...</value>
+  </data>
+  <data name="Contact_Form_Newsletter" xml:space="preserve">
+    <value>Ich möchte Updates über die Bamberger Spinnerei erhalten</value>
+  </data>
+
+  <!-- Contact Info Sidebar -->
+  <data name="Contact_Info_SidebarTitle" xml:space="preserve">
+    <value>Weitere Informationen</value>
+  </data>
+  <data name="Contact_Info_Address" xml:space="preserve">
+    <value>Unsere Adresse</value>
+  </data>
+  <data name="Contact_Info_AddressLine1" xml:space="preserve">
+    <value>Bamberger Spinnerei</value>
+  </data>
+  <data name="Contact_Info_AddressLine2" xml:space="preserve">
+    <value>Gemeinschaftsraum für Innovation</value>
+  </data>
+  <data name="Contact_Info_AddressLine3" xml:space="preserve">
+    <value>96047 Bamberg</value>
+  </data>
+  <data name="Contact_Info_AddressLine4" xml:space="preserve">
+    <value>Deutschland</value>
+  </data>
+  <data name="Contact_Info_ResponseTimes" xml:space="preserve">
+    <value>Antwortzeiten</value>
+  </data>
+  <data name="Contact_Info_EmailResponse" xml:space="preserve">
+    <value>E-Mail: Innerhalb von 24 Stunden</value>
+  </data>
+  <data name="Contact_Info_BetaResponse" xml:space="preserve">
+    <value>Beta-Anfragen: Innerhalb von 48 Stunden</value>
+  </data>
+  <data name="Contact_Info_ConsultationResponse" xml:space="preserve">
+    <value>Beratungstermine: Innerhalb einer Woche</value>
+  </data>
+  <data name="Contact_Info_FollowUs" xml:space="preserve">
+    <value>Folge uns</value>
+  </data>
+  <data name="Contact_Info_MapPlaceholder" xml:space="preserve">
+    <value>Karte wird geladen...</value>
+  </data>
+  <data name="Contact_Info_MapPlaceholderDesc" xml:space="preserve">
+    <value>Interaktive Karte mit der Lage der Bamberger Spinnerei</value>
+  </data>
+
+  <!-- Additional Contact Page Placeholders -->
+  <data name="Contact_Beta_Apply" xml:space="preserve">
+    <value>Jetzt für Beta bewerben</value>
+  </data>
+  <data name="Contact_Consultation_Schedule" xml:space="preserve">
+    <value>Gespräch vereinbaren</value>
+  </data>
+  <data name="Contact_Consultation_Title" xml:space="preserve">
+    <value>Persönliche Beratung</value>
+  </data>
+  <data name="Contact_FAQ_Beta_Text" xml:space="preserve">
+    <value>Als Beta-Tester erhältst du frühen Zugang zu unserer Plattform und hilfst uns dabei, die Bamberger Spinnerei zu perfektionieren. Du kannst neue Features testen und direktes Feedback geben.</value>
+  </data>
+  <data name="Contact_FAQ_Beta_Title" xml:space="preserve">
+    <value>Wie funktioniert das Beta-Programm?</value>
+  </data>
+  <data name="Contact_FAQ_Free_Text" xml:space="preserve">
+    <value>Ja, die Teilnahme am Beta-Programm und die grundlegenden Funktionen der Bamberger Spinnerei sind kostenfrei. Unser Ziel ist es, Gemeinschaft und Unterstützung für alle zugänglich zu machen.</value>
+  </data>
+  <data name="Contact_FAQ_Free_Title" xml:space="preserve">
+    <value>Ist die Teilnahme kostenfrei?</value>
+  </data>
+  <data name="Contact_FAQ_Location_Text" xml:space="preserve">
+    <value>Die Bamberger Spinnerei ist sowohl digital als auch physisch in Bamberg präsent. Viele Aktivitäten finden online statt, aber wir planen auch lokale Veranstaltungen und Workshops in Bamberg.</value>
+  </data>
+  <data name="Contact_FAQ_Location_Title" xml:space="preserve">
+    <value>Wo findet die Bamberger Spinnerei statt?</value>
+  </data>
+  <data name="Contact_FAQ_Partnership_Text" xml:space="preserve">
+    <value>Gerne! Wir suchen Organisationen, Unternehmen und Initiativen, die unsere Vision teilen. Schreib uns einfach eine Nachricht und erzähl uns von deiner Idee für eine Zusammenarbeit.</value>
+  </data>
+  <data name="Contact_FAQ_Partnership_Title" xml:space="preserve">
+    <value>Kann ich eine Partnerschaft eingehen?</value>
+  </data>
+  <data name="Contact_FAQ_Subtitle" xml:space="preserve">
+    <value>Die wichtigsten Fragen und Antworten</value>
+  </data>
+  <data name="Contact_FAQ_TimeBank_Text" xml:space="preserve">
+    <value>Die Zeitsparkasse ist unser innovatives Time-Banking-System. Du kannst Zeit „einzahlen", indem du anderen hilfst, und „abheben", wenn du selbst Unterstützung brauchst. So entsteht ein fairer Austausch ohne Geld.</value>
+  </data>
+  <data name="Contact_FAQ_TimeBank_Title" xml:space="preserve">
+    <value>Was ist die Zeitsparkasse?</value>
+  </data>
+  <data name="Contact_FAQ_Title" xml:space="preserve">
+    <value>Häufige Fragen</value>
+  </data>
+  <data name="Contact_FAQ_What_Text" xml:space="preserve">
+    <value>Die Bamberger Spinnerei ist ein innovatives Gemeinschaftsprojekt, das Raum für kreative Entwicklung, Bildung und soziale Innovation schafft. Wir verbinden Menschen, Ideen und Ressourcen für eine bessere Zukunft.</value>
+  </data>
+  <data name="Contact_Form_SubjectBeta" xml:space="preserve">
+    <value>Beta-Programm Interesse</value>
+  </data>
+  <data name="Contact_Form_SubjectGeneral" xml:space="preserve">
+    <value>Allgemeine Anfrage</value>
+  </data>
+  <data name="Contact_Form_SubjectMedia" xml:space="preserve">
+    <value>Medienanfrage</value>
+  </data>
+  <data name="Contact_Form_SubjectPartnership" xml:space="preserve">
+    <value>Partnerschaft &amp; Kooperation</value>
+  </data>
+  <data name="Contact_Form_SubjectTimeBank" xml:space="preserve">
+    <value>Zeitsparkasse &amp; Time Banking</value>
+  </data>
+  <data name="Contact_Form_SubjectWorkshop" xml:space="preserve">
+    <value>Workshop &amp; Veranstaltung</value>
+  </data>
+  <data name="Contact_Newsletter_Placeholder" xml:space="preserve">
+    <value>deine@email.de</value>
+  </data>
+  <data name="Contact_Newsletter_Subscribe" xml:space="preserve">
+    <value>Newsletter abonnieren</value>
+  </data>
+  <data name="Contact_Newsletter_Text" xml:space="preserve">
+    <value>Bleib auf dem Laufenden mit unserem Newsletter. Erhalte Updates über neue Features, Veranstaltungen und die neuesten Entwicklungen in der Bamberger Spinnerei.</value>
+  </data>
+  <data name="Contact_Newsletter_Title" xml:space="preserve">
+    <value>Newsletter</value>
+  </data>
+
+  <!-- Footer Keys -->
+  <data name="footer.innovation" xml:space="preserve">
+    <value>Innovation Werkstatt</value>
+  </data>
+
+  <!-- Support Page -->
+  <data name="Support_Hero_Title" xml:space="preserve">
+    <value>Hilfe &amp; Support</value>
+  </data>
+  <data name="Support_Hero_Description" xml:space="preserve">
+    <value>Wir sind hier, um zu helfen</value>
+  </data>
+
+  <!-- Additional Support Page Placeholders -->
+  <data name="Support_Categories_Description" xml:space="preserve">
+    <value>Wähle die passende Kategorie für deine Anfrage aus</value>
+  </data>
+  <data name="Support_Community_Description" xml:space="preserve">
+    <value>Erhalte Hilfe von der Bamberger Spinnerei Community. Oft haben andere Nutzer bereits ähnliche Fragen beantwortet.</value>
+  </data>
+  <data name="Support_Contact_Description" xml:space="preserve">
+    <value>Sende uns eine direkte Nachricht für individuelle Unterstützung</value>
+  </data>
+  <data name="Support_Emergency_Description" xml:space="preserve">
+    <value>Für dringende technische Probleme, die sofortige Aufmerksamkeit benötigen</value>
+  </data>
+  <data name="Support_FAQ_Description" xml:space="preserve">
+    <value>Durchsuche unsere häufig gestellten Fragen nach schnellen Antworten</value>
+  </data>
+  <data name="Support_Form_Category" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="Support_Form_Description" xml:space="preserve">
+    <value>Beschreibung des Problems</value>
+  </data>
+  <data name="Support_Form_Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Support_Form_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Support_Form_Priority" xml:space="preserve">
+    <value>Priorität</value>
+  </data>
+  <data name="Support_Form_Submit" xml:space="preserve">
+    <value>Support-Anfrage senden</value>
+  </data>
+  <data name="Support_Form_SystemInfo" xml:space="preserve">
+    <value>Systeminformationen</value>
+  </data>
+  <data name="Support_QuickHelp_Description" xml:space="preserve">
+    <value>Sofortige Antworten auf die häufigsten Fragen</value>
+  </data>
+  <data name="Support_TechSupport_Description" xml:space="preserve">
+    <value>Hilfe bei technischen Problemen mit der Plattform</value>
+  </data>
+
+  <!-- Index Page CTA Buttons -->
+  <data name="Index_CTA_LearnMore" xml:space="preserve">
+    <value>Mehr erfahren</value>
+  </data>
+  <data name="Index_CTA_BookWorkshop" xml:space="preserve">
+    <value>Werkstatt buchen</value>
+  </data>
+  <data name="Index_CTA_JoinCommunity" xml:space="preserve">
+    <value>Community beitreten</value>
+  </data>
+
+  <!-- Index Page Image Placeholders -->
+  <data name="Index_Placeholder_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Zeitsparkasse Dashboard</value>
+  </data>
+  <data name="Index_Placeholder_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Moderne Dashboard-Oberfläche mit ZeitCoin-Transaktionen, Zeitkonto-Saldo und Wechselkursen. Klares UI mit blauen Akzentfarben und zeitbasierten Visualisierungen.</value>
+  </data>
+  <data name="Index_Placeholder_Innovation_Title" xml:space="preserve">
+    <value>Innovation Werkstatt</value>
+  </data>
+  <data name="Index_Placeholder_Innovation_Description" xml:space="preserve">
+    <value>Moderner kollaborativer Arbeitsbereich mit Glaswänden, Whiteboards, gemütlichen Sitzecken und modernster Ausstattung. Helle, inspirierende Umgebung.</value>
+  </data>
+  <data name="Index_Placeholder_Community_Title" xml:space="preserve">
+    <value>Community Event</value>
+  </data>
+  <data name="Index_Placeholder_Community_Description" xml:space="preserve">
+    <value>Vielfältige Gruppe von Menschen beim Netzwerken in entspannter Atmosphäre. Gemischte Altersgruppen, professionelles Setting mit Kaffee und Gesprächen.</value>
+  </data>
+  <data name="Index_Placeholder_Maria_Title" xml:space="preserve">
+    <value>Marias Startup-Reise</value>
+  </data>
+  <data name="Index_Placeholder_Maria_Description" xml:space="preserve">
+    <value>Porträt einer jungen Unternehmerin (Maria, 28) mit ihrem Startup-Team in der Innovation Werkstatt. Professionelle aber zugängliche Atmosphäre.</value>
+  </data>
+  <data name="Index_Placeholder_Hans_Title" xml:space="preserve">
+    <value>Hans' Mentoring-Session</value>
+  </data>
+  <data name="Index_Placeholder_Hans_Description" xml:space="preserve">
+    <value>Älterer Herr (Hans, 65) im Mentoring-Gespräch mit jungem Studenten. Warme, professionelle Umgebung zeigt Wissenstransfer.</value>
+  </data>
+  <data name="Index_Placeholder_Logo_Title" xml:space="preserve">
+    <value>3D Herz-Logo Animation</value>
+  </data>
+  <data name="Index_Placeholder_Logo_Description" xml:space="preserve">
+    <value>3D-gerenderte Version des Bamberger Spinnerei Herz-Logos mit subtilem Glow-Effekt und schwebender Animation.</value>
+  </data>
+  <data name="Index_Placeholder_ZeitCoin_Title" xml:space="preserve">
+    <value>ZeitCoin 2.0 Interface</value>
+  </data>
+  <data name="Index_Placeholder_ZeitCoin_Description" xml:space="preserve">
+    <value>Screenshot der neuen ZeitCoin Wallet-Oberfläche mit modernem UI-Design und verbesserter Benutzererfahrung und Sicherheitsfeatures.</value>
+  </data>
+  <data name="Index_Placeholder_LabOpening_Title" xml:space="preserve">
+    <value>Werkstatt-Eröffnungsfeier</value>
+  </data>
+  <data name="Index_Placeholder_LabOpening_Description" xml:space="preserve">
+    <value>Banddurchschneidung für neue Innovation Werkstätten mit Offiziellen und Community-Mitgliedern bei der Expansionsfeier.</value>
+  </data>
+  <data name="Index_Placeholder_AI_Title" xml:space="preserve">
+    <value>KI-Podiumsdiskussion</value>
+  </data>
+  <data name="Index_Placeholder_AI_Description" xml:space="preserve">
+    <value>Podiumsdiskussion mit Peter Paul Clinton und anderen Experten über KI und die Zukunft der Arbeit. Professionelles Konferenz-Setting.</value>
+  </data>
+
+  <!-- Index Page News Dates -->
+  <data name="Index_News_Date_ZeitCoin" xml:space="preserve">
+    <value>15. Juni 2025</value>
+  </data>
+  <data name="Index_News_Date_Labs" xml:space="preserve">
+    <value>10. Juni 2025</value>
+  </data>
+  <data name="Index_News_Date_AI" xml:space="preserve">
+    <value>5. Juni 2025</value>
+  </data>
+
+  <!-- Stories Section -->
+  <data name="Index_Stories_Title" xml:space="preserve">
+    <value>Erfolgsgeschichten</value>
+  </data>
+  <data name="Index_Stories_Description" xml:space="preserve">
+    <value>Echte Menschen, echte Ergebnisse - wie die Bamberger Spinnerei Leben verändert</value>
+  </data>
+  <data name="Index_Stories_Maria_Title" xml:space="preserve">
+    <value>Vom Traum zur Realität</value>
+  </data>
+  <data name="Index_Stories_Maria_Quote" xml:space="preserve">
+    <value>"Die Innovation Werkstatt hat mir geholfen, meine Startup-Idee zu verwirklichen. Die Community und die Zeitsparkasse haben den Unterschied gemacht."</value>
+  </data>
+  <data name="Index_Stories_Maria_Attribution" xml:space="preserve">
+    <value>Maria K., Gründerin von EcoTech Solutions</value>
+  </data>
+  <data name="Index_Stories_Hans_Title" xml:space="preserve">
+    <value>Wissen weitergeben, Leben bereichern</value>
+  </data>
+  <data name="Index_Stories_Hans_Quote" xml:space="preserve">
+    <value>"Als Mentor kann ich meine 40 Jahre Berufserfahrung teilen und gleichzeitig von der Energie der jungen Generation lernen."</value>
+  </data>
+  <data name="Index_Stories_Hans_Attribution" xml:space="preserve">
+    <value>Hans M., Senior-Mentor und Zeitspender</value>
+  </data>
+  <data name="Index_Stories_ViewAll" xml:space="preserve">
+    <value>Alle Geschichten ansehen</value>
+  </data>
+
+  <!-- News Section -->
+  <data name="Index_News_Title" xml:space="preserve">
+    <value>Aktuelles &amp; Updates</value>
+  </data>
+  <data name="Index_News_Description" xml:space="preserve">
+    <value>Bleib auf dem Laufenden über die neuesten Entwicklungen</value>
+  </data>
+  <data name="Index_News_ZeitCoin_Title" xml:space="preserve">
+    <value>ZeitCoin 2.0 startet mit neuen Features</value>
+  </data>
+  <data name="Index_News_ZeitCoin_Description" xml:space="preserve">
+    <value>Verbesserte Sicherheit, intuitivere Benutzeroberfläche und erweiterte Zeit-Banking-Funktionen machen ZeitCoin noch benutzerfreundlicher.</value>
+  </data>
+  <data name="Index_News_Labs_Title" xml:space="preserve">
+    <value>Neue Innovation Werkstätten eröffnet</value>
+  </data>
+  <data name="Index_News_Labs_Description" xml:space="preserve">
+    <value>Drei weitere Werkstätten stehen der Community zur Verfügung - mit modernster Ausstattung und erweiterten Möglichkeiten für Kreativität.</value>
+  </data>
+  <data name="Index_News_AI_Title" xml:space="preserve">
+    <value>KI &amp; Zukunft der Arbeit: Podiumsdiskussion</value>
+  </data>
+  <data name="Index_News_AI_Description" xml:space="preserve">
+    <value>Peter Paul Clinton diskutiert mit Experten über den verantwortungsvollen Einsatz von KI und wie wir gemeinsam die Zukunft gestalten können.</value>
+  </data>
+  <data name="Index_News_ReadMore" xml:space="preserve">
+    <value>Weiterlesen</value>
+  </data>
+  <data name="Index_News_ViewAll" xml:space="preserve">
+    <value>Alle Nachrichten ansehen</value>
+  </data>
+
+  <!-- Newsletter Section -->
+  <data name="Index_Newsletter_Title" xml:space="preserve">
+    <value>Bleib informiert</value>
+  </data>
+  <data name="Index_Newsletter_Description" xml:space="preserve">
+    <value>Erhalte die neuesten Updates direkt in dein Postfach</value>
+  </data>
+  <data name="Index_Newsletter_Placeholder" xml:space="preserve">
+    <value>Deine E-Mail-Adresse</value>
+  </data>
+  <data name="Index_Newsletter_Subscribe" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+
+  <!-- Stats Section -->
+  <data name="Index_Stats_PartnerCompanies" xml:space="preserve">
+    <value>Partner-Unternehmen</value>
+  </data>
+
+</root>

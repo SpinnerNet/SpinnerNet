@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Navigation -->
+  <data name="Nav_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Nav_Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Nav_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Nav_Beta" xml:space="preserve">
+    <value>Beta Access</value>
+  </data>
+  <data name="Nav_App" xml:space="preserve">
+    <value>Go to App</value>
+  </data>
+  <data name="Nav_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+
+  <!-- Hero Section -->
+  <data name="Hero_MainSlogan" xml:space="preserve">
+    <value>More than software – a buddy for life.</value>
+  </data>
+  <data name="Hero_Subtitle" xml:space="preserve">
+    <value>Spinner.Net is your personal AI companion who understands you, protects your time, and helps you live the life you want.</value>
+  </data>
+  <data name="Hero_GetStarted" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
+  <data name="Hero_LearnMore" xml:space="preserve">
+    <value>Learn More</value>
+  </data>
+
+  <!-- Three Pillars -->
+  <data name="Pillars_Title" xml:space="preserve">
+    <value>Our Three Pillars</value>
+  </data>
+  <data name="Pillar_Spinnen_Title" xml:space="preserve">
+    <value>Spin</value>
+  </data>
+  <data name="Pillar_Spinnen_Subtitle" xml:space="preserve">
+    <value>Space for Creativity &amp; Development</value>
+  </data>
+  <data name="Pillar_Spinnen_Description" xml:space="preserve">
+    <value>Here ideas, projects and social innovations emerge. Creative spaces and workshops for art, environment, technology and education.</value>
+  </data>
+  <data name="Pillar_Vermitteln_Title" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="Pillar_Vermitteln_Subtitle" xml:space="preserve">
+    <value>Share Knowledge, Experience &amp; Learning</value>
+  </data>
+  <data name="Pillar_Vermitteln_Description" xml:space="preserve">
+    <value>Courses and workshops for all ages. Mentorships between generations. Languages, culture and practical learning.</value>
+  </data>
+  <data name="Pillar_Marktplatz_Title" xml:space="preserve">
+    <value>Marketplace</value>
+  </data>
+  <data name="Pillar_Marktplatz_Subtitle" xml:space="preserve">
+    <value>Exchange &amp; Support</value>
+  </data>
+  <data name="Pillar_Marktplatz_Description" xml:space="preserve">
+    <value>Flexible work models and community-oriented projects. Implementation of the 23% rule for solidarity financing.</value>
+  </data>
+
+  <!-- About Section -->
+  <data name="About_Title" xml:space="preserve">
+    <value>About Bamberger Spinnerei</value>
+  </data>
+  <data name="About_Vision_Title" xml:space="preserve">
+    <value>Our Vision</value>
+  </data>
+  <data name="About_Vision_Text" xml:space="preserve">
+    <value>The Spinnerei is more than a place – it's a model for living together, working, learning and spiritual growth. At the center is the human being in their wholeness – not just as an employee, but as a feeling, thinking and creative being.</value>
+  </data>
+  <data name="About_Mission_Title" xml:space="preserve">
+    <value>Our Mission</value>
+  </data>
+  <data name="About_Mission_Text" xml:space="preserve">
+    <value>We create space, time and trust so that people can unfold, realize ideas and shape community. A place for all generations, cultures and life situations – carried by the idea: Who carries today, will be carried tomorrow.</value>
+  </data>
+
+  <!-- Support Section -->
+  <data name="Support_Title" xml:space="preserve">
+    <value>Support Our Mission</value>
+  </data>
+  <data name="Support_23Percent_Title" xml:space="preserve">
+    <value>The 23% Principle</value>
+  </data>
+  <data name="Support_23Percent_Description" xml:space="preserve">
+    <value>The number 23 stands symbolically for voluntary and responsible participation in a community. The more people act, the more people can be carried. It's not about control, but about trust – the central capital of the Spinnerei.</value>
+  </data>
+  <data name="Support_BGE_Title" xml:space="preserve">
+    <value>Basic Income Initiative</value>
+  </data>
+  <data name="Support_BGE_Description" xml:space="preserve">
+    <value>People carried by basic income have no obligations. They receive time and space to find themselves again. Who was carried, later carries others. A chain of trust.</value>
+  </data>
+  <data name="Support_Donate" xml:space="preserve">
+    <value>Support Us</value>
+  </data>
+
+  <!-- Beta Section -->
+  <data name="Beta_Title" xml:space="preserve">
+    <value>Experience Spinner.Net Beta</value>
+  </data>
+  <data name="Beta_Description" xml:space="preserve">
+    <value>Get early access to our digital platform. Create AI buddies, manage tasks, and connect with the community.</value>
+  </data>
+  <data name="Beta_Features_Title" xml:space="preserve">
+    <value>Beta Features</value>
+  </data>
+  <data name="Beta_Feature_AI" xml:space="preserve">
+    <value>AI Buddy Assistants</value>
+  </data>
+  <data name="Beta_Feature_Tasks" xml:space="preserve">
+    <value>Task Management with Time Banking</value>
+  </data>
+  <data name="Beta_Feature_Community" xml:space="preserve">
+    <value>Community Connection</value>
+  </data>
+  <data name="Beta_AccessButton" xml:space="preserve">
+    <value>Request Beta Access</value>
+  </data>
+  <data name="Beta_Hero_Title" xml:space="preserve">
+    <value>Beta Program</value>
+  </data>
+  <data name="Beta_Hero_Subtitle" xml:space="preserve">
+    <value>Become a Beta Tester of the Future</value>
+  </data>
+  <data name="Beta_Hero_Description" xml:space="preserve">
+    <value>Get exclusive access to our platform and help us perfect the Bamberger Spinnerei.</value>
+  </data>
+  <data name="Beta_Benefits_Title" xml:space="preserve">
+    <value>Why become a Beta Tester?</value>
+  </data>
+  <data name="Beta_Benefits_Subtitle" xml:space="preserve">
+    <value>Discover the advantages of the Beta Program</value>
+  </data>
+
+  <!-- Contact Section -->
+  <data name="Contact_Title" xml:space="preserve">
+    <value>Get in Touch</value>
+  </data>
+  <data name="Contact_Description" xml:space="preserve">
+    <value>Have questions or want to get involved? We'd love to hear from you.</value>
+  </data>
+  <data name="Contact_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Contact_Newsletter" xml:space="preserve">
+    <value>Subscribe to Newsletter</value>
+  </data>
+
+  <!-- Common -->
+  <data name="Common_LearnMore" xml:space="preserve">
+    <value>Learn More</value>
+  </data>
+  <data name="Common_GetStarted" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Language_German" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="Language_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Language_French" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="Language_Spanish" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+
+  <!-- Index Page Content -->
+  <data name="Index_Hero_Title" xml:space="preserve">
+    <value>Imagine having a personal buddy</value>
+  </data>
+  <data name="Index_Hero_Slogan" xml:space="preserve">
+    <value>Spin your idea. We give you time.</value>
+  </data>
+  <data name="Index_Hero_Description" xml:space="preserve">
+    <value>...who knows you like your best friend. Who knows when you're productive, what motivates you. Who helps you use your time so that you're satisfied in the evening.</value>
+  </data>
+  <data name="Index_Hero_LearnMore" xml:space="preserve">
+    <value>How does it work?</value>
+  </data>
+  <data name="Index_Hero_BetaAccess" xml:space="preserve">
+    <value>Meet your buddy</value>
+  </data>
+  <data name="Index_Hero_ToApp" xml:space="preserve">
+    <value>Go to App</value>
+  </data>
+
+  <!-- Stats Section -->
+  <data name="Index_Stats_CommunityMembers" xml:space="preserve">
+    <value>Solidarity Contribution</value>
+  </data>
+  <data name="Index_Stats_RealizedProjects" xml:space="preserve">
+    <value>Stays with you</value>
+  </data>
+  <data name="Index_Stats_SavedHours" xml:space="preserve">
+    <value>Possibilities</value>
+  </data>
+  <data name="Index_Stats_PartnerCompanies" xml:space="preserve">
+    <value>Partner Companies</value>
+  </data>
+
+  <!-- Features Section -->
+  <data name="Index_Features_Title" xml:space="preserve">
+    <value>More than software – a new way of being together</value>
+  </data>
+  <data name="Index_Features_Description" xml:space="preserve">
+    <value>We create space for your ideas. Three pillars support our community: Spinning, Teaching, and the Marketplace.</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Title" xml:space="preserve">
+    <value>Spinning – Let ideas emerge</value>
+  </data>
+  <data name="Index_Features_Zeitsparkasse_Description" xml:space="preserve">
+    <value>Whether you're trying out a new learning concept, developing an app, or having a vision for sustainable tourism – here you'll find space, materials, and people to accompany you.</value>
+  </data>
+  <data name="Index_Features_Innovation_Title" xml:space="preserve">
+    <value>Teaching – Share knowledge</value>
+  </data>
+  <data name="Index_Features_Innovation_Description" xml:space="preserve">
+    <value>Knowledge isn't lectured here, it's shared. From experienced craftsmen to young entrepreneurs – everyone passes on what they can. No grade pressure, with real encounters.</value>
+  </data>
+  <data name="Index_Features_Community_Title" xml:space="preserve">
+    <value>Marketplace – Rethink work</value>
+  </data>
+  <data name="Index_Features_Community_Description" xml:space="preserve">
+    <value>Work self-determined, but not alone. Here you can program and paint, teach in the morning and make music in the evening. Your identity can be multidimensional.</value>
+  </data>
+
+  <!-- How it Works -->
+  <data name="Index_HowItWorks_Title" xml:space="preserve">
+    <value>How it Works</value>
+  </data>
+  <data name="Index_HowItWorks_Description" xml:space="preserve">
+    <value>Three simple steps to your innovation and community participation</value>
+  </data>
+  <data name="Index_HowItWorks_Step1_Title" xml:space="preserve">
+    <value>Register &amp; Create Profile</value>
+  </data>
+  <data name="Index_HowItWorks_Step1_Description" xml:space="preserve">
+    <value>Create your personal profile, define your skills and interests. Choose whether you want to give or receive time.</value>
+  </data>
+  <data name="Index_HowItWorks_Step2_Title" xml:space="preserve">
+    <value>Connect &amp; Find Projects</value>
+  </data>
+  <data name="Index_HowItWorks_Step2_Description" xml:space="preserve">
+    <value>Find suitable projects, teams or mentors. Use our AI-powered matching technology for optimal connections.</value>
+  </data>
+  <data name="Index_HowItWorks_Step3_Title" xml:space="preserve">
+    <value>Trade Time &amp; Grow</value>
+  </data>
+  <data name="Index_HowItWorks_Step3_Description" xml:space="preserve">
+    <value>Trade time for time, collect ZeitCoins and build your network. Together we create more.</value>
+  </data>
+
+  <!-- Success Stories -->
+  <data name="Index_Stories_Title" xml:space="preserve">
+    <value>Success Stories</value>
+  </data>
+  <data name="Index_Stories_Description" xml:space="preserve">
+    <value>Real people, real results - how Bamberger Spinnerei changes lives</value>
+  </data>
+  <data name="Index_Stories_Maria_Title" xml:space="preserve">
+    <value>Maria's EdTech Startup</value>
+  </data>
+  <data name="Index_Stories_Maria_Quote" xml:space="preserve">
+    <value>"Through the Time Bank I was able to trade 200 hours of programming for marketing expertise. My startup is now successfully funded!"</value>
+  </data>
+  <data name="Index_Stories_Maria_Attribution" xml:space="preserve">
+    <value>Maria K., 28 - Founder, EduInnovate</value>
+  </data>
+  <data name="Index_Stories_Hans_Title" xml:space="preserve">
+    <value>Hans' Mentor Journey</value>
+  </data>
+  <data name="Index_Stories_Hans_Quote" xml:space="preserve">
+    <value>"As a retired engineer, I pass on my knowledge while learning digital skills. The community keeps me young!"</value>
+  </data>
+  <data name="Index_Stories_Hans_Attribution" xml:space="preserve">
+    <value>Hans M., 65 - Mentor &amp; Engineer</value>
+  </data>
+  <data name="Index_Stories_ViewAll" xml:space="preserve">
+    <value>View All Stories</value>
+  </data>
+
+  <!-- Call to Action -->
+  <data name="Index_CTA_Title" xml:space="preserve">
+    <value>Ready for Your Innovation?</value>
+  </data>
+  <data name="Index_CTA_Description" xml:space="preserve">
+    <value>Become part of a community that understands time as the most valuable resource. Start your journey in Bamberger Spinnerei today.</value>
+  </data>
+  <data name="Index_CTA_SecureBeta" xml:space="preserve">
+    <value>Secure Beta Access</value>
+  </data>
+  <data name="Index_CTA_BookConsultation" xml:space="preserve">
+    <value>Book Consultation</value>
+  </data>
+
+  <!-- News Section -->
+  <data name="Index_News_Title" xml:space="preserve">
+    <value>News &amp; Updates</value>
+  </data>
+  <data name="Index_News_Description" xml:space="preserve">
+    <value>Stay updated on the latest developments</value>
+  </data>
+  <data name="Index_News_ZeitCoin_Title" xml:space="preserve">
+    <value>ZeitCoin 2.0 Launch</value>
+  </data>
+  <data name="Index_News_ZeitCoin_Description" xml:space="preserve">
+    <value>The new version of our time currency is live! Improved security, new features and better user experience.</value>
+  </data>
+  <data name="Index_News_Labs_Title" xml:space="preserve">
+    <value>New Innovation Labs</value>
+  </data>
+  <data name="Index_News_Labs_Description" xml:space="preserve">
+    <value>Our expanded facilities now offer space for 100+ innovators. State-of-the-art equipment included.</value>
+  </data>
+  <data name="Index_News_AI_Title" xml:space="preserve">
+    <value>AI &amp; Future of Work</value>
+  </data>
+  <data name="Index_News_AI_Description" xml:space="preserve">
+    <value>Peter Paul Clinton discusses the future of work in the AI era. Recording now available.</value>
+  </data>
+  <data name="Index_News_ViewAll" xml:space="preserve">
+    <value>Show All News</value>
+  </data>
+  <data name="Index_News_ReadMore" xml:space="preserve">
+    <value>Read More</value>
+  </data>
+
+  <!-- Newsletter -->
+  <data name="Index_Newsletter_Title" xml:space="preserve">
+    <value>Stay Informed</value>
+  </data>
+  <data name="Index_Newsletter_Description" xml:space="preserve">
+    <value>Receive weekly updates on new features, events and community highlights.</value>
+  </data>
+  <data name="Index_Newsletter_Placeholder" xml:space="preserve">
+    <value>Your Email Address</value>
+  </data>
+  <data name="Index_Newsletter_Subscribe" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+
+</root>

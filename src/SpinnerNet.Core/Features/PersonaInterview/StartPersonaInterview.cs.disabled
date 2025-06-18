@@ -1,0 +1,339 @@
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using SpinnerNet.Core.Data.CosmosDb;
+using SpinnerNet.Shared.Models.CosmosDb;
+using SpinnerNet.Shared.Models;
+using System.Text.Json.Serialization;
+
+namespace SpinnerNet.Core.Features.PersonaInterview;
+
+/// <summary>
+/// Vertical slice for starting AI-guided persona interview
+/// Creates conversational discovery session to understand user preferences, culture, and goals
+/// </summary>
+public static class StartPersonaInterview
+{
+    // 1. Command (Input)
+    public record Command : IRequest<Result>
+    {
+        [JsonPropertyName("userId")]
+        public string UserId { get; init; } = string.Empty;
+
+        [JsonPropertyName("language")]
+        public string Language { get; init; } = "en";
+
+        [JsonPropertyName("skipToSection")]
+        public string? SkipToSection { get; init; }
+    }
+
+    // 2. Result (Output)
+    public record Result
+    {
+        [JsonPropertyName("success")]
+        public bool Success { get; init; }
+
+        [JsonPropertyName("interviewSessionId")]
+        public string? InterviewSessionId { get; init; }
+
+        [JsonPropertyName("firstQuestion")]
+        public InterviewQuestion? FirstQuestion { get; init; }
+
+        [JsonPropertyName("estimatedDuration")]
+        public int EstimatedDurationMinutes { get; init; }
+
+        [JsonPropertyName("errorMessage")]
+        public string? ErrorMessage { get; init; }
+
+        public static Result SuccessResult(string sessionId, InterviewQuestion firstQuestion, int duration) =>
+            new() 
+            { 
+                Success = true, 
+                InterviewSessionId = sessionId, 
+                FirstQuestion = firstQuestion,
+                EstimatedDurationMinutes = duration
+            };
+
+        public static Result Failure(string errorMessage) =>
+            new() { Success = false, ErrorMessage = errorMessage };
+    }
+
+    // 3. Supporting Models
+    public record InterviewQuestion
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; init; } = string.Empty;
+
+        [JsonPropertyName("question")]
+        public string Question { get; init; } = string.Empty;
+
+        [JsonPropertyName("context")]
+        public string Context { get; init; } = string.Empty;
+
+        [JsonPropertyName("expectedResponseType")]
+        public string ExpectedResponseType { get; init; } = "text";
+
+        [JsonPropertyName("suggestions")]
+        public List<string> Suggestions { get; init; } = new();
+
+        [JsonPropertyName("isOptional")]
+        public bool IsOptional { get; init; } = false;
+    }
+
+    // 4. Validator (Input Validation)
+    public class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.UserId)
+                .NotEmpty().WithMessage("User ID is required")
+                .MaximumLength(100).WithMessage("User ID must not exceed 100 characters");
+
+            RuleFor(x => x.Language)
+                .NotEmpty().WithMessage("Language is required")
+                .Length(2, 5).WithMessage("Language must be a valid language code (2-5 characters)");
+
+            RuleFor(x => x.SkipToSection)
+                .MaximumLength(50).WithMessage("Section name must not exceed 50 characters")
+                .When(x => !string.IsNullOrEmpty(x.SkipToSection));
+        }
+    }
+
+    // 5. Handler (Business Logic + Data Access)
+    public class Handler : IRequestHandler<Command, Result>
+    {
+        private readonly ICosmosRepository<InterviewSessionDocument> _sessionRepository;
+        private readonly ICosmosRepository<UserDocument> _userRepository;
+        private readonly ILogger<Handler> _logger;
+
+        public Handler(
+            ICosmosRepository<InterviewSessionDocument> sessionRepository,
+            ICosmosRepository<UserDocument> userRepository,
+            ILogger<Handler> logger)
+        {
+            _sessionRepository = sessionRepository;
+            _userRepository = userRepository;
+            _logger = logger;
+        }
+
+        public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                _logger.LogInformation("Starting persona interview for user: {UserId}", request.UserId);
+
+                // 1. Verify user exists
+                var existingUsers = await _userRepository.QueryAsync(
+                    u => u.UserId == request.UserId,
+                    maxResults: 1,
+                    cancellationToken: cancellationToken);
+
+                if (!existingUsers.Any())
+                {
+                    _logger.LogWarning("Interview start attempted for non-existent user: {UserId}", request.UserId);
+                    return Result.Failure("User not found");
+                }
+
+                var user = existingUsers.First();
+
+                // 2. Check for existing active interview session
+                var existingSessions = await _sessionRepository.QueryAsync(
+                    s => s.UserId == request.UserId && s.Status == InterviewStatus.InProgress,
+                    maxResults: 1,
+                    cancellationToken: cancellationToken);
+
+                if (existingSessions.Any())
+                {
+                    var existingSession = existingSessions.First();
+                    _logger.LogInformation("Resuming existing interview session: {SessionId}", existingSession.SessionId);
+                    
+                    var resumeQuestion = GetNextQuestion(existingSession);
+                    return Result.SuccessResult(
+                        existingSession.SessionId, 
+                        resumeQuestion, 
+                        EstimateRemainingDuration(existingSession));
+                }
+
+                // 3. Create new interview session
+                var sessionId = $"interview_{request.UserId}_{Guid.NewGuid():N}";
+                var interviewSession = new InterviewSessionDocument
+                {
+                    Id = $"interview_session_{sessionId}",
+                    SessionId = sessionId,
+                    UserId = request.UserId,
+                    Status = InterviewStatus.InProgress,
+                    Language = request.Language,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    Progress = new InterviewProgress
+                    {
+                        CurrentSection = request.SkipToSection ?? "welcome",
+                        CompletedSections = new List<string>(),
+                        CurrentQuestionIndex = 0,
+                        TotalQuestions = GetTotalQuestions(),
+                        EstimatedTimeRemainingMinutes = 8
+                    },
+                    Responses = new List<InterviewResponse>(),
+                    ExtractedInfo = new ExtractedInfo()
+                };
+
+                // 4. Save session to Cosmos DB
+                await _sessionRepository.CreateOrUpdateAsync(
+                    interviewSession,
+                    request.UserId,
+                    cancellationToken);
+
+                // 5. Generate first question based on user's language and starting section
+                var firstQuestion = GenerateFirstQuestion(request.Language, interviewSession.CurrentSection);
+
+                _logger.LogInformation("Interview session created: {SessionId} for user: {UserId}", sessionId, request.UserId);
+
+                return Result.SuccessResult(sessionId, firstQuestion, 8); // Estimated 8 minutes
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error starting persona interview for user: {UserId}", request.UserId);
+                return Result.Failure("An error occurred starting the interview. Please try again.");
+            }
+        }
+
+        private InterviewQuestion GetNextQuestion(InterviewSessionDocument session)
+        {
+            // Resume from current section and question index
+            return GenerateQuestionForSection(session.Progress.CurrentSection, session.Progress.CurrentQuestionIndex, session.Language);
+        }
+
+        private int EstimateRemainingDuration(InterviewSessionDocument session)
+        {
+            var currentQuestion = session.Progress.CurrentQuestionIndex;
+            var totalQuestions = session.Progress.TotalQuestions;
+            var remainingQuestions = Math.Max(0, totalQuestions - currentQuestion);
+            return Math.Max(1, remainingQuestions); // ~1 minute per question
+        }
+
+        private int GetTotalQuestions()
+        {
+            return 12; // ~3 questions per section: welcome, basics, interests, preferences
+        }
+
+        private InterviewQuestion GenerateFirstQuestion(string language, string section)
+        {
+            return section switch
+            {
+                "welcome" => new InterviewQuestion
+                {
+                    Id = "welcome_01",
+                    Question = GetLocalizedWelcomeQuestion(language),
+                    Context = "This is the beginning of your persona creation journey. I'll ask you a few friendly questions to understand your preferences and interests.",
+                    ExpectedResponseType = "text",
+                    Suggestions = GetLocalizedWelcomeSuggestions(language),
+                    IsOptional = false
+                },
+                "basics" => new InterviewQuestion
+                {
+                    Id = "basics_01", 
+                    Question = GetLocalizedBasicsQuestion(language),
+                    Context = "Let's start with some basic information about you.",
+                    ExpectedResponseType = "text",
+                    Suggestions = new List<string>(),
+                    IsOptional = false
+                },
+                _ => GenerateWelcomeQuestion(language)
+            };
+        }
+
+        private InterviewQuestion GenerateQuestionForSection(string section, int questionIndex, string language)
+        {
+            // Generate appropriate question based on section and index
+            return GenerateFirstQuestion(language, section);
+        }
+
+        private InterviewQuestion GenerateWelcomeQuestion(string language)
+        {
+            return new InterviewQuestion
+            {
+                Id = "welcome_01",
+                Question = GetLocalizedWelcomeQuestion(language),
+                Context = "Welcome to Spinner.Net! Let's create your personal profile together.",
+                ExpectedResponseType = "text",
+                Suggestions = GetLocalizedWelcomeSuggestions(language),
+                IsOptional = false
+            };
+        }
+
+        private string GetLocalizedWelcomeQuestion(string language)
+        {
+            return language switch
+            {
+                "de" => "Hallo! Ich freue mich, dich kennenzulernen. Erzähl mir ein bisschen über dich - was machst du gerne in deiner Freizeit?",
+                "es" => "¡Hola! Me alegra conocerte. Cuéntame un poco sobre ti: ¿qué te gusta hacer en tu tiempo libre?",
+                "fr" => "Salut ! Je suis ravi de faire ta connaissance. Parle-moi un peu de toi - qu'aimes-tu faire pendant ton temps libre ?",
+                _ => "Hello! I'm excited to get to know you. Tell me a bit about yourself - what do you enjoy doing in your free time?"
+            };
+        }
+
+        private List<string> GetLocalizedWelcomeSuggestions(string language)
+        {
+            return language switch
+            {
+                "de" => new List<string> { "Ich lese gerne", "Ich mache Sport", "Ich höre Musik", "Ich reise gerne" },
+                "es" => new List<string> { "Me gusta leer", "Hago deporte", "Escucho música", "Me gusta viajar" },
+                "fr" => new List<string> { "J'aime lire", "Je fais du sport", "J'écoute de la musique", "J'aime voyager" },
+                _ => new List<string> { "I love reading", "I enjoy sports", "I listen to music", "I like traveling" }
+            };
+        }
+
+        private string GetLocalizedBasicsQuestion(string language)
+        {
+            return language switch
+            {
+                "de" => "Was für Arbeit machst du, oder was studierst du? Das hilft mir zu verstehen, womit ich dir am besten helfen kann.",
+                "es" => "¿En qué trabajas o qué estudias? Esto me ayuda a entender cómo puedo ayudarte mejor.",
+                "fr" => "Quel est ton travail ou tes études ? Cela m'aide à comprendre comment je peux mieux t'aider.",
+                _ => "What kind of work do you do, or what are you studying? This helps me understand how I can best assist you."
+            };
+        }
+    }
+
+    // 6. Endpoint (HTTP API)
+    [ApiController]
+    [Route("api/persona-interview")]
+    public class Endpoint : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public Endpoint(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        /// <summary>
+        /// Start a new AI-guided persona interview
+        /// </summary>
+        /// <param name="command">Interview start parameters</param>
+        /// <returns>Interview session and first question</returns>
+        [HttpPost("start")]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(Result), 404)]
+        public async Task<ActionResult<Result>> StartInterview([FromBody] Command command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (!result.Success)
+            {
+                if (result.ErrorMessage?.Contains("not found") == true)
+                {
+                    return NotFound(result);
+                }
+
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+    }
+}
+
