@@ -22,11 +22,16 @@
     --color-warning: #ffc107;
     --color-danger: #dc3545;
     
-    /* Alternative colors for other pages */
-    --color-alt-primary: #7c3aed;    /* Purple */
-    --color-alt-secondary: #059669;   /* Green */
-    --color-alt-tertiary: #dc2626;    /* Red */
-    --color-alt-quaternary: #ea580c;  /* Orange */
+    /* Alternative colors for other pages - Soft pastels */
+    --color-alt-primary: #34d399;    /* Soft Green for Spinnen */
+    --color-alt-secondary: #f472b6;   /* Soft Pink for Vermitteln */
+    --color-alt-tertiary: #ef4444;    /* Soft Red for Beta */
+    --color-alt-quaternary: #fb923c;  /* Soft Orange for Marktplatz */
+    
+    /* Beta specific red theme */
+    --color-beta-red: #ef4444;
+    --color-beta-red-light: #fca5a5;
+    --color-beta-red-dark: #dc2626;
     
     /* Neutral colors */
     --color-white: #ffffff;
@@ -226,7 +231,7 @@ p {
 .navbar {
     background-color: var(--color-white);
     border-bottom: 1px solid var(--color-gray-200);
-    padding: var(--space-12) 0;
+    padding: var(--space-16) 0;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -252,14 +257,16 @@ p {
 }
 
 .navbar-logo {
-    height: 32px;
+    height: 40px;
     width: auto;
-    margin-right: var(--space-8);
+    margin-right: var(--space-12);
 }
 
 .navbar-title {
-    font-size: var(--font-size-18);
+    font-size: var(--font-size-16);
     color: var(--color-gray-900);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.05em;
 }
 
 /* Mobile Menu Toggle */
@@ -304,7 +311,7 @@ p {
     display: flex;
     list-style: none;
     align-items: center;
-    gap: var(--space-32);
+    gap: var(--space-24);
     margin: 0;
     padding: 0;
 }
@@ -317,11 +324,12 @@ p {
     text-decoration: none;
     color: var(--color-gray-700);
     font-weight: var(--font-weight-medium);
-    font-size: var(--font-size-16);
-    padding: var(--space-8) var(--space-16);
+    font-size: var(--font-size-14);
+    padding: var(--space-8) var(--space-12);
     border-radius: var(--radius-md);
     transition: all 0.2s ease;
     display: block;
+    white-space: nowrap;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -692,6 +700,13 @@ p {
     color: var(--color-gray-400);
 }
 
+/* ===== SPECIAL NAVBAR BUTTON STYLES ===== */
+.nav-link[href="/beta"]:hover {
+    background: #dc2626 !important;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1199.98px) {
     .container { max-width: var(--container-lg); }
@@ -885,7 +900,102 @@ p {
 
 /* ===== PAGE-SPECIFIC COLOR SCHEMES ===== */
 
-/* About page - Purple theme */
+/* Vision page - Blue theme (same as home) */
+body[data-page="vision"] {
+    --color-primary: #2c5aa0;
+    --color-primary-dark: #1e3f73;
+}
+
+body[data-page="vision"] .hero {
+    background: linear-gradient(135deg, #2c5aa0 0%, #4472ca 100%);
+}
+
+/* Spinnen page - Soft Green theme */
+body[data-page="spinnen"] {
+    --color-primary: var(--color-alt-primary);
+    --color-primary-dark: #10b981;
+}
+
+body[data-page="spinnen"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-primary) 0%, #6ee7b7 100%);
+}
+
+body[data-page="spinnen"] .btn-primary {
+    background-color: var(--color-alt-primary);
+    border-color: var(--color-alt-primary);
+}
+
+body[data-page="spinnen"] .btn-primary:hover {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+body[data-page="spinnen"] .navbar .btn-primary {
+    background-color: var(--color-alt-primary);
+    border-color: var(--color-alt-primary);
+}
+
+/* Vermitteln page - Soft Pink theme */
+body[data-page="vermitteln"] {
+    --color-primary: var(--color-alt-secondary);
+    --color-primary-dark: #ec4899;
+}
+
+body[data-page="vermitteln"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #f9a8d4 100%);
+}
+
+body[data-page="vermitteln"] .btn-primary {
+    background-color: var(--color-alt-secondary);
+    border-color: var(--color-alt-secondary);
+}
+
+body[data-page="vermitteln"] .btn-primary:hover {
+    background-color: #ec4899;
+    border-color: #ec4899;
+}
+
+body[data-page="vermitteln"] .navbar .btn-primary {
+    background-color: var(--color-alt-secondary);
+    border-color: var(--color-alt-secondary);
+}
+
+/* Marktplatz page - Soft Orange theme */
+body[data-page="marktplatz"] {
+    --color-primary: var(--color-alt-quaternary);
+    --color-primary-dark: #f97316;
+}
+
+body[data-page="marktplatz"] .hero {
+    background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #fdba74 100%);
+}
+
+body[data-page="marktplatz"] .btn-primary {
+    background-color: var(--color-alt-quaternary);
+    border-color: var(--color-alt-quaternary);
+}
+
+body[data-page="marktplatz"] .btn-primary:hover {
+    background-color: #f97316;
+    border-color: #f97316;
+}
+
+body[data-page="marktplatz"] .navbar .btn-primary {
+    background-color: var(--color-alt-quaternary);
+    border-color: var(--color-alt-quaternary);
+}
+
+/* Contact page - Blue theme (same as home and vision) */
+body[data-page="contact"] {
+    --color-primary: #2c5aa0;
+    --color-primary-dark: #1e3f73;
+}
+
+body[data-page="contact"] .hero {
+    background: linear-gradient(135deg, #2c5aa0 0%, #4472ca 100%);
+}
+
+/* About page - Purple theme (kept for compatibility) */
 body[data-page="about"] {
     --color-primary: var(--color-alt-primary);
     --color-primary-dark: #6d28d9;
@@ -895,27 +1005,27 @@ body[data-page="about"] .hero {
     background: linear-gradient(135deg, var(--color-alt-primary) 0%, #8b5cf6 100%);
 }
 
-/* Contact page - Green theme */
-body[data-page="contact"] {
-    --color-primary: var(--color-alt-secondary);
-    --color-primary-dark: #047857;
-}
-
-body[data-page="contact"] .hero {
-    background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #10b981 100%);
-}
-
-/* Beta page - Orange theme */
+/* Beta page - Red/Pastel Red theme */
 body[data-page="beta"] {
-    --color-primary: var(--color-alt-quaternary);
-    --color-primary-dark: #c2410c;
+    --color-primary: var(--color-alt-tertiary);
+    --color-primary-dark: #b91c1c;
 }
 
 body[data-page="beta"] .hero {
-    background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #f97316 100%);
+    background: linear-gradient(135deg, var(--color-alt-tertiary) 0%, #fca5a5 100%);
 }
 
-/* Support page - Red theme */
+body[data-page="beta"] .btn-primary {
+    background-color: var(--color-alt-tertiary);
+    border-color: var(--color-alt-tertiary);
+}
+
+body[data-page="beta"] .btn-primary:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+/* Support page - Red theme (kept for compatibility) */
 body[data-page="support"] {
     --color-primary: var(--color-alt-tertiary);
     --color-primary-dark: #b91c1c;

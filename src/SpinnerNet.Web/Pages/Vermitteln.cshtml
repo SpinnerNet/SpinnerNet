@@ -1,0 +1,178 @@
+@page
+@model SpinnerNet.Web.Pages.VermittelnModel
+@{
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section - Vermitteln -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("Vermitteln_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("Vermitteln_Hero_Subtitle")</p>
+            <p class="lead">@Model.GetText("Vermitteln_Hero_Description")</p>
+            
+            <div class="hero-actions">
+                <a href="#mentoring" class="btn btn-secondary btn-lg">@Model.GetText("Vermitteln_Hero_Mentoring")</a>
+                <a href="#events" class="btn btn-outline btn-lg">@Model.GetText("Vermitteln_Hero_Events")</a>
+                <a href="/contact" class="btn btn-primary btn-lg">@Model.GetText("Vermitteln_Hero_Contact")</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Knowledge Sharing Section -->
+<section class="section-sm" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vermitteln_Knowledge_Title")</h2>
+            <p class="lead">@Model.GetText("Vermitteln_Knowledge_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <h3>@Model.GetText("Vermitteln_Knowledge_Experience_Title")</h3>
+                <p>@Model.GetText("Vermitteln_Knowledge_Experience_Description")</p>
+            </div>
+            <div class="col-4">
+                <h3>@Model.GetText("Vermitteln_Knowledge_Skills_Title")</h3>
+                <p>@Model.GetText("Vermitteln_Knowledge_Skills_Description")</p>
+            </div>
+            <div class="col-4">
+                <h3>@Model.GetText("Vermitteln_Knowledge_Network_Title")</h3>
+                <p>@Model.GetText("Vermitteln_Knowledge_Network_Description")</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mentoring & Coaching Section -->
+<section class="section" id="mentoring">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vermitteln_Mentoring_Title")</h2>
+            <p class="lead">@Model.GetText("Vermitteln_Mentoring_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>@Model.GetText("Vermitteln_Mentoring_Personal_Title")</h3>
+                        <p>@Model.GetText("Vermitteln_Mentoring_Personal_Description")</p>
+                        
+                        <h4>@Model.GetText("Vermitteln_Mentoring_Personal_Areas")</h4>
+                        <ul>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Personal_Area1")</li>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Personal_Area2")</li>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Personal_Area3")</li>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Personal_Area4")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>@Model.GetText("Vermitteln_Mentoring_Professional_Title")</h3>
+                        <p>@Model.GetText("Vermitteln_Mentoring_Professional_Description")</p>
+                        
+                        <h4>@Model.GetText("Vermitteln_Mentoring_Professional_Areas")</h4>
+                        <ul>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Professional_Area1")</li>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Professional_Area2")</li>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Professional_Area3")</li>
+                            <li>@Model.GetText("Vermitteln_Mentoring_Professional_Area4")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Events & Community Section -->
+<section class="section" id="events" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vermitteln_Events_Title")</h2>
+            <p class="lead">@Model.GetText("Vermitteln_Events_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #f9a8d4 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Vermitteln_Events_Workshops_Short")</strong><br>
+                            @Model.GetText("Vermitteln_Events_Workshops_Subtitle")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Vermitteln_Events_Workshops_Title")</h3>
+                        <p class="card-text">@Model.GetText("Vermitteln_Events_Workshops_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #f9a8d4 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Vermitteln_Events_Talks_Short")</strong><br>
+                            @Model.GetText("Vermitteln_Events_Talks_Subtitle")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Vermitteln_Events_Talks_Title")</h3>
+                        <p class="card-text">@Model.GetText("Vermitteln_Events_Talks_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #f9a8d4 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Vermitteln_Events_Networking_Short")</strong><br>
+                            @Model.GetText("Vermitteln_Events_Networking_Subtitle")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Vermitteln_Events_Networking_Title")</h3>
+                        <p class="card-text">@Model.GetText("Vermitteln_Events_Networking_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #f9a8d4 100%); color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2 style="color: white; margin-bottom: var(--space-24);">@Model.GetText("Vermitteln_CTA_Title")</h2>
+                <p class="lead" style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-32);">
+                    @Model.GetText("Vermitteln_CTA_Description")
+                </p>
+                <div style="display: flex; gap: var(--space-16); flex-wrap: wrap;">
+                    <a href="/contact" class="btn btn-secondary btn-lg">@Model.GetText("Vermitteln_CTA_Contact")</a>
+                    <a href="/spinnen" class="btn btn-outline btn-lg" style="border-color: white; color: white;">@Model.GetText("Vermitteln_CTA_Explore")</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div style="text-align: center;">
+                    <div class="card-img card-img-placeholder" style="background-color: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3); height: 280px;">
+                        <div style="color: rgba(255,255,255,0.8); text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Vermitteln_CTA_Placeholder_Title")</strong><br>
+                            @Model.GetText("Vermitteln_CTA_Placeholder_Description")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

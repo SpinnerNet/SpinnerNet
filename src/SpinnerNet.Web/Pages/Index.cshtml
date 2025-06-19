@@ -4,7 +4,7 @@
     Layout = "Shared/_Layout";
 }
 
-<!-- Hero Section - World Vision Layout -->
+<!-- Hero Section - Bamberger Spinnerei -->
 <section class="hero">
     <div class="container">
         <div class="hero-content">
@@ -13,68 +13,57 @@
             <p class="lead">@Model.GetText("Index_Hero_Description")</p>
             
             <div class="hero-actions">
-                <a href="/about" class="btn btn-secondary btn-lg">@Model.GetText("Index_Hero_LearnMore")</a>
-                <a href="/beta" class="btn btn-outline btn-lg">@Model.GetText("Index_Hero_BetaAccess")</a>
+                <a href="/vision" class="btn btn-secondary btn-lg">@Model.GetText("Index_Hero_Vision")</a>
+                <a href="/spinnen" class="btn btn-outline btn-lg">@Model.GetText("Index_Hero_Discover")</a>
                 <a href="/app" class="btn btn-primary btn-lg">@Model.GetText("Index_Hero_ToApp")</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Statistics Section - World Vision Style -->
-<section class="stats-section">
+<!-- Vision Overview Section -->
+<section class="section-sm" style="background-color: var(--color-gray-50);">
     <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Index_Vision_Title")</h2>
+            <p class="lead">@Model.GetText("Index_Vision_Description")</p>
+        </div>
+        
         <div class="row">
-            <div class="col-3">
-                <div class="stat-item">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">@Model.GetText("Index_Stats_CommunityMembers")</span>
-                </div>
+            <div class="col-6">
+                <h3>@Model.GetText("Index_Vision_RoomForAll_Title")</h3>
+                <p>@Model.GetText("Index_Vision_RoomForAll_Description")</p>
             </div>
-            <div class="col-3">
-                <div class="stat-item">
-                    <span class="stat-number">150+</span>
-                    <span class="stat-label">@Model.GetText("Index_Stats_RealizedProjects")</span>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="stat-item">
-                    <span class="stat-number">10,000+</span>
-                    <span class="stat-label">@Model.GetText("Index_Stats_SavedHours")</span>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="stat-item">
-                    <span class="stat-number">25+</span>
-                    <span class="stat-label">@Model.GetText("Index_Stats_PartnerCompanies")</span>
-                </div>
+            <div class="col-6">
+                <h3>@Model.GetText("Index_Vision_Digital_Title")</h3>
+                <p>@Html.Raw(@Model.GetText("Index_Vision_Digital_Description"))</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main Features Section - World Vision Container Structure -->
+<!-- Three Pillars Section -->
 <section class="section">
     <div class="container">
         <div class="section-header">
-            <h2>@Model.GetText("Index_Features_Title")</h2>
-            <p class="lead">@Model.GetText("Index_Features_Description")</p>
+            <h2>@Model.GetText("Index_Pillars_Title")</h2>
+            <p class="lead">@Model.GetText("Index_Pillars_Description")</p>
         </div>
         
         <div class="row">
             <div class="col-4">
                 <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_Zeitsparkasse_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_Zeitsparkasse_Description")
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-primary) 0%, #8b5cf6 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Index_Pillars_Spinnen_Label")</strong><br>
+                            @Model.GetText("Index_Pillars_Spinnen_Subtitle")
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">@Model.GetText("Index_Features_Zeitsparkasse_Title")</h3>
-                        <p class="card-text">@Model.GetText("Index_Features_Zeitsparkasse_Description")</p>
+                        <h3 class="card-title">@Model.GetText("Index_Pillars_Spinnen_Title")</h3>
+                        <p class="card-text">@Model.GetText("Index_Pillars_Spinnen_Description")</p>
                         <div class="mt-4">
-                            <a href="/about#zeitsparkasse" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
+                            <a href="/spinnen" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
                         </div>
                     </div>
                 </div>
@@ -82,17 +71,17 @@
             
             <div class="col-4">
                 <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_Innovation_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_Innovation_Description")
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #10b981 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Index_Pillars_Vermitteln_Label")</strong><br>
+                            @Model.GetText("Index_Pillars_Vermitteln_Subtitle")
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">@Model.GetText("Index_Features_Innovation_Title")</h3>
-                        <p class="card-text">@Model.GetText("Index_Features_Innovation_Description")</p>
+                        <h3 class="card-title">@Model.GetText("Index_Pillars_Vermitteln_Title")</h3>
+                        <p class="card-text">@Model.GetText("Index_Pillars_Vermitteln_Description")</p>
                         <div class="mt-4">
-                            <a href="/about#innovation" class="btn btn-primary">@Model.GetText("Index_CTA_BookWorkshop")</a>
+                            <a href="/vermitteln" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
                         </div>
                     </div>
                 </div>
@@ -100,17 +89,17 @@
             
             <div class="col-4">
                 <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_Community_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_Community_Description")
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #f97316 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Index_Pillars_Marktplatz_Label")</strong><br>
+                            @Model.GetText("Index_Pillars_Marktplatz_Subtitle")
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">@Model.GetText("Index_Features_Community_Title")</h3>
-                        <p class="card-text">@Model.GetText("Index_Features_Community_Description")</p>
+                        <h3 class="card-title">@Model.GetText("Index_Pillars_Marktplatz_Title")</h3>
+                        <p class="card-text">@Model.GetText("Index_Pillars_Marktplatz_Description")</p>
                         <div class="mt-4">
-                            <a href="/about#community" class="btn btn-primary">@Model.GetText("Index_CTA_JoinCommunity")</a>
+                            <a href="/marktplatz" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
                         </div>
                     </div>
                 </div>

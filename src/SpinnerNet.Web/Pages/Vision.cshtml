@@ -1,0 +1,241 @@
+@page
+@model SpinnerNet.Web.Pages.VisionModel
+@{
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section - Vision -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("Vision_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("Vision_Hero_Description")</p>
+            
+            <div class="hero-actions">
+                <a href="#bge" class="btn btn-secondary btn-lg">@Model.GetText("Vision_Hero_BGE")</a>
+                <a href="#principle" class="btn btn-outline btn-lg">@Model.GetText("Vision_Hero_Principle")</a>
+                <a href="/contact" class="btn btn-primary btn-lg">@Model.GetText("Vision_Hero_Contact")</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vision Foundation Section -->
+<section class="section-sm" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vision_Foundation_Title")</h2>
+            <p class="lead">@Model.GetText("Vision_Foundation_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <h3>@Model.GetText("Vision_Foundation_Human_Title")</h3>
+                <p>@Model.GetText("Vision_Foundation_Human_Description")</p>
+            </div>
+            <div class="col-6">
+                <h3>@Model.GetText("Vision_Foundation_Together_Title")</h3>
+                <p>@Model.GetText("Vision_Foundation_Together_Description")</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 23% Principle Section -->
+<section class="section" id="principle">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vision_Principle_Title")</h2>
+            <p class="lead">@Model.GetText("Vision_Principle_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-8">
+                <h3>@Model.GetText("Vision_Principle_How_Title")</h3>
+                <p>@Model.GetText("Vision_Principle_How_Description")</p>
+                
+                <h3>@Model.GetText("Vision_Principle_Uses_Title")</h3>
+                <p>@Model.GetText("Vision_Principle_Uses_Description")</p>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body" style="text-align: center; background: linear-gradient(135deg, var(--color-primary) 0%, #4472ca 100%); color: white;">
+                        <h1 style="font-size: 4rem; margin-bottom: 0; color: white;">23%</h1>
+                        <p style="color: rgba(255,255,255,0.9);">@Model.GetText("Vision_Principle_Card_Description")</p>
+                        <hr style="border-color: rgba(255,255,255,0.3);">
+                        <h1 style="font-size: 4rem; margin-bottom: 0; color: white;">77%</h1>
+                        <p style="color: rgba(255,255,255,0.9);">@Model.GetText("Vision_Principle_Card_Personal")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>@Model.GetText("Vision_Principle_Symbol_Title")</h4>
+                        <p>@Model.GetText("Vision_Principle_Symbol_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BGE Section -->
+<section class="section" id="bge" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vision_BGE_Title")</h2>
+            <p class="lead">@Model.GetText("Vision_BGE_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <h3>@Model.GetText("Vision_BGE_How_Title")</h3>
+                <p>@Model.GetText("Vision_BGE_How_Description")</p>
+                
+                <h3>@Model.GetText("Vision_BGE_Chain_Title")</h3>
+                <p>@Model.GetText("Vision_BGE_Chain_Description")</p>
+            </div>
+            <div class="col-6">
+                <h3>@Model.GetText("Vision_BGE_Freedom_Title")</h3>
+                <p>@Model.GetText("Vision_BGE_Freedom_Description")</p>
+                
+                <h3>@Model.GetText("Vision_BGE_Growth_Title")</h3>
+                <p>@Model.GetText("Vision_BGE_Growth_Description")</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- International Vision Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vision_International_Title")</h2>
+            <p class="lead">@Model.GetText("Vision_International_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Vision_International_Global_Title")</h3>
+                        <p>@Model.GetText("Vision_International_Global_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="feature-item">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Vision_International_Exchange_Title")</h3>
+                        <p>@Model.GetText("Vision_International_Exchange_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="feature-item">
+                    <div class="feature-icon">💡</div>
+                    <div class="feature-content">
+                        <h3>@Model.GetText("Vision_International_Projects_Title")</h3>
+                        <p>@Model.GetText("Vision_International_Projects_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Three Pillars Section -->
+<section class="section" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Vision_Pillars_Title")</h2>
+            <p class="lead">@Model.GetText("Vision_Pillars_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-primary) 0%, #6ee7b7 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Nav_Spinnen")</strong><br>
+                            @Model.GetText("Vision_Pillars_Spinnen_Short")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Nav_Spinnen")</h3>
+                        <p class="card-text">@Model.GetText("Vision_Pillars_Spinnen_Description")</p>
+                        <a href="/spinnen" class="btn btn-primary" style="background-color: var(--color-alt-primary); border-color: var(--color-alt-primary);">@Model.GetText("Vision_Pillars_Explore")</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #f9a8d4 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Nav_Vermitteln")</strong><br>
+                            @Model.GetText("Vision_Pillars_Vermitteln_Short")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Nav_Vermitteln")</h3>
+                        <p class="card-text">@Model.GetText("Vision_Pillars_Vermitteln_Description")</p>
+                        <a href="/vermitteln" class="btn btn-primary" style="background-color: var(--color-alt-secondary); border-color: var(--color-alt-secondary);">@Model.GetText("Vision_Pillars_Explore")</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #fdba74 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Nav_Marktplatz")</strong><br>
+                            @Model.GetText("Vision_Pillars_Marktplatz_Short")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Nav_Marktplatz")</h3>
+                        <p class="card-text">@Model.GetText("Vision_Pillars_Marktplatz_Description")</p>
+                        <a href="/marktplatz" class="btn btn-primary" style="background-color: var(--color-alt-quaternary); border-color: var(--color-alt-quaternary);">@Model.GetText("Vision_Pillars_Explore")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%); color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2 style="color: white; margin-bottom: var(--space-24);">@Model.GetText("Vision_CTA_Title")</h2>
+                <p class="lead" style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-32);">
+                    @Model.GetText("Vision_CTA_Description")
+                </p>
+                <div style="display: flex; gap: var(--space-16); flex-wrap: wrap;">
+                    <a href="/contact" class="btn btn-secondary btn-lg">@Model.GetText("Vision_CTA_Contact")</a>
+                    <a href="/spinnen" class="btn btn-outline btn-lg" style="border-color: white; color: white;">@Model.GetText("Vision_CTA_Explore")</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div style="text-align: center;">
+                    <div class="card-img card-img-placeholder" style="background-color: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3); height: 280px;">
+                        <div style="color: rgba(255,255,255,0.8); text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Vision_CTA_Placeholder_Title")</strong><br>
+                            @Model.GetText("Vision_CTA_Placeholder_Description")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

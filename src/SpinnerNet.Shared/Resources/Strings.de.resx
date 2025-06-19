@@ -63,20 +63,23 @@
   <data name="Nav_Home" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="Nav_About" xml:space="preserve">
-    <value>Über uns</value>
-  </data>
-  <data name="Nav_Support" xml:space="preserve">
-    <value>Unterstützen</value>
-  </data>
   <data name="Nav_Contact" xml:space="preserve">
     <value>Kontakt</value>
   </data>
-  <data name="Nav_Beta" xml:space="preserve">
-    <value>Beta-Zugang</value>
-  </data>
   <data name="Nav_App" xml:space="preserve">
     <value>Zur App</value>
+  </data>
+  <data name="Nav_Vision" xml:space="preserve">
+    <value>Vision</value>
+  </data>
+  <data name="Nav_Spinnen" xml:space="preserve">
+    <value>Spinnen</value>
+  </data>
+  <data name="Nav_Vermitteln" xml:space="preserve">
+    <value>Vermitteln</value>
+  </data>
+  <data name="Nav_Marktplatz" xml:space="preserve">
+    <value>Marktplatz</value>
   </data>
   <data name="Nav_Language" xml:space="preserve">
     <value>Sprache</value>
@@ -245,19 +248,353 @@
     <value>Bamberger Spinnerei</value>
   </data>
   <data name="Index_Hero_Slogan" xml:space="preserve">
-    <value>Spin your idea. We give you time.</value>
+    <value>Wir schaffen Raum, Zeit und Vertrauen</value>
   </data>
   <data name="Index_Hero_Description" xml:space="preserve">
-    <value>Die Bamberger Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.</value>
+    <value>Dort, wo einst Maschinen ratterten, soll heute wieder Leben entstehen: durch Ideen, Begegnung und gemeinsames Wirken.</value>
   </data>
-  <data name="Index_Hero_LearnMore" xml:space="preserve">
-    <value>Wie funktioniert das?</value>
+  <data name="Index_Hero_Vision" xml:space="preserve">
+    <value>Unsere Vision</value>
   </data>
-  <data name="Index_Hero_BetaAccess" xml:space="preserve">
-    <value>Beta Zugang</value>
+  <data name="Index_Hero_Discover" xml:space="preserve">
+    <value>Entdecken</value>
   </data>
   <data name="Index_Hero_ToApp" xml:space="preserve">
     <value>Zur App</value>
+  </data>
+  
+  <!-- Vision Section -->
+  <data name="Index_Vision_Title" xml:space="preserve">
+    <value>Unsere Vision</value>
+  </data>
+  <data name="Index_Vision_Description" xml:space="preserve">
+    <value>Eine Gesellschaft, in der individuelle Potenziale gefördert, soziale Verantwortung gelebt und kollektive Intelligenz genutzt wird.</value>
+  </data>
+  <data name="Index_Vision_RoomForAll_Title" xml:space="preserve">
+    <value>Raum für alle</value>
+  </data>
+  <data name="Index_Vision_RoomForAll_Description" xml:space="preserve">
+    <value>Die Spinnerei ist ein Ort für alle Generationen, Kulturen und Lebenslagen – getragen von der Idee: Wer heute trägt, wird morgen getragen.</value>
+  </data>
+  <data name="Index_Vision_Digital_Title" xml:space="preserve">
+    <value>Digitale Ergänzung</value>
+  </data>
+  <data name="Index_Vision_Digital_Description" xml:space="preserve">
+    <value>Ergänzt wird dieser analoge Raum durch &lt;strong&gt;Spinner.Net&lt;/strong&gt; als technologische Plattform – zugänglich für alle, unabhängig von Ort oder technischer Vorerfahrung.</value>
+  </data>
+  
+  <!-- Three Pillars Section -->
+  <data name="Index_Pillars_Title" xml:space="preserve">
+    <value>Unsere drei Säulen</value>
+  </data>
+  <data name="Index_Pillars_Description" xml:space="preserve">
+    <value>Die Spinnerei basiert auf drei miteinander verknüpften Säulen, die sich inhaltlich ergänzen und strukturell gegenseitig tragen.</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Label" xml:space="preserve">
+    <value>SPINNEN</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Subtitle" xml:space="preserve">
+    <value>Ideen entwickeln</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Title" xml:space="preserve">
+    <value>Spinnen</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Description" xml:space="preserve">
+    <value>Hier entstehen Ideen – von handwerklichen über soziale bis hin zu digitalen und internationalen Projekten. Die Spinnerei bietet Raum, Material, Vernetzung und Begleitung.</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Label" xml:space="preserve">
+    <value>VERMITTELN</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Subtitle" xml:space="preserve">
+    <value>Wissen teilen</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Title" xml:space="preserve">
+    <value>Vermitteln</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Description" xml:space="preserve">
+    <value>Wissen wird nicht belehrt, sondern geteilt. In einer Atmosphäre des Vertrauens entstehen Workshops, Kurse und inspirierende Begegnungen zwischen Menschen unterschiedlicher Lebenswege.</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Label" xml:space="preserve">
+    <value>MARKTPLATZ</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Subtitle" xml:space="preserve">
+    <value>Arbeit neu denken</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Title" xml:space="preserve">
+    <value>Marktplatz</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Description" xml:space="preserve">
+    <value>Ein Ort, an dem Arbeit neu gedacht wird – selbstbestimmt, vielseitig und menschenfreundlich. Hier arbeiten Menschen frei, aber nicht allein.</value>
+  </data>
+  <data name="Index_CTA_LearnMore" xml:space="preserve">
+    <value>Mehr erfahren</value>
+  </data>
+
+  <!-- Vision Page -->
+  <data name="Vision_Title" xml:space="preserve">
+    <value>Vision</value>
+  </data>
+  <data name="Vision_Description" xml:space="preserve">
+    <value>Die Vision der Bamberger Spinnerei: Eine Gesellschaft, in der individuelle Potenziale gefördert, soziale Verantwortung gelebt und kollektive Intelligenz genutzt wird. Entdecken Sie das 23%-Prinzip und das BGE.</value>
+  </data>
+  <data name="Vision_Hero_Title" xml:space="preserve">
+    <value>Unsere Vision</value>
+  </data>
+  <data name="Vision_Hero_Description" xml:space="preserve">
+    <value>Eine Gesellschaft, in der individuelle Potenziale gefördert, soziale Verantwortung gelebt und kollektive Intelligenz genutzt wird.</value>
+  </data>
+  <data name="Vision_Hero_BGE" xml:space="preserve">
+    <value>Das BGE</value>
+  </data>
+  <data name="Vision_Hero_Principle" xml:space="preserve">
+    <value>23%-Prinzip</value>
+  </data>
+  <data name="Vision_Hero_Contact" xml:space="preserve">
+    <value>Mitmachen</value>
+  </data>
+  <data name="Vision_Foundation_Title" xml:space="preserve">
+    <value>Grundgedanke</value>
+  </data>
+  <data name="Vision_Foundation_Description" xml:space="preserve">
+    <value>Die Spinnerei schafft Raum, Zeit und Vertrauen, damit Menschen sich entfalten, Ideen verwirklichen und Gemeinschaft gestalten können.</value>
+  </data>
+  <data name="Vision_Foundation_Human_Title" xml:space="preserve">
+    <value>Der Mensch im Mittelpunkt</value>
+  </data>
+  <data name="Vision_Foundation_Human_Description" xml:space="preserve">
+    <value>Im Zentrum steht der Mensch in seiner Ganzheit – nicht nur als Arbeitnehmer, Konsument oder Leistungserbringer, sondern als fühlendes, denkendes und schöpferisches Wesen.</value>
+  </data>
+  <data name="Vision_Foundation_Together_Title" xml:space="preserve">
+    <value>Wer heute trägt, wird morgen getragen</value>
+  </data>
+  <data name="Vision_Foundation_Together_Description" xml:space="preserve">
+    <value>Ein Ort für alle Generationen, Kulturen und Lebenslagen – getragen von der Idee des gegenseitigen Tragens und Getragen-Werdens.</value>
+  </data>
+  <data name="Vision_Principle_Title" xml:space="preserve">
+    <value>Das 23%-Prinzip</value>
+  </data>
+  <data name="Vision_Principle_Description" xml:space="preserve">
+    <value>Die wirtschaftliche Grundlage der Spinnerei basiert auf einem einfachen, aber wirkungsvollen Prinzip solidarischer Finanzierung.</value>
+  </data>
+  <data name="Vision_Principle_How_Title" xml:space="preserve">
+    <value>Wie es funktioniert</value>
+  </data>
+  <data name="Vision_Principle_How_Description" xml:space="preserve">
+    <value>Wer durch die Spinnerei Einkünfte erzielt – sei es durch Kurse, Projekte, Dienstleistungen oder Verkauf –, gibt 23% dieser Einnahmen in den gemeinsamen Spinnerei-Topf. Die verbleibenden 77% bleiben frei zur persönlichen Verfügung.</value>
+  </data>
+  <data name="Vision_Principle_Uses_Title" xml:space="preserve">
+    <value>Wofür wird es verwendet</value>
+  </data>
+  <data name="Vision_Principle_Uses_Description" xml:space="preserve">
+    <value>Der Topf finanziert den Unterhalt der Räume, technische Infrastruktur wie Spinner.Net, neue Projekte und Anschubfinanzierungen, das BGE, sowie Weiterbildung und Öffentlichkeitsarbeit.</value>
+  </data>
+  <data name="Vision_Principle_Card_Description" xml:space="preserve">
+    <value>für die Gemeinschaft</value>
+  </data>
+  <data name="Vision_Principle_Card_Personal" xml:space="preserve">
+    <value>persönlich verfügbar</value>
+  </data>
+  <data name="Vision_Principle_Symbol_Title" xml:space="preserve">
+    <value>Symbolische Bedeutung</value>
+  </data>
+  <data name="Vision_Principle_Symbol_Description" xml:space="preserve">
+    <value>Die Zahl 23 steht symbolisch für eine freiwillige und verantwortungsbewusste Beteiligung an einer Gemeinschaft, in der jede und jeder dazu beiträgt, dass andere wachsen können. Dabei geht es nicht um Kontrolle, sondern um Vertrauen – das zentrale Kapital der Spinnerei.</value>
+  </data>
+  <data name="Vision_BGE_Title" xml:space="preserve">
+    <value>Das BGE der Spinnerei</value>
+  </data>
+  <data name="Vision_BGE_Description" xml:space="preserve">
+    <value>Ein bedingungsloses Grundeinkommen, das aus dem gemeinsamen Topf finanziert wird und Menschen einen sicheren Raum für Orientierung und kreative Entfaltung ermöglicht.</value>
+  </data>
+  <data name="Vision_BGE_How_Title" xml:space="preserve">
+    <value>Wie es beginnt</value>
+  </data>
+  <data name="Vision_BGE_How_Description" xml:space="preserve">
+    <value>Zu Beginn wird Peter Paul Clinton aus eigenen Einnahmen eine erste Person mittragen. Sobald diese Person durch eigene Projekte Einkünfte generiert, sinkt der BGE-Anteil – und der nächste Mensch kann getragen werden.</value>
+  </data>
+  <data name="Vision_BGE_Chain_Title" xml:space="preserve">
+    <value>Kette des Vertrauens</value>
+  </data>
+  <data name="Vision_BGE_Chain_Description" xml:space="preserve">
+    <value>Dieses Prinzip schafft eine Kette des Vertrauens: Wer getragen wurde, trägt später andere mit. Das BGE ist keine Einbahnstraße, sondern ein dynamischer Kreislauf.</value>
+  </data>
+  <data name="Vision_BGE_Freedom_Title" xml:space="preserve">
+    <value>Bedingungslose Freiheit</value>
+  </data>
+  <data name="Vision_BGE_Freedom_Description" xml:space="preserve">
+    <value>Menschen, die durch das BGE getragen werden, haben in der Anfangsphase keinerlei Verpflichtungen. Sie erhalten Zeit und Raum, um wieder zu sich selbst zu finden und neue Lebensperspektiven zu entwickeln.</value>
+  </data>
+  <data name="Vision_BGE_Growth_Title" xml:space="preserve">
+    <value>Organisches Wachstum</value>
+  </data>
+  <data name="Vision_BGE_Growth_Description" xml:space="preserve">
+    <value>Erst mit der Zeit – wenn der Wunsch nach Mitwirkung von innen kommt – entstehen Ideen für eigene Projekte oder Engagement. Spinner.Net begleitet diesen Weg behutsam.</value>
+  </data>
+  <data name="Vision_International_Title" xml:space="preserve">
+    <value>Internationale Wirkung</value>
+  </data>
+  <data name="Vision_International_Description" xml:space="preserve">
+    <value>Die Spinnerei denkt über Bamberg hinaus – als Modell, das auch in anderen Regionen und Ländern wirken kann.</value>
+  </data>
+  <data name="Vision_International_Global_Title" xml:space="preserve">
+    <value>Global vernetzt</value>
+  </data>
+  <data name="Vision_International_Global_Description" xml:space="preserve">
+    <value>Spinnereien in verschiedenen Ländern könnten entstehen – vernetzt über Spinner.Net, aber mit eigenem kulturellem Charakter.</value>
+  </data>
+  <data name="Vision_International_Exchange_Title" xml:space="preserve">
+    <value>Austausch fördern</value>
+  </data>
+  <data name="Vision_International_Exchange_Description" xml:space="preserve">
+    <value>Bildungsaustausch, Jugendbegegnungen und internationale Praktika eröffnen neue Perspektiven für alle Beteiligten.</value>
+  </data>
+  <data name="Vision_International_Projects_Title" xml:space="preserve">
+    <value>Projekte mit Wirkung</value>
+  </data>
+  <data name="Vision_International_Projects_Description" xml:space="preserve">
+    <value>Beispielprojekte wie das Trainingszentrum für Tourismuskräfte in Sri Lanka zeigen das globale Potenzial des Konzepts.</value>
+  </data>
+  <data name="Vision_CTA_Title" xml:space="preserve">
+    <value>Teil der Vision werden</value>
+  </data>
+  <data name="Vision_CTA_Description" xml:space="preserve">
+    <value>Die Spinnerei lebt von Begegnung, Vertrauen und Mitgestaltung. Jede Person ist eingeladen – egal ob neugierig, skeptisch, begeistert oder einfach auf der Suche.</value>
+  </data>
+  <data name="Vision_CTA_Contact" xml:space="preserve">
+    <value>Kontakt aufnehmen</value>
+  </data>
+  <data name="Vision_CTA_Explore" xml:space="preserve">
+    <value>Säulen entdecken</value>
+  </data>
+  <data name="Vision_CTA_Placeholder_Title" xml:space="preserve">
+    <value>Vision in Aktion</value>
+  </data>
+  <data name="Vision_CTA_Placeholder_Description" xml:space="preserve">
+    <value>Hier könnte ein inspirierendes Bild der Gemeinschaft stehen</value>
+  </data>
+
+  <!-- Spinnen Page -->
+  <data name="Spinnen_Title" xml:space="preserve">
+    <value>Spinnen</value>
+  </data>
+  <data name="Spinnen_Description" xml:space="preserve">
+    <value>Hier entstehen Ideen – von handwerklichen über soziale bis hin zu digitalen und internationalen Projekten. Die Spinnerei bietet Raum, Material, Vernetzung und Begleitung für Ihre kreativen Vorhaben.</value>
+  </data>
+  <data name="Spinnen_Hero_Title" xml:space="preserve">
+    <value>Spinnen</value>
+  </data>
+  <data name="Spinnen_Hero_Subtitle" xml:space="preserve">
+    <value>Hier entstehen Ideen</value>
+  </data>
+  <data name="Spinnen_Hero_Description" xml:space="preserve">
+    <value>Von handwerklichen über soziale bis hin zu digitalen und internationalen Projekten. Die Spinnerei bietet Raum, Material, Vernetzung und Begleitung.</value>
+  </data>
+  <data name="Spinnen_Hero_Projects" xml:space="preserve">
+    <value>Projekte entdecken</value>
+  </data>
+  <data name="Spinnen_Hero_Education" xml:space="preserve">
+    <value>Bildung &amp; Zukunft</value>
+  </data>
+  <data name="Spinnen_Hero_Contact" xml:space="preserve">
+    <value>Projekt starten</value>
+  </data>
+  <data name="Spinnen_Space_Title" xml:space="preserve">
+    <value>Kreativer Freiraum</value>
+  </data>
+  <data name="Spinnen_Space_Description" xml:space="preserve">
+    <value>Ob ein Kind ein neues Spielgerät für den Spielplatz entwirft, ein Gründer eine kommerzielle Plattform entwickelt oder ein Jugendlicher eine App gestaltet: Die Spinnerei bietet den Rahmen.</value>
+  </data>
+  <data name="Spinnen_Space_Room_Title" xml:space="preserve">
+    <value>Raum</value>
+  </data>
+  <data name="Spinnen_Space_Room_Description" xml:space="preserve">
+    <value>Physische und digitale Räume für kreative Entfaltung, ausgestattet mit den notwendigen Werkzeugen und Technologien.</value>
+  </data>
+  <data name="Spinnen_Space_Material_Title" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="Spinnen_Space_Material_Description" xml:space="preserve">
+    <value>Von Prototyping-Tools bis hin zu digitalen Plattformen – alles was benötigt wird, um Ideen in die Realität umzusetzen.</value>
+  </data>
+  <data name="Spinnen_Space_Network_Title" xml:space="preserve">
+    <value>Vernetzung</value>
+  </data>
+  <data name="Spinnen_Space_Network_Description" xml:space="preserve">
+    <value>Verbindung zu Mentoren, Partnern und anderen Kreativen, die bei der Umsetzung unterstützen können.</value>
+  </data>
+  <data name="Spinnen_Education_Title" xml:space="preserve">
+    <value>Bildung &amp; Zukunft neu denken</value>
+  </data>
+  <data name="Spinnen_Education_Description" xml:space="preserve">
+    <value>Ein besonderer Fokus liegt auf Kindern und Jugendlichen, denn sie sind unsere Zukunft. Hier entstehen neue Formen von Erziehung, sozialer Arbeit und Mental Health.</value>
+  </data>
+  <data name="Spinnen_CTA_Title" xml:space="preserve">
+    <value>Deine Idee spinnen</value>
+  </data>
+  <data name="Spinnen_CTA_Description" xml:space="preserve">
+    <value>Hast du eine Idee, die Raum, Material oder Vernetzung braucht? Die Spinnerei unterstützt dich dabei, aus der Vision Realität zu machen.</value>
+  </data>
+  <data name="Spinnen_CTA_Contact" xml:space="preserve">
+    <value>Projekt besprechen</value>
+  </data>
+  <data name="Spinnen_CTA_Learn" xml:space="preserve">
+    <value>Erste Schritte lernen</value>
+  </data>
+  <data name="Spinnen_CTA_Placeholder_Title" xml:space="preserve">
+    <value>Projekte entstehen</value>
+  </data>
+  <data name="Spinnen_CTA_Placeholder_Description" xml:space="preserve">
+    <value>Hier könnte ein Bild der kreativen Arbeit stehen</value>
+  </data>
+
+  <!-- Footer -->
+  <data name="Footer_Mission" xml:space="preserve">
+    <value>Wir schaffen Raum, Zeit und Vertrauen, damit Menschen sich entfalten, Ideen verwirklichen und Gemeinschaft gestalten können.</value>
+  </data>
+  <data name="Footer_Address" xml:space="preserve">
+    <value>Adresse:</value>
+  </data>
+  <data name="Footer_Address_Line1" xml:space="preserve">
+    <value>Bamberger Spinnerei</value>
+  </data>
+  <data name="Footer_Address_Line2" xml:space="preserve">
+    <value>Innovation &amp; Community Hub</value>
+  </data>
+  <data name="Footer_Address_Line3" xml:space="preserve">
+    <value>96047 Bamberg, Deutschland</value>
+  </data>
+  <data name="Footer_Pillars" xml:space="preserve">
+    <value>Die drei Säulen</value>
+  </data>
+  <data name="Footer_Resources" xml:space="preserve">
+    <value>Ressourcen</value>
+  </data>
+  <data name="Footer_Vision_Mission" xml:space="preserve">
+    <value>Vision &amp; Mission</value>
+  </data>
+  <data name="Footer_Contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="Footer_ToApp" xml:space="preserve">
+    <value>Zur App</value>
+  </data>
+  <data name="Footer_Legal" xml:space="preserve">
+    <value>Rechtliches</value>
+  </data>
+  <data name="Footer_Imprint" xml:space="preserve">
+    <value>Impressum</value>
+  </data>
+  <data name="Footer_Privacy" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="Footer_Terms" xml:space="preserve">
+    <value>AGB</value>
+  </data>
+  <data name="Footer_PoweredBy" xml:space="preserve">
+    <value>Powered by</value>
+  </data>
+  <data name="Footer_Subtitle" xml:space="preserve">
+    <value>Spinn deine Idee. Wir geben dir Zeit.</value>
   </data>
 
   <!-- Index Features Section -->
@@ -1088,6 +1425,243 @@
   <!-- Stats Section -->
   <data name="Index_Stats_PartnerCompanies" xml:space="preserve">
     <value>Partner-Unternehmen</value>
+  </data>
+
+  <!-- Spinnen Page - Education Section -->
+  <data name="Spinnen_Education_Holistic_Title" xml:space="preserve">
+    <value>Ganzheitlicher Blick</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Description" xml:space="preserve">
+    <value>Wie können Kinder ihre Talente entdecken, emotionale Stärke entwickeln und selbstbestimmt wachsen? Jenseits von Leistungsdruck und veralteten Lehrplänen.</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Formats" xml:space="preserve">
+    <value>Formate</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format1" xml:space="preserve">
+    <value>Lernwerkstätten</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format2" xml:space="preserve">
+    <value>Eltern-Kind-Formate</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format3" xml:space="preserve">
+    <value>Kreative Nachmittagsangebote</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format4" xml:space="preserve">
+    <value>Therapie-unterstützende Spielgruppen</value>
+  </data>
+  <data name="Spinnen_Education_Future_Title" xml:space="preserve">
+    <value>Zukunftskompetenzen</value>
+  </data>
+  <data name="Spinnen_Education_Future_Description" xml:space="preserve">
+    <value>Gesellschaftlich wichtige Themen werden in kleinen, geschützten Gruppen erprobt und gemeinsam weiterentwickelt.</value>
+  </data>
+  <data name="Spinnen_Education_Future_Areas" xml:space="preserve">
+    <value>Themenbereiche</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area1" xml:space="preserve">
+    <value>Medienkompetenz</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area2" xml:space="preserve">
+    <value>Naturerfahrung</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area3" xml:space="preserve">
+    <value>Gewaltfreie Kommunikation</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area4" xml:space="preserve">
+    <value>Kulturelle Bildung</value>
+  </data>
+  <data name="Spinnen_Projects_Title" xml:space="preserve">
+    <value>Beispielhafte Projekte</value>
+  </data>
+  <data name="Spinnen_Projects_Description" xml:space="preserve">
+    <value>Von lokalen Initiativen bis zu internationalen Visionen – die Spinnerei ist ein lebendiges Ökosystem mit Platz für kleine und große Vorhaben.</value>
+  </data>
+
+  <!-- Vision Pillars Section -->
+  <data name="Vision_Pillars_Title" xml:space="preserve">
+    <value>Die drei Säulen der Spinnerei</value>
+  </data>
+  <data name="Vision_Pillars_Description" xml:space="preserve">
+    <value>Entdecke die drei Kernbereiche, in denen Menschen gemeinsam beitragen, lernen und wachsen können.</value>
+  </data>
+  <data name="Vision_Pillars_Spinnen_Short" xml:space="preserve">
+    <value>Kreativität &amp; Entwicklung</value>
+  </data>
+  <data name="Vision_Pillars_Spinnen_Description" xml:space="preserve">
+    <value>Raum für kreative Entfaltung, Bildung und innovative Projekte, die aus der Gemeinschaft heraus wachsen.</value>
+  </data>
+  <data name="Vision_Pillars_Vermitteln_Short" xml:space="preserve">
+    <value>Wissen &amp; Teilen</value>
+  </data>
+  <data name="Vision_Pillars_Vermitteln_Description" xml:space="preserve">
+    <value>Menschen verbinden, Wissen teilen und Brücken zwischen verschiedenen Gemeinschaften und Erfahrungen bauen.</value>
+  </data>
+  <data name="Vision_Pillars_Marktplatz_Short" xml:space="preserve">
+    <value>Arbeit &amp; Markt</value>
+  </data>
+  <data name="Vision_Pillars_Marktplatz_Description" xml:space="preserve">
+    <value>Ein Marktplatz für sinnvolle Arbeit, nachhaltige Projekte und wirtschaftliche Aktivitäten, die der Gemeinschaft dienen.</value>
+  </data>
+  <data name="Vision_Pillars_Explore" xml:space="preserve">
+    <value>Entdecken</value>
+  </data>
+
+  <!-- Vermitteln Page -->
+  <data name="Vermitteln_Title" xml:space="preserve">
+    <value>Vermitteln - Wissen &amp; Teilen</value>
+  </data>
+  <data name="Vermitteln_Description" xml:space="preserve">
+    <value>Menschen verbinden, Wissen teilen und Brücken zwischen verschiedenen Gemeinschaften und Erfahrungen bauen.</value>
+  </data>
+  <data name="Vermitteln_Hero_Title" xml:space="preserve">
+    <value>Menschen verbinden &amp; Wissen teilen</value>
+  </data>
+  <data name="Vermitteln_Hero_Subtitle" xml:space="preserve">
+    <value>Brücken bauen zwischen Gemeinschaften, Erfahrungen und Generationen.</value>
+  </data>
+  <data name="Vermitteln_Hero_Description" xml:space="preserve">
+    <value>Jeder Mensch trägt einzigartiges Wissen und Erfahrungen in sich. Wir schaffen Räume, in denen Menschen voneinander lernen und gemeinsam wachsen können.</value>
+  </data>
+  <data name="Vermitteln_Hero_Mentoring" xml:space="preserve">
+    <value>Mentoring</value>
+  </data>
+  <data name="Vermitteln_Hero_Events" xml:space="preserve">
+    <value>Veranstaltungen</value>
+  </data>
+  <data name="Vermitteln_Hero_Contact" xml:space="preserve">
+    <value>Mitmachen</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Title" xml:space="preserve">
+    <value>Wissen als Brücke</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Description" xml:space="preserve">
+    <value>Wir glauben, dass geteiltes Wissen Verbindungen schafft und neue Möglichkeiten für alle eröffnet.</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Experience_Title" xml:space="preserve">
+    <value>Lebenserfahrung</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Experience_Description" xml:space="preserve">
+    <value>Jeder Mensch trägt wertvolle Lebenserfahrungen in sich, die andere auf ihrem Weg inspirieren und leiten können.</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Skills_Title" xml:space="preserve">
+    <value>Praktische Fertigkeiten</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Skills_Description" xml:space="preserve">
+    <value>Vom Handwerk bis zur Technologie, vom Kochen bis zur Kommunikation - geteilte Fertigkeiten stärken die ganze Gemeinschaft.</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Network_Title" xml:space="preserve">
+    <value>Netzwerke &amp; Verbindungen</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Network_Description" xml:space="preserve">
+    <value>Die richtigen Menschen zur richtigen Zeit zu verbinden kann wunderbare Möglichkeiten und Kooperationen schaffen.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Title" xml:space="preserve">
+    <value>Mentoring &amp; Coaching</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Description" xml:space="preserve">
+    <value>Erfahrene Gemeinschaftsmitglieder unterstützen andere in ihrer persönlichen und beruflichen Entwicklung.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Title" xml:space="preserve">
+    <value>Persönliche Entwicklung</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Description" xml:space="preserve">
+    <value>Unterstützung beim Finden des eigenen Weges, beim Aufbau von Selbstvertrauen und beim Entdecken persönlicher Stärken.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Areas" xml:space="preserve">
+    <value>Bereiche</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area1" xml:space="preserve">
+    <value>Lebensorientierung &amp; Zielsetzung</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area2" xml:space="preserve">
+    <value>Selbstvertrauen &amp; Kommunikation</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area3" xml:space="preserve">
+    <value>Work-Life-Balance</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area4" xml:space="preserve">
+    <value>Beziehungsaufbau</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Title" xml:space="preserve">
+    <value>Berufliches Coaching</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Description" xml:space="preserve">
+    <value>Begleitung bei der Karriereentwicklung, dem Aufbau von Fertigkeiten und beruflicher Vernetzung in sinnvollen Arbeitskontexten.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Areas" xml:space="preserve">
+    <value>Schwerpunkte</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area1" xml:space="preserve">
+    <value>Berufswechsel &amp; Neuorientierung</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area2" xml:space="preserve">
+    <value>Unternehmertum &amp; Selbstständigkeit</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area3" xml:space="preserve">
+    <value>Führung &amp; Teamentwicklung</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area4" xml:space="preserve">
+    <value>Kreative Projekte &amp; Innovation</value>
+  </data>
+  <data name="Vermitteln_Events_Title" xml:space="preserve">
+    <value>Veranstaltungen &amp; Gemeinschaftstreffen</value>
+  </data>
+  <data name="Vermitteln_Events_Description" xml:space="preserve">
+    <value>Regelmäßige Veranstaltungen bringen Menschen zusammen zum Lernen, Teilen und dem Aufbau dauerhafter Verbindungen.</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Short" xml:space="preserve">
+    <value>WORKSHOPS</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Subtitle" xml:space="preserve">
+    <value>Praktisches Lernen</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Title" xml:space="preserve">
+    <value>Fertigkeiten-Workshops</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Description" xml:space="preserve">
+    <value>Praktische Workshops, in denen sich Gemeinschaftsmitglieder gegenseitig nützliche Fertigkeiten und Handwerk beibringen.</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Short" xml:space="preserve">
+    <value>TALKS</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Subtitle" xml:space="preserve">
+    <value>Inspiration &amp; Geschichten</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Title" xml:space="preserve">
+    <value>Gemeinschafts-Talks</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Description" xml:space="preserve">
+    <value>Inspirierende Vorträge, in denen Menschen ihre Wege, Einsichten und Lebenslektionen mit der Gemeinschaft teilen.</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Short" xml:space="preserve">
+    <value>NETWORKING</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Subtitle" xml:space="preserve">
+    <value>Verbindungen knüpfen</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Title" xml:space="preserve">
+    <value>Networking-Events</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Description" xml:space="preserve">
+    <value>Ungezwungene Zusammenkünfte, die darauf ausgelegt sind, Menschen zu helfen, sich zu treffen, zu vernetzen und Kooperationsmöglichkeiten zu entdecken.</value>
+  </data>
+  <data name="Vermitteln_CTA_Title" xml:space="preserve">
+    <value>Bereit zum Teilen &amp; Vernetzen?</value>
+  </data>
+  <data name="Vermitteln_CTA_Description" xml:space="preserve">
+    <value>Ob du dein Wissen teilen oder von anderen lernen möchtest - in unserer Gemeinschaft von Vermittlern und Lernenden ist Platz für dich.</value>
+  </data>
+  <data name="Vermitteln_CTA_Contact" xml:space="preserve">
+    <value>Mitmachen</value>
+  </data>
+  <data name="Vermitteln_CTA_Explore" xml:space="preserve">
+    <value>Andere Säulen entdecken</value>
+  </data>
+  <data name="Vermitteln_CTA_Placeholder_Title" xml:space="preserve">
+    <value>DEIN WISSEN ZÄHLT</value>
+  </data>
+  <data name="Vermitteln_CTA_Placeholder_Description" xml:space="preserve">
+    <value>Was du weißt, kann anderen beim Wachsen helfen</value>
   </data>
 
 </root>

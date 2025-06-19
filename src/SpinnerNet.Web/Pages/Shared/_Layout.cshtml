@@ -26,8 +26,12 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/bamberger-spinnerei-heart-logo.svg" />
-    <link rel="apple-touch-icon" href="/images/bamberger-spinnerei-heart-logo.svg" />
-    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/images/favicon-256.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,18 +63,18 @@
                 <div class="navbar-menu" id="navbarMenu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="/about" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/About" ? "active" : "")">
-                                @GetText("Nav_About", "Über uns")
+                            <a href="/vision" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Vision" ? "active" : "")">
+                                @LocalizationService.GetString("Nav_Vision")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/beta" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Beta" ? "active" : "")" style="background: #ef4444; color: white; border-radius: var(--radius-md); padding: var(--space-8) var(--space-16); font-weight: var(--font-weight-semibold); transition: all 0.2s ease;">
+                                Beta Programm
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/contact" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Contact" ? "active" : "")">
-                                @GetText("Nav_Contact", "Kontakt")
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/beta" class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Beta" ? "active" : "")">
-                                @GetText("Nav_Beta", "Beta-Zugang")
+                                @LocalizationService.GetString("Nav_Contact")
                             </a>
                         </li>
                     </ul>
@@ -85,7 +89,7 @@
                                 <option value="es" @(GetCurrentLanguage() == "es" ? "selected" : "")">🇪🇸 ES</option>
                             </select>
                         </div>
-                        <a href="@(ViewData["BlazorAppUrl"] ?? "/app")" class="btn btn-primary navbar-cta">@GetText("Nav_App", "Zur App")</a>
+                        <a href="@(ViewData["BlazorAppUrl"] ?? "/app")" class="btn btn-primary navbar-cta">@LocalizationService.GetString("Nav_App")</a>
                     </div>
                 </div>
             </div>
@@ -103,51 +107,46 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Bamberger Spinnerei</h4>
-                    <p>@GetText("footer.mission", "Wir schaffen Raum, Zeit und Vertrauen, damit Menschen Ideen entwickeln, verwirklichen und Gemeinschaft gestalten können.")</p>
+                    <p>@LocalizationService.GetString("Footer_Mission")</p>
                     <p>
-                        <strong>@GetText("footer.address", "Adresse:"):</strong><br>
-                        @GetText("footer.address.line1", "Bamberger Spinnerei")<br>
-                        @GetText("footer.address.line2", "Innovation & Community Hub")<br>
-                        @GetText("footer.address.line3", "96047 Bamberg, Deutschland")
+                        <strong>@LocalizationService.GetString("Footer_Address")</strong><br>
+                        @LocalizationService.GetString("Footer_Address_Line1")<br>
+                        @LocalizationService.GetString("Footer_Address_Line2")<br>
+                        @LocalizationService.GetString("Footer_Address_Line3")
                     </p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>@GetText("footer.services", "Leistungen")</h4>
+                    <h4>@LocalizationService.GetString("Footer_Pillars")</h4>
                     <ul class="footer-links">
-                        <li><a href="/about#zeitsparkasse">@GetText("footer.zeitsparkasse", "Zeitsparkasse™")</a></li>
-                        <li><a href="/about#innovation">@GetText("footer.innovation", "Innovation Labs")</a></li>
-                        <li><a href="/about#community">@GetText("footer.community", "Community Building")</a></li>
-                        <li><a href="/about#workshops">@GetText("footer.workshops", "Workshops & Events")</a></li>
-                        <li><a href="/beta">@GetText("footer.beta", "Beta Programm")</a></li>
+                        <li><a href="/spinnen">@LocalizationService.GetString("Nav_Spinnen")</a></li>
+                        <li><a href="/vermitteln">@LocalizationService.GetString("Nav_Vermitteln")</a></li>
+                        <li><a href="/marktplatz">@LocalizationService.GetString("Nav_Marktplatz")</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>@GetText("footer.resources", "Ressourcen")</h4>
+                    <h4>@LocalizationService.GetString("Footer_Resources")</h4>
                     <ul class="footer-links">
-                        <li><a href="/about#vision">@GetText("footer.vision", "Vision & Mission")</a></li>
-                        <li><a href="/about#team">@GetText("footer.team", "Team")</a></li>
-                        <li><a href="/support">@GetText("footer.support", "Support")</a></li>
-                        <li><a href="/contact">@GetText("footer.contact", "Kontakt")</a></li>
-                        <li><a href="/test">@GetText("footer.test", "Test Seite")</a></li>
+                        <li><a href="/vision">@LocalizationService.GetString("Nav_Vision")</a></li>
+                        <li><a href="/contact">@LocalizationService.GetString("Footer_Contact")</a></li>
+                        <li><a href="/app">@LocalizationService.GetString("Footer_ToApp")</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>@GetText("footer.legal", "Rechtliches")</h4>
+                    <h4>@LocalizationService.GetString("Footer_Legal")</h4>
                     <ul class="footer-links">
-                        <li><a href="/impressum">@GetText("footer.impressum", "Impressum")</a></li>
-                        <li><a href="/datenschutz">@GetText("footer.privacy", "Datenschutz")</a></li>
-                        <li><a href="/agb">@GetText("footer.terms", "AGB")</a></li>
-                        <li><a href="/cookies">@GetText("footer.cookies", "Cookie-Richtlinie")</a></li>
+                        <li><a href="/impressum">@LocalizationService.GetString("Footer_Imprint")</a></li>
+                        <li><a href="/datenschutz">@LocalizationService.GetString("Footer_Privacy")</a></li>
+                        <li><a href="/agb">@LocalizationService.GetString("Footer_Terms")</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Bamberger Spinnerei • @GetText("footer.created", "Powered by") <strong>@(ViewData["SiteAuthor"] ?? "Spinner.Net")</strong></p>
-                <p class="text-xs mt-2">@GetText("footer.subtitle", "Spin your idea. We give you time.")</p>
+                <p>&copy; 2025 Bamberger Spinnerei • @LocalizationService.GetString("Footer_PoweredBy") <strong>@(ViewData["SiteAuthor"] ?? "Spinner.Net")</strong></p>
+                <p class="text-xs mt-2">@LocalizationService.GetString("Footer_Subtitle")</p>
             </div>
         </div>
     </footer>
@@ -279,18 +278,6 @@
         return LocalizationService.CurrentCulture.TwoLetterISOLanguageName;
     }
     
-    private string GetText(string key, string defaultText)
-    {
-        var result = LocalizationService.GetString(key);
-        
-        // If the result is in the format [key], use the default text
-        if (result.StartsWith('[') && result.EndsWith(']'))
-        {
-            return defaultText;
-        }
-        
-        return result;
-    }
     
     private string GetPageName()
     {
@@ -299,8 +286,12 @@
         
         return path.TrimStart('/').Split('/')[0] switch
         {
-            "about" => "about",
+            "vision" => "vision",
+            "spinnen" => "spinnen",
+            "vermitteln" => "vermitteln",
+            "marktplatz" => "marktplatz",
             "contact" => "contact", 
+            "about" => "about",
             "beta" => "beta",
             "support" => "support",
             _ => "home"

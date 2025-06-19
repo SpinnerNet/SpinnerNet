@@ -63,20 +63,23 @@
   <data name="Nav_Home" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Nav_About" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="Nav_Support" xml:space="preserve">
-    <value>Support</value>
-  </data>
   <data name="Nav_Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
-  <data name="Nav_Beta" xml:space="preserve">
-    <value>Beta Access</value>
-  </data>
   <data name="Nav_App" xml:space="preserve">
     <value>Go to App</value>
+  </data>
+  <data name="Nav_Vision" xml:space="preserve">
+    <value>Vision</value>
+  </data>
+  <data name="Nav_Spinnen" xml:space="preserve">
+    <value>Spin</value>
+  </data>
+  <data name="Nav_Vermitteln" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="Nav_Marktplatz" xml:space="preserve">
+    <value>Marketplace</value>
   </data>
   <data name="Nav_Language" xml:space="preserve">
     <value>Language</value>
@@ -242,22 +245,407 @@
 
   <!-- Index Page Content -->
   <data name="Index_Hero_Title" xml:space="preserve">
-    <value>Imagine having a personal buddy</value>
+    <value>Bamberger Spinnerei</value>
   </data>
   <data name="Index_Hero_Slogan" xml:space="preserve">
-    <value>Spin your idea. We give you time.</value>
+    <value>We create space, time and trust</value>
   </data>
   <data name="Index_Hero_Description" xml:space="preserve">
-    <value>...who knows you like your best friend. Who knows when you're productive, what motivates you. Who helps you use your time so that you're satisfied in the evening.</value>
+    <value>Where machines once rattled, life should emerge again: through ideas, encounters and collaborative action.</value>
   </data>
-  <data name="Index_Hero_LearnMore" xml:space="preserve">
-    <value>How does it work?</value>
+  <data name="Index_Hero_Vision" xml:space="preserve">
+    <value>Our Vision</value>
   </data>
-  <data name="Index_Hero_BetaAccess" xml:space="preserve">
-    <value>Meet your buddy</value>
+  <data name="Index_Hero_Discover" xml:space="preserve">
+    <value>Discover</value>
   </data>
   <data name="Index_Hero_ToApp" xml:space="preserve">
     <value>Go to App</value>
+  </data>
+  
+  <!-- Vision Section -->
+  <data name="Index_Vision_Title" xml:space="preserve">
+    <value>Our Vision</value>
+  </data>
+  <data name="Index_Vision_Description" xml:space="preserve">
+    <value>A society in which individual potential is promoted, social responsibility is lived and collective intelligence is used.</value>
+  </data>
+  <data name="Index_Vision_RoomForAll_Title" xml:space="preserve">
+    <value>Room for all</value>
+  </data>
+  <data name="Index_Vision_RoomForAll_Description" xml:space="preserve">
+    <value>The Spinnerei is a place for all generations, cultures and life situations – carried by the idea: Who carries today, will be carried tomorrow.</value>
+  </data>
+  <data name="Index_Vision_Digital_Title" xml:space="preserve">
+    <value>Digital complement</value>
+  </data>
+  <data name="Index_Vision_Digital_Description" xml:space="preserve">
+    <value>This analog space is complemented by &lt;strong&gt;Spinner.Net&lt;/strong&gt; as a technological platform – accessible to all, regardless of location or technical experience.</value>
+  </data>
+  
+  <!-- Three Pillars Section -->
+  <data name="Index_Pillars_Title" xml:space="preserve">
+    <value>Our Three Pillars</value>
+  </data>
+  <data name="Index_Pillars_Description" xml:space="preserve">
+    <value>The Spinnerei is based on three interconnected pillars that complement each other in content and support each other structurally.</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Label" xml:space="preserve">
+    <value>SPINNING</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Subtitle" xml:space="preserve">
+    <value>Developing ideas</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Title" xml:space="preserve">
+    <value>Spinning</value>
+  </data>
+  <data name="Index_Pillars_Spinnen_Description" xml:space="preserve">
+    <value>This is where ideas emerge – from craft to social to digital and international projects. The Spinnerei offers space, materials, networking and support.</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Label" xml:space="preserve">
+    <value>CONNECTING</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Subtitle" xml:space="preserve">
+    <value>Sharing knowledge</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Title" xml:space="preserve">
+    <value>Connecting</value>
+  </data>
+  <data name="Index_Pillars_Vermitteln_Description" xml:space="preserve">
+    <value>Knowledge is not taught here, it is shared. In an atmosphere of trust, workshops, courses and inspiring encounters emerge between people from different walks of life.</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Label" xml:space="preserve">
+    <value>MARKETPLACE</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Subtitle" xml:space="preserve">
+    <value>Rethinking work</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Title" xml:space="preserve">
+    <value>Marketplace</value>
+  </data>
+  <data name="Index_Pillars_Marktplatz_Description" xml:space="preserve">
+    <value>A place where work is rethought – self-determined, versatile and people-friendly. Here people work freely, but not alone.</value>
+  </data>
+  <data name="Index_CTA_LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+  </data>
+
+  <!-- Vision Page -->
+  <data name="Vision_Title" xml:space="preserve">
+    <value>Vision</value>
+  </data>
+  <data name="Vision_Description" xml:space="preserve">
+    <value>The vision of Bamberger Spinnerei: A society in which individual potential is promoted, social responsibility is lived and collective intelligence is used. Discover the 23% principle and the BGE.</value>
+  </data>
+  <data name="Vision_Hero_Title" xml:space="preserve">
+    <value>Our Vision</value>
+  </data>
+  <data name="Vision_Hero_Description" xml:space="preserve">
+    <value>A society in which individual potential is promoted, social responsibility is lived and collective intelligence is used.</value>
+  </data>
+  <data name="Vision_Hero_BGE" xml:space="preserve">
+    <value>The BGE</value>
+  </data>
+  <data name="Vision_Hero_Principle" xml:space="preserve">
+    <value>23% Principle</value>
+  </data>
+  <data name="Vision_Hero_Contact" xml:space="preserve">
+    <value>Join Us</value>
+  </data>
+  <data name="Vision_Foundation_Title" xml:space="preserve">
+    <value>Foundation</value>
+  </data>
+  <data name="Vision_Foundation_Description" xml:space="preserve">
+    <value>The Spinnerei creates space, time and trust so that people can unfold, realize ideas and shape community.</value>
+  </data>
+  <data name="Vision_Foundation_Human_Title" xml:space="preserve">
+    <value>Human at the center</value>
+  </data>
+  <data name="Vision_Foundation_Human_Description" xml:space="preserve">
+    <value>At the center is the human being in their wholeness – not just as employee, consumer or performer, but as a feeling, thinking and creative being.</value>
+  </data>
+  <data name="Vision_Foundation_Together_Title" xml:space="preserve">
+    <value>Who carries today, will be carried tomorrow</value>
+  </data>
+  <data name="Vision_Foundation_Together_Description" xml:space="preserve">
+    <value>A place for all generations, cultures and life situations – carried by the idea of mutual carrying and being carried.</value>
+  </data>
+  <data name="Vision_Principle_Title" xml:space="preserve">
+    <value>The 23% Principle</value>
+  </data>
+  <data name="Vision_Principle_Description" xml:space="preserve">
+    <value>The economic foundation of the Spinnerei is based on a simple but effective principle of solidarity financing.</value>
+  </data>
+  <data name="Vision_Principle_How_Title" xml:space="preserve">
+    <value>How it works</value>
+  </data>
+  <data name="Vision_Principle_How_Description" xml:space="preserve">
+    <value>Anyone who earns income through the Spinnerei – whether through courses, projects, services or sales – contributes 23% of this income to the common Spinnerei fund. The remaining 77% remains freely available for personal use.</value>
+  </data>
+  <data name="Vision_Principle_Uses_Title" xml:space="preserve">
+    <value>What it's used for</value>
+  </data>
+  <data name="Vision_Principle_Uses_Description" xml:space="preserve">
+    <value>The fund finances maintenance of spaces, technical infrastructure like Spinner.Net, new projects and seed funding, the BGE, as well as continuing education and public relations.</value>
+  </data>
+  <data name="Vision_Principle_Card_Description" xml:space="preserve">
+    <value>for the community</value>
+  </data>
+  <data name="Vision_Principle_Card_Personal" xml:space="preserve">
+    <value>personally available</value>
+  </data>
+  <data name="Vision_Principle_Symbol_Title" xml:space="preserve">
+    <value>Symbolic meaning</value>
+  </data>
+  <data name="Vision_Principle_Symbol_Description" xml:space="preserve">
+    <value>The number 23 stands symbolically for voluntary and responsible participation in a community where everyone contributes so that others can grow. It's not about control, but about trust – the central capital of the Spinnerei.</value>
+  </data>
+  <data name="Vision_BGE_Title" xml:space="preserve">
+    <value>The BGE of the Spinnerei</value>
+  </data>
+  <data name="Vision_BGE_Description" xml:space="preserve">
+    <value>An unconditional basic income funded from the common pool that enables people a safe space for orientation and creative development.</value>
+  </data>
+  <data name="Vision_BGE_How_Title" xml:space="preserve">
+    <value>How it begins</value>
+  </data>
+  <data name="Vision_BGE_How_Description" xml:space="preserve">
+    <value>Initially, Peter Paul Clinton will support one person from his own income. Once this person generates income through their own projects, the BGE share decreases – and the next person can be supported.</value>
+  </data>
+  <data name="Vision_BGE_Chain_Title" xml:space="preserve">
+    <value>Chain of trust</value>
+  </data>
+  <data name="Vision_BGE_Chain_Description" xml:space="preserve">
+    <value>This principle creates a chain of trust: Those who were carried, later carry others. The BGE is not a one-way street, but a dynamic cycle.</value>
+  </data>
+  <data name="Vision_BGE_Freedom_Title" xml:space="preserve">
+    <value>Unconditional freedom</value>
+  </data>
+  <data name="Vision_BGE_Freedom_Description" xml:space="preserve">
+    <value>People carried by the BGE have no obligations in the initial phase. They receive time and space to find themselves again and develop new life perspectives.</value>
+  </data>
+  <data name="Vision_BGE_Growth_Title" xml:space="preserve">
+    <value>Organic growth</value>
+  </data>
+  <data name="Vision_BGE_Growth_Description" xml:space="preserve">
+    <value>Only over time – when the desire for participation comes from within – do ideas for own projects or engagement emerge. Spinner.Net accompanies this path gently.</value>
+  </data>
+  <data name="Vision_International_Title" xml:space="preserve">
+    <value>International impact</value>
+  </data>
+  <data name="Vision_International_Description" xml:space="preserve">
+    <value>The Spinnerei thinks beyond Bamberg – as a model that can also work in other regions and countries.</value>
+  </data>
+  <data name="Vision_International_Global_Title" xml:space="preserve">
+    <value>Globally connected</value>
+  </data>
+  <data name="Vision_International_Global_Description" xml:space="preserve">
+    <value>Spinnereien in different countries could emerge – networked via Spinner.Net, but with their own cultural character.</value>
+  </data>
+  <data name="Vision_International_Exchange_Title" xml:space="preserve">
+    <value>Promoting exchange</value>
+  </data>
+  <data name="Vision_International_Exchange_Description" xml:space="preserve">
+    <value>Educational exchange, youth encounters and international internships open new perspectives for all participants.</value>
+  </data>
+  <data name="Vision_International_Projects_Title" xml:space="preserve">
+    <value>Projects with impact</value>
+  </data>
+  <data name="Vision_International_Projects_Description" xml:space="preserve">
+    <value>Example projects like the training center for tourism workers in Sri Lanka show the global potential of the concept.</value>
+  </data>
+  <data name="Vision_CTA_Title" xml:space="preserve">
+    <value>Become part of the vision</value>
+  </data>
+  <data name="Vision_CTA_Description" xml:space="preserve">
+    <value>The Spinnerei lives from encounter, trust and co-creation. Everyone is invited – whether curious, skeptical, enthusiastic or simply searching.</value>
+  </data>
+  <data name="Vision_CTA_Contact" xml:space="preserve">
+    <value>Get in touch</value>
+  </data>
+  <data name="Vision_CTA_Explore" xml:space="preserve">
+    <value>Discover pillars</value>
+  </data>
+  <data name="Vision_CTA_Placeholder_Title" xml:space="preserve">
+    <value>Vision in action</value>
+  </data>
+  <data name="Vision_CTA_Placeholder_Description" xml:space="preserve">
+    <value>Here could be an inspiring image of the community</value>
+  </data>
+
+  <!-- Spinnen Page -->
+  <data name="Spinnen_Title" xml:space="preserve">
+    <value>Spinning</value>
+  </data>
+  <data name="Spinnen_Description" xml:space="preserve">
+    <value>This is where ideas emerge – from craft to social to digital and international projects. The Spinnerei offers space, materials, networking and support for your creative endeavors.</value>
+  </data>
+  <data name="Spinnen_Hero_Title" xml:space="preserve">
+    <value>Spinning</value>
+  </data>
+  <data name="Spinnen_Hero_Subtitle" xml:space="preserve">
+    <value>Here ideas emerge</value>
+  </data>
+  <data name="Spinnen_Hero_Description" xml:space="preserve">
+    <value>From craft to social to digital and international projects. The Spinnerei offers space, materials, networking and support.</value>
+  </data>
+  <data name="Spinnen_Hero_Projects" xml:space="preserve">
+    <value>Discover projects</value>
+  </data>
+  <data name="Spinnen_Hero_Education" xml:space="preserve">
+    <value>Education &amp; Future</value>
+  </data>
+  <data name="Spinnen_Hero_Contact" xml:space="preserve">
+    <value>Start project</value>
+  </data>
+  <data name="Spinnen_Space_Title" xml:space="preserve">
+    <value>Creative space</value>
+  </data>
+  <data name="Spinnen_Space_Description" xml:space="preserve">
+    <value>Whether a child designs a new playground equipment, an entrepreneur develops a commercial platform, or a young person creates an app: The Spinnerei provides the framework.</value>
+  </data>
+  <data name="Spinnen_Space_Room_Title" xml:space="preserve">
+    <value>Space</value>
+  </data>
+  <data name="Spinnen_Space_Room_Description" xml:space="preserve">
+    <value>Physical and digital spaces for creative development, equipped with the necessary tools and technologies.</value>
+  </data>
+  <data name="Spinnen_Space_Material_Title" xml:space="preserve">
+    <value>Materials</value>
+  </data>
+  <data name="Spinnen_Space_Material_Description" xml:space="preserve">
+    <value>From prototyping tools to digital platforms – everything needed to turn ideas into reality.</value>
+  </data>
+  <data name="Spinnen_Space_Network_Title" xml:space="preserve">
+    <value>Networking</value>
+  </data>
+  <data name="Spinnen_Space_Network_Description" xml:space="preserve">
+    <value>Connection to mentors, partners and other creatives who can support implementation.</value>
+  </data>
+  <data name="Spinnen_Education_Title" xml:space="preserve">
+    <value>Rethinking education &amp; future</value>
+  </data>
+  <data name="Spinnen_Education_Description" xml:space="preserve">
+    <value>A special focus is on children and young people, because they are our future. Here new forms of education, social work and mental health emerge.</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Title" xml:space="preserve">
+    <value>Holistic view</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Description" xml:space="preserve">
+    <value>How can children discover their talents, develop emotional strength and grow self-determined? Beyond performance pressure and outdated curricula.</value>
+  </data>
+  <data name="Spinnen_Education_Skills_Title" xml:space="preserve">
+    <value>Future competencies</value>
+  </data>
+  <data name="Spinnen_Education_Skills_Description" xml:space="preserve">
+    <value>Socially important topics are tested in small, protected groups and developed together.</value>
+  </data>
+  <data name="Spinnen_Projects_Title" xml:space="preserve">
+    <value>Example projects</value>
+  </data>
+  <data name="Spinnen_Projects_Description" xml:space="preserve">
+    <value>From local initiatives to international visions – the Spinnerei is a living ecosystem with space for small and large endeavors.</value>
+  </data>
+  <data name="Spinnen_International_Title" xml:space="preserve">
+    <value>International visions</value>
+  </data>
+  <data name="Spinnen_International_Description" xml:space="preserve">
+    <value>Large-scale visions find space here – projects that are locally anchored and can unfold global impact.</value>
+  </data>
+  <data name="Spinnen_International_SriLanka_Title" xml:space="preserve">
+    <value>Training Center Sri Lanka</value>
+  </data>
+  <data name="Spinnen_International_SriLanka_Description" xml:space="preserve">
+    <value>Building a training center for tourism workers in Sri Lanka that qualifies young people for work in Germany. From May to October they work in the German high season, in winter they return to Sri Lanka, where high season is then.</value>
+  </data>
+  <data name="Spinnen_International_SriLanka_Benefits_Title" xml:space="preserve">
+    <value>Mutual benefit</value>
+  </data>
+  <data name="Spinnen_International_SriLanka_Benefits_Description" xml:space="preserve">
+    <value>This creates a mutual flow of knowledge and experience that promotes long-term economic stability and intercultural competence. People are holistically accompanied – in thinking, acting and living together.</value>
+  </data>
+  <data name="Spinnen_International_Model_Title" xml:space="preserve">
+    <value>Transferable model</value>
+  </data>
+  <data name="Spinnen_International_Model_Description" xml:space="preserve">
+    <value>The combination of training, cultural exchange and digital infrastructure creates a model that is transferable to many regions worldwide.</value>
+  </data>
+  <data name="Spinnen_International_Contact" xml:space="preserve">
+    <value>Discuss project</value>
+  </data>
+  <data name="Spinnen_Integration_Title" xml:space="preserve">
+    <value>Integrative projects</value>
+  </data>
+  <data name="Spinnen_Integration_Description" xml:space="preserve">
+    <value>The Spinnerei is a place of encounter for people of all cultures and backgrounds.</value>
+  </data>
+  <data name="Spinnen_CTA_Title" xml:space="preserve">
+    <value>Spin your idea</value>
+  </data>
+  <data name="Spinnen_CTA_Description" xml:space="preserve">
+    <value>Do you have an idea that needs space, materials or networking? The Spinnerei supports you in turning vision into reality.</value>
+  </data>
+  <data name="Spinnen_CTA_Contact" xml:space="preserve">
+    <value>Discuss project</value>
+  </data>
+  <data name="Spinnen_CTA_Learn" xml:space="preserve">
+    <value>Learn first steps</value>
+  </data>
+  <data name="Spinnen_CTA_Placeholder_Title" xml:space="preserve">
+    <value>Projects emerge</value>
+  </data>
+  <data name="Spinnen_CTA_Placeholder_Description" xml:space="preserve">
+    <value>Here could be an image of creative work</value>
+  </data>
+
+  <!-- Footer -->
+  <data name="Footer_Mission" xml:space="preserve">
+    <value>We create space, time and trust so that people can unfold, realize ideas and shape community.</value>
+  </data>
+  <data name="Footer_Address" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="Footer_Address_Line1" xml:space="preserve">
+    <value>Bamberger Spinnerei</value>
+  </data>
+  <data name="Footer_Address_Line2" xml:space="preserve">
+    <value>Innovation &amp; Community Hub</value>
+  </data>
+  <data name="Footer_Address_Line3" xml:space="preserve">
+    <value>96047 Bamberg, Germany</value>
+  </data>
+  <data name="Footer_Pillars" xml:space="preserve">
+    <value>The Three Pillars</value>
+  </data>
+  <data name="Footer_Resources" xml:space="preserve">
+    <value>Resources</value>
+  </data>
+  <data name="Footer_Vision_Mission" xml:space="preserve">
+    <value>Vision &amp; Mission</value>
+  </data>
+  <data name="Footer_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Footer_ToApp" xml:space="preserve">
+    <value>Go to App</value>
+  </data>
+  <data name="Footer_Legal" xml:space="preserve">
+    <value>Legal</value>
+  </data>
+  <data name="Footer_Imprint" xml:space="preserve">
+    <value>Imprint</value>
+  </data>
+  <data name="Footer_Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Footer_Terms" xml:space="preserve">
+    <value>Terms</value>
+  </data>
+  <data name="Footer_PoweredBy" xml:space="preserve">
+    <value>Powered by</value>
+  </data>
+  <data name="Footer_Subtitle" xml:space="preserve">
+    <value>Spin your idea. We give you time.</value>
   </data>
 
   <!-- Stats Section -->
@@ -413,6 +801,532 @@
   </data>
   <data name="Index_Newsletter_Subscribe" xml:space="preserve">
     <value>Subscribe</value>
+  </data>
+
+  <!-- Spinnen Page - Education Section -->
+  <data name="Spinnen_Education_Holistic_Title" xml:space="preserve">
+    <value>Holistic Approach</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Description" xml:space="preserve">
+    <value>How can children discover their talents, develop emotional strength and grow self-determined? Beyond performance pressure and outdated curricula.</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Formats" xml:space="preserve">
+    <value>Formats</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format1" xml:space="preserve">
+    <value>Learning workshops</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format2" xml:space="preserve">
+    <value>Parent-child formats</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format3" xml:space="preserve">
+    <value>Creative afternoon activities</value>
+  </data>
+  <data name="Spinnen_Education_Holistic_Format4" xml:space="preserve">
+    <value>Therapy-supporting play groups</value>
+  </data>
+  <data name="Spinnen_Education_Future_Title" xml:space="preserve">
+    <value>Future Skills</value>
+  </data>
+  <data name="Spinnen_Education_Future_Description" xml:space="preserve">
+    <value>Socially important topics are tested in small, protected groups and developed together.</value>
+  </data>
+  <data name="Spinnen_Education_Future_Areas" xml:space="preserve">
+    <value>Topic Areas</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area1" xml:space="preserve">
+    <value>Media literacy</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area2" xml:space="preserve">
+    <value>Nature experience</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area3" xml:space="preserve">
+    <value>Nonviolent communication</value>
+  </data>
+  <data name="Spinnen_Education_Future_Area4" xml:space="preserve">
+    <value>Cultural education</value>
+  </data>
+  <data name="Spinnen_Projects_Title" xml:space="preserve">
+    <value>Exemplary Projects</value>
+  </data>
+  <data name="Spinnen_Projects_Description" xml:space="preserve">
+    <value>From local initiatives to international visions – the Spinnerei is a living ecosystem with space for small and large projects.</value>
+  </data>
+
+  <!-- Vision Pillars Section -->
+  <data name="Vision_Pillars_Title" xml:space="preserve">
+    <value>Three Pillars of the Spinnerei</value>
+  </data>
+  <data name="Vision_Pillars_Description" xml:space="preserve">
+    <value>Discover the three core areas where people can contribute, learn, and grow together.</value>
+  </data>
+  <data name="Vision_Pillars_Spinnen_Short" xml:space="preserve">
+    <value>Creativity &amp; Development</value>
+  </data>
+  <data name="Vision_Pillars_Spinnen_Description" xml:space="preserve">
+    <value>Space for creative development, education, and innovative projects that grow from the community.</value>
+  </data>
+  <data name="Vision_Pillars_Vermitteln_Short" xml:space="preserve">
+    <value>Knowledge &amp; Sharing</value>
+  </data>
+  <data name="Vision_Pillars_Vermitteln_Description" xml:space="preserve">
+    <value>Connecting people, sharing knowledge, and building bridges between different communities and experiences.</value>
+  </data>
+  <data name="Vision_Pillars_Marktplatz_Short" xml:space="preserve">
+    <value>Work &amp; Market</value>
+  </data>
+  <data name="Vision_Pillars_Marktplatz_Description" xml:space="preserve">
+    <value>A marketplace for meaningful work, sustainable projects, and economic activities that serve the community.</value>
+  </data>
+  <data name="Vision_Pillars_Explore" xml:space="preserve">
+    <value>Explore</value>
+  </data>
+
+  <!-- Vermitteln Page -->
+  <data name="Vermitteln_Title" xml:space="preserve">
+    <value>Connect - Knowledge &amp; Sharing</value>
+  </data>
+  <data name="Vermitteln_Description" xml:space="preserve">
+    <value>Connecting people, sharing knowledge, and building bridges between different communities and experiences.</value>
+  </data>
+  <data name="Vermitteln_Hero_Title" xml:space="preserve">
+    <value>Connecting People &amp; Sharing Knowledge</value>
+  </data>
+  <data name="Vermitteln_Hero_Subtitle" xml:space="preserve">
+    <value>Building bridges between communities, experiences, and generations.</value>
+  </data>
+  <data name="Vermitteln_Hero_Description" xml:space="preserve">
+    <value>Everyone has unique knowledge and experiences to share. We create spaces where people can learn from each other and grow together.</value>
+  </data>
+  <data name="Vermitteln_Hero_Mentoring" xml:space="preserve">
+    <value>Mentoring</value>
+  </data>
+  <data name="Vermitteln_Hero_Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Vermitteln_Hero_Contact" xml:space="preserve">
+    <value>Get Involved</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Title" xml:space="preserve">
+    <value>Knowledge as a Bridge</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Description" xml:space="preserve">
+    <value>We believe that sharing knowledge creates connections and opens new possibilities for everyone.</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Experience_Title" xml:space="preserve">
+    <value>Life Experience</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Experience_Description" xml:space="preserve">
+    <value>Every person carries valuable life experiences that can inspire and guide others on their journey.</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Skills_Title" xml:space="preserve">
+    <value>Practical Skills</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Skills_Description" xml:space="preserve">
+    <value>From crafts to technology, from cooking to communication - skills shared strengthen the entire community.</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Network_Title" xml:space="preserve">
+    <value>Networks &amp; Connections</value>
+  </data>
+  <data name="Vermitteln_Knowledge_Network_Description" xml:space="preserve">
+    <value>Connecting the right people at the right time can create wonderful opportunities and collaborations.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Title" xml:space="preserve">
+    <value>Mentoring &amp; Coaching</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Description" xml:space="preserve">
+    <value>Experienced community members support others in their personal and professional development.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Title" xml:space="preserve">
+    <value>Personal Development</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Description" xml:space="preserve">
+    <value>Support in finding your own path, developing self-confidence, and discovering personal strengths.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Areas" xml:space="preserve">
+    <value>Areas</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area1" xml:space="preserve">
+    <value>Life orientation &amp; goal setting</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area2" xml:space="preserve">
+    <value>Self-confidence &amp; communication</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area3" xml:space="preserve">
+    <value>Work-life balance</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Personal_Area4" xml:space="preserve">
+    <value>Relationship building</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Title" xml:space="preserve">
+    <value>Professional Coaching</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Description" xml:space="preserve">
+    <value>Guidance in career development, skill building, and professional networking within meaningful work contexts.</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Areas" xml:space="preserve">
+    <value>Focus Areas</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area1" xml:space="preserve">
+    <value>Career transitions &amp; reorientation</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area2" xml:space="preserve">
+    <value>Entrepreneurship &amp; self-employment</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area3" xml:space="preserve">
+    <value>Leadership &amp; team development</value>
+  </data>
+  <data name="Vermitteln_Mentoring_Professional_Area4" xml:space="preserve">
+    <value>Creative projects &amp; innovation</value>
+  </data>
+  <data name="Vermitteln_Events_Title" xml:space="preserve">
+    <value>Events &amp; Community Gatherings</value>
+  </data>
+  <data name="Vermitteln_Events_Description" xml:space="preserve">
+    <value>Regular events bring people together to learn, share, and build lasting connections.</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Short" xml:space="preserve">
+    <value>WORKSHOPS</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Subtitle" xml:space="preserve">
+    <value>Hands-on Learning</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Title" xml:space="preserve">
+    <value>Skills Workshops</value>
+  </data>
+  <data name="Vermitteln_Events_Workshops_Description" xml:space="preserve">
+    <value>Practical workshops where community members teach each other useful skills and crafts.</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Short" xml:space="preserve">
+    <value>TALKS</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Subtitle" xml:space="preserve">
+    <value>Inspiration &amp; Stories</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Title" xml:space="preserve">
+    <value>Community Talks</value>
+  </data>
+  <data name="Vermitteln_Events_Talks_Description" xml:space="preserve">
+    <value>Inspiring talks where people share their journeys, insights, and life lessons with the community.</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Short" xml:space="preserve">
+    <value>NETWORKING</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Subtitle" xml:space="preserve">
+    <value>Making Connections</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Title" xml:space="preserve">
+    <value>Networking Events</value>
+  </data>
+  <data name="Vermitteln_Events_Networking_Description" xml:space="preserve">
+    <value>Informal gatherings designed to help people meet, connect, and discover collaboration opportunities.</value>
+  </data>
+  <data name="Vermitteln_CTA_Title" xml:space="preserve">
+    <value>Ready to Share &amp; Connect?</value>
+  </data>
+  <data name="Vermitteln_CTA_Description" xml:space="preserve">
+    <value>Whether you want to share your knowledge or learn from others, there's a place for you in our community of connectors and learners.</value>
+  </data>
+  <data name="Vermitteln_CTA_Contact" xml:space="preserve">
+    <value>Join Us</value>
+  </data>
+  <data name="Vermitteln_CTA_Explore" xml:space="preserve">
+    <value>Explore Other Pillars</value>
+  </data>
+  <data name="Vermitteln_CTA_Placeholder_Title" xml:space="preserve">
+    <value>YOUR KNOWLEDGE MATTERS</value>
+  </data>
+  <data name="Vermitteln_CTA_Placeholder_Description" xml:space="preserve">
+    <value>What you know can help others grow</value>
+  </data>
+
+  <!-- Marktplatz Page -->
+  <data name="Marktplatz_Title" xml:space="preserve">
+    <value>Marketplace - Work &amp; Market</value>
+  </data>
+  <data name="Marktplatz_Description" xml:space="preserve">
+    <value>A marketplace for meaningful work, sustainable projects, and economic activities that serve the community.</value>
+  </data>
+  <data name="Marktplatz_Hero_Title" xml:space="preserve">
+    <value>Meaningful Work &amp; Sustainable Economy</value>
+  </data>
+  <data name="Marktplatz_Hero_Subtitle" xml:space="preserve">
+    <value>Creating economic opportunities that serve people and planet.</value>
+  </data>
+  <data name="Marktplatz_Hero_Description" xml:space="preserve">
+    <value>Work should be more than just earning money. We create spaces for meaningful projects, fair collaboration, and economic models that benefit everyone.</value>
+  </data>
+  <data name="Marktplatz_Hero_Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Marktplatz_Hero_Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Marktplatz_Hero_Contact" xml:space="preserve">
+    <value>Start Working</value>
+  </data>
+  <data name="Marktplatz_Work_Title" xml:space="preserve">
+    <value>Redefining Work</value>
+  </data>
+  <data name="Marktplatz_Work_Description" xml:space="preserve">
+    <value>Work that creates value for people, communities, and the environment - not just profit.</value>
+  </data>
+  <data name="Marktplatz_Work_Purpose_Title" xml:space="preserve">
+    <value>Purpose-Driven</value>
+  </data>
+  <data name="Marktplatz_Work_Purpose_Description" xml:space="preserve">
+    <value>Every project should contribute to something meaningful and create positive impact in the world.</value>
+  </data>
+  <data name="Marktplatz_Work_Community_Title" xml:space="preserve">
+    <value>Community-Centered</value>
+  </data>
+  <data name="Marktplatz_Work_Community_Description" xml:space="preserve">
+    <value>Work that strengthens communities and brings people together rather than isolating them.</value>
+  </data>
+  <data name="Marktplatz_Work_Balance_Title" xml:space="preserve">
+    <value>Life Balance</value>
+  </data>
+  <data name="Marktplatz_Work_Balance_Description" xml:space="preserve">
+    <value>Flexible working arrangements that respect personal time, family, and well-being.</value>
+  </data>
+  <data name="Marktplatz_Services_Title" xml:space="preserve">
+    <value>Services &amp; Skills Exchange</value>
+  </data>
+  <data name="Marktplatz_Services_Description" xml:space="preserve">
+    <value>A platform where community members can offer their skills and find the services they need.</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Title" xml:space="preserve">
+    <value>Creative Services</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Description" xml:space="preserve">
+    <value>Artists, designers, writers, and creative professionals offering their talents to meaningful projects.</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Examples" xml:space="preserve">
+    <value>Examples</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Example1" xml:space="preserve">
+    <value>Graphic design &amp; branding</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Example2" xml:space="preserve">
+    <value>Content writing &amp; storytelling</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Example3" xml:space="preserve">
+    <value>Photography &amp; video production</value>
+  </data>
+  <data name="Marktplatz_Services_Creative_Example4" xml:space="preserve">
+    <value>Music &amp; audio production</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Title" xml:space="preserve">
+    <value>Technical Services</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Description" xml:space="preserve">
+    <value>Developers, engineers, and technical experts supporting community projects and social enterprises.</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Examples" xml:space="preserve">
+    <value>Specializations</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Example1" xml:space="preserve">
+    <value>Web &amp; app development</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Example2" xml:space="preserve">
+    <value>System administration &amp; DevOps</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Example3" xml:space="preserve">
+    <value>Data analysis &amp; automation</value>
+  </data>
+  <data name="Marktplatz_Services_Technical_Example4" xml:space="preserve">
+    <value>IT consulting &amp; training</value>
+  </data>
+  <data name="Marktplatz_Projects_Title" xml:space="preserve">
+    <value>Collaborative Projects</value>
+  </data>
+  <data name="Marktplatz_Projects_Description" xml:space="preserve">
+    <value>Join forces with others to create projects that make a real difference in the world.</value>
+  </data>
+  <data name="Marktplatz_Projects_Social_Short" xml:space="preserve">
+    <value>SOCIAL IMPACT</value>
+  </data>
+  <data name="Marktplatz_Projects_Social_Subtitle" xml:space="preserve">
+    <value>Community Solutions</value>
+  </data>
+  <data name="Marktplatz_Projects_Social_Title" xml:space="preserve">
+    <value>Social Impact Projects</value>
+  </data>
+  <data name="Marktplatz_Projects_Social_Description" xml:space="preserve">
+    <value>Projects that address social challenges and improve quality of life for communities.</value>
+  </data>
+  <data name="Marktplatz_Projects_Sustainable_Short" xml:space="preserve">
+    <value>SUSTAINABILITY</value>
+  </data>
+  <data name="Marktplatz_Projects_Sustainable_Subtitle" xml:space="preserve">
+    <value>Environmental Care</value>
+  </data>
+  <data name="Marktplatz_Projects_Sustainable_Title" xml:space="preserve">
+    <value>Sustainable Ventures</value>
+  </data>
+  <data name="Marktplatz_Projects_Sustainable_Description" xml:space="preserve">
+    <value>Environmentally conscious projects that promote sustainability and regenerative practices.</value>
+  </data>
+  <data name="Marktplatz_Projects_Innovation_Short" xml:space="preserve">
+    <value>INNOVATION</value>
+  </data>
+  <data name="Marktplatz_Projects_Innovation_Subtitle" xml:space="preserve">
+    <value>Future Solutions</value>
+  </data>
+  <data name="Marktplatz_Projects_Innovation_Title" xml:space="preserve">
+    <value>Innovation Labs</value>
+  </data>
+  <data name="Marktplatz_Projects_Innovation_Description" xml:space="preserve">
+    <value>Experimental projects exploring new technologies and methodologies for positive change.</value>
+  </data>
+  <data name="Marktplatz_Economy_Title" xml:space="preserve">
+    <value>Alternative Economic Models</value>
+  </data>
+  <data name="Marktplatz_Economy_Description" xml:space="preserve">
+    <value>Exploring fair and sustainable ways to organize economic activity within our community.</value>
+  </data>
+  <data name="Marktplatz_Economy_TimeBank_Title" xml:space="preserve">
+    <value>Time Banking</value>
+  </data>
+  <data name="Marktplatz_Economy_TimeBank_Description" xml:space="preserve">
+    <value>A system where time becomes currency - one hour of anyone's work equals one hour of someone else's work.</value>
+  </data>
+  <data name="Marktplatz_Economy_TimeBank_How" xml:space="preserve">
+    <value>How it works</value>
+  </data>
+  <data name="Marktplatz_Economy_TimeBank_How_Description" xml:space="preserve">
+    <value>Members earn time credits by helping others and can spend these credits to receive help in return. It values all contributions equally.</value>
+  </data>
+  <data name="Marktplatz_Economy_Cooperative_Title" xml:space="preserve">
+    <value>Worker Cooperatives</value>
+  </data>
+  <data name="Marktplatz_Economy_Cooperative_Description" xml:space="preserve">
+    <value>Businesses owned and democratically controlled by their workers, ensuring fair wages and shared decision-making.</value>
+  </data>
+  <data name="Marktplatz_Economy_Cooperative_Benefits" xml:space="preserve">
+    <value>Benefits</value>
+  </data>
+  <data name="Marktplatz_Economy_Cooperative_Benefits_Description" xml:space="preserve">
+    <value>More equitable income distribution, job security, and alignment between worker interests and business success.</value>
+  </data>
+  <data name="Marktplatz_CTA_Title" xml:space="preserve">
+    <value>Ready for Meaningful Work?</value>
+  </data>
+  <data name="Marktplatz_CTA_Description" xml:space="preserve">
+    <value>Whether you're looking for meaningful projects or want to start your own sustainable venture, our community is here to support you.</value>
+  </data>
+  <data name="Marktplatz_CTA_Contact" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
+  <data name="Marktplatz_CTA_Learn" xml:space="preserve">
+    <value>Learn &amp; Connect</value>
+  </data>
+  <data name="Marktplatz_CTA_Placeholder_Title" xml:space="preserve">
+    <value>WORK WITH PURPOSE</value>
+  </data>
+  <data name="Marktplatz_CTA_Placeholder_Description" xml:space="preserve">
+    <value>Create value for people and planet</value>
+  </data>
+
+  <!-- Impressum Page -->
+  <data name="Impressum_Title" xml:space="preserve">
+    <value>Imprint</value>
+  </data>
+  <data name="Impressum_Subtitle" xml:space="preserve">
+    <value>Legal information according to the German Telemediengesetz</value>
+  </data>
+  <data name="Impressum_ResponsibleContent" xml:space="preserve">
+    <value>Responsible for content</value>
+  </data>
+  <data name="Impressum_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Impressum_TechnicalImplementation" xml:space="preserve">
+    <value>Technical Implementation</value>
+  </data>
+  <data name="Impressum_TechnicalDescription" xml:space="preserve">
+    <value>Development and operation of the Spinner.Net platform</value>
+  </data>
+  <data name="Impressum_PoweredBy" xml:space="preserve">
+    <value>Powered by:</value>
+  </data>
+  <data name="Impressum_Framework" xml:space="preserve">
+    <value>Framework:</value>
+  </data>
+  <data name="Impressum_Disclaimer" xml:space="preserve">
+    <value>Disclaimer</value>
+  </data>
+  <data name="Impressum_ContentLiability" xml:space="preserve">
+    <value>Liability for content</value>
+  </data>
+  <data name="Impressum_ContentLiabilityText" xml:space="preserve">
+    <value>As a service provider, we are responsible for our own content on these pages according to general laws in accordance with Section 7 (1) of the German Telemediengesetz (TMG). However, according to Sections 8 to 10 TMG, we as a service provider are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.</value>
+  </data>
+  <data name="Impressum_LinkLiability" xml:space="preserve">
+    <value>Liability for links</value>
+  </data>
+  <data name="Impressum_LinkLiabilityText" xml:space="preserve">
+    <value>Our website contains links to external third-party websites over whose content we have no influence. Therefore, we cannot assume any liability for this external content. The respective provider or operator of the pages is always responsible for the content of the linked pages.</value>
+  </data>
+  <data name="Impressum_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="Impressum_CopyrightText" xml:space="preserve">
+    <value>The content and works created by the site operators on these pages are subject to German copyright law. Duplication, processing, distribution and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator.</value>
+  </data>
+  <data name="Impressum_OnlineDispute" xml:space="preserve">
+    <value>Online dispute resolution</value>
+  </data>
+  <data name="Impressum_OnlineDisputeText1" xml:space="preserve">
+    <value>The European Commission provides a platform for online dispute resolution (ODR):</value>
+  </data>
+  <data name="Impressum_OnlineDisputeText2" xml:space="preserve">
+    <value>We are neither willing nor obligated to participate in dispute resolution procedures before a consumer arbitration board.</value>
+  </data>
+  <data name="Impressum_CommunityPrinciples" xml:space="preserve">
+    <value>Community principles</value>
+  </data>
+  <data name="Impressum_CommunityText1" xml:space="preserve">
+    <value>Bamberger Spinnerei is more than just a platform - we are a community.</value>
+  </data>
+  <data name="Impressum_CommunityText2" xml:space="preserve">
+    <value>We create space, time and trust so that people can develop ideas, realize them and shape community.</value>
+  </data>
+  <data name="Impressum_CommunityMotto" xml:space="preserve">
+    <value>Our guiding principle:</value>
+  </data>
+  <data name="Impressum_CommunityMottoText" xml:space="preserve">
+    <value>You are not alone - together we are stronger than any system.</value>
+  </data>
+  <data name="Impressum_MoreInfo" xml:space="preserve">
+    <value>More information</value>
+  </data>
+  <data name="Impressum_Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Impressum_PrivacyDescription" xml:space="preserve">
+    <value>Learn more about how we handle your personal data.</value>
+  </data>
+  <data name="Impressum_PrivacyButton" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="Impressum_Terms" xml:space="preserve">
+    <value>Terms of use</value>
+  </data>
+  <data name="Impressum_TermsDescription" xml:space="preserve">
+    <value>The rules and conditions for using our platform.</value>
+  </data>
+  <data name="Impressum_TermsButton" xml:space="preserve">
+    <value>Read terms</value>
+  </data>
+  <data name="Impressum_ContactInfo" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Impressum_ContactDescription" xml:space="preserve">
+    <value>Do you have questions? We are here for you and are happy to help.</value>
+  </data>
+  <data name="Impressum_ContactButton" xml:space="preserve">
+    <value>Get in touch</value>
   </data>
 
 </root>

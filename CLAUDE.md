@@ -411,4 +411,45 @@ COSMOS_DB_DATABASE_NAME=SpinnerNetDb
 4. **Run solution** and navigate to onboarding wizard
 5. **Create user → persona → buddy → connect email**
 
+## Localization and Text Management
+
+**CRITICAL RULE**: NO HARDCODED TEXT allowed in any UI components or pages.
+
+### .resx Files Usage
+- **ALL text content** must be stored in .resx resource files located in `SpinnerNet.Shared/Resources/`
+- **Default language** is English in `Strings.resx`
+- **Translations** are in `Strings.de.resx`, `Strings.fr.resx`, `Strings.es.resx`
+- **Access strings** via `@LocalizationService.GetString("Key_Name")` in Razor pages
+- **Naming convention**: Use descriptive keys like `Nav_Home`, `Footer_Contact`, `Impressum_Title`
+
+### XML Encoding in .resx Files
+
+**CRITICAL**: When working with .resx localization files, always use proper XML entity encoding:
+- `&` must be encoded as `&amp;`
+- `<` must be encoded as `&lt;`
+- `>` must be encoded as `&gt;`
+- `"` must be encoded as `&quot;`
+- `'` must be encoded as `&apos;`
+- German umlauts (ä, ö, ü, ß) should be kept as-is in UTF-8
+
+**Examples**:
+```xml
+<!-- WRONG -->
+<value>Innovation & Community Hub</value>
+
+<!-- CORRECT -->
+<value>Innovation &amp; Community Hub</value>
+```
+
+### Implementation Examples
+```razor
+<!-- WRONG - Hardcoded text -->
+<h1>Impressum</h1>
+<p>Rechtliche Angaben gemäß Telemediengesetz</p>
+
+<!-- CORRECT - Using localization -->
+<h1>@LocalizationService.GetString("Impressum_Title")</h1>
+<p>@LocalizationService.GetString("Impressum_Subtitle")</p>
+```
+
 **Current Focus**: Build multi-tenant public areas system for persona-based websites with custom domain support.

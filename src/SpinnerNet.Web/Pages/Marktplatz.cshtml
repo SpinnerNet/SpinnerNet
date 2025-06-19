@@ -1,0 +1,214 @@
+@page
+@model SpinnerNet.Web.Pages.MarktplatzModel
+@{
+    Layout = "Shared/_Layout";
+}
+
+<!-- Hero Section - Marktplatz -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>@Model.GetText("Marktplatz_Hero_Title")</h1>
+            <p class="lead">@Model.GetText("Marktplatz_Hero_Subtitle")</p>
+            <p class="lead">@Model.GetText("Marktplatz_Hero_Description")</p>
+            
+            <div class="hero-actions">
+                <a href="#services" class="btn btn-secondary btn-lg">@Model.GetText("Marktplatz_Hero_Services")</a>
+                <a href="#projects" class="btn btn-outline btn-lg">@Model.GetText("Marktplatz_Hero_Projects")</a>
+                <a href="/contact" class="btn btn-primary btn-lg">@Model.GetText("Marktplatz_Hero_Contact")</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Meaningful Work Section -->
+<section class="section-sm" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Marktplatz_Work_Title")</h2>
+            <p class="lead">@Model.GetText("Marktplatz_Work_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <h3>@Model.GetText("Marktplatz_Work_Purpose_Title")</h3>
+                <p>@Model.GetText("Marktplatz_Work_Purpose_Description")</p>
+            </div>
+            <div class="col-4">
+                <h3>@Model.GetText("Marktplatz_Work_Community_Title")</h3>
+                <p>@Model.GetText("Marktplatz_Work_Community_Description")</p>
+            </div>
+            <div class="col-4">
+                <h3>@Model.GetText("Marktplatz_Work_Balance_Title")</h3>
+                <p>@Model.GetText("Marktplatz_Work_Balance_Description")</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services & Skills Section -->
+<section class="section" id="services">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Marktplatz_Services_Title")</h2>
+            <p class="lead">@Model.GetText("Marktplatz_Services_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>@Model.GetText("Marktplatz_Services_Creative_Title")</h3>
+                        <p>@Model.GetText("Marktplatz_Services_Creative_Description")</p>
+                        
+                        <h4>@Model.GetText("Marktplatz_Services_Creative_Examples")</h4>
+                        <ul>
+                            <li>@Model.GetText("Marktplatz_Services_Creative_Example1")</li>
+                            <li>@Model.GetText("Marktplatz_Services_Creative_Example2")</li>
+                            <li>@Model.GetText("Marktplatz_Services_Creative_Example3")</li>
+                            <li>@Model.GetText("Marktplatz_Services_Creative_Example4")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>@Model.GetText("Marktplatz_Services_Technical_Title")</h3>
+                        <p>@Model.GetText("Marktplatz_Services_Technical_Description")</p>
+                        
+                        <h4>@Model.GetText("Marktplatz_Services_Technical_Examples")</h4>
+                        <ul>
+                            <li>@Model.GetText("Marktplatz_Services_Technical_Example1")</li>
+                            <li>@Model.GetText("Marktplatz_Services_Technical_Example2")</li>
+                            <li>@Model.GetText("Marktplatz_Services_Technical_Example3")</li>
+                            <li>@Model.GetText("Marktplatz_Services_Technical_Example4")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Collaborative Projects Section -->
+<section class="section" id="projects" style="background-color: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Marktplatz_Projects_Title")</h2>
+            <p class="lead">@Model.GetText("Marktplatz_Projects_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #fdba74 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Marktplatz_Projects_Social_Short")</strong><br>
+                            @Model.GetText("Marktplatz_Projects_Social_Subtitle")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Marktplatz_Projects_Social_Title")</h3>
+                        <p class="card-text">@Model.GetText("Marktplatz_Projects_Social_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #fdba74 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Marktplatz_Projects_Sustainable_Short")</strong><br>
+                            @Model.GetText("Marktplatz_Projects_Sustainable_Subtitle")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Marktplatz_Projects_Sustainable_Title")</h3>
+                        <p class="card-text">@Model.GetText("Marktplatz_Projects_Sustainable_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #fdba74 100%);">
+                        <div style="text-align: center; line-height: 1.4; color: white;">
+                            <strong>@Model.GetText("Marktplatz_Projects_Innovation_Short")</strong><br>
+                            @Model.GetText("Marktplatz_Projects_Innovation_Subtitle")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.GetText("Marktplatz_Projects_Innovation_Title")</h3>
+                        <p class="card-text">@Model.GetText("Marktplatz_Projects_Innovation_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Economic Models Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.GetText("Marktplatz_Economy_Title")</h2>
+            <p class="lead">@Model.GetText("Marktplatz_Economy_Description")</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>@Model.GetText("Marktplatz_Economy_TimeBank_Title")</h3>
+                        <p>@Model.GetText("Marktplatz_Economy_TimeBank_Description")</p>
+                        
+                        <h4>@Model.GetText("Marktplatz_Economy_TimeBank_How")</h4>
+                        <p>@Model.GetText("Marktplatz_Economy_TimeBank_How_Description")</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>@Model.GetText("Marktplatz_Economy_Cooperative_Title")</h3>
+                        <p>@Model.GetText("Marktplatz_Economy_Cooperative_Description")</p>
+                        
+                        <h4>@Model.GetText("Marktplatz_Economy_Cooperative_Benefits")</h4>
+                        <p>@Model.GetText("Marktplatz_Economy_Cooperative_Benefits_Description")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #fdba74 100%); color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h2 style="color: white; margin-bottom: var(--space-24);">@Model.GetText("Marktplatz_CTA_Title")</h2>
+                <p class="lead" style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-32);">
+                    @Model.GetText("Marktplatz_CTA_Description")
+                </p>
+                <div style="display: flex; gap: var(--space-16); flex-wrap: wrap;">
+                    <a href="/contact" class="btn btn-secondary btn-lg">@Model.GetText("Marktplatz_CTA_Contact")</a>
+                    <a href="/vermitteln" class="btn btn-outline btn-lg" style="border-color: white; color: white;">@Model.GetText("Marktplatz_CTA_Learn")</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div style="text-align: center;">
+                    <div class="card-img card-img-placeholder" style="background-color: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3); height: 280px;">
+                        <div style="color: rgba(255,255,255,0.8); text-align: center; line-height: 1.4;">
+                            <strong>@Model.GetText("Marktplatz_CTA_Placeholder_Title")</strong><br>
+                            @Model.GetText("Marktplatz_CTA_Placeholder_Description")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
