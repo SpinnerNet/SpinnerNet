@@ -1,0 +1,101 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "SpinnerNet.Maui (Mac Catalyst)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-maui-maccatalyst",
+            "program": "${workspaceFolder}/src/SpinnerNet.Maui/bin/Debug/net9.0-maccatalyst/maccatalyst-arm64/SpinnerNet.Maui.app/Contents/MacOS/SpinnerNet.Maui",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/SpinnerNet.Maui",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "SpinnerNet.Maui (iOS Simulator)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-maui-ios",
+            "program": "${workspaceFolder}/src/SpinnerNet.Maui/bin/Debug/net9.0-ios/iossimulator-arm64/SpinnerNet.Maui.app/SpinnerNet.Maui",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/SpinnerNet.Maui",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "SpinnerNet.Maui (Android Debug)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-maui-android",
+            "program": "${workspaceFolder}/src/SpinnerNet.Maui/bin/Debug/net9.0-android/SpinnerNet.Maui.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/SpinnerNet.Maui",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "SpinnerNet.Web (Public Site)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-web",
+            "program": "${workspaceFolder}/src/SpinnerNet.Web/bin/Debug/net9.0/SpinnerNet.Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/SpinnerNet.Web",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/SpinnerNet.Web/Views"
+            }
+        },
+        {
+            "name": "SpinnerNet.App (Blazor Platform)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-app",
+            "program": "${workspaceFolder}/src/SpinnerNet.App/bin/Debug/net9.0/SpinnerNet.App.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/SpinnerNet.App",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/SpinnerNet.App/Views"
+            }
+        },
+        {
+            "name": "SpinnerNet.Console (CLI Tool)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-console",
+            "program": "${workspaceFolder}/src/SpinnerNet.Console/bin/Debug/net9.0/SpinnerNet.Console.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/SpinnerNet.Console",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
+    ]
+}

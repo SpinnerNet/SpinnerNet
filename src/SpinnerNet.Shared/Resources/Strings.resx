@@ -804,12 +804,6 @@
   </data>
 
   <!-- Spinnen Page - Education Section -->
-  <data name="Spinnen_Education_Holistic_Title" xml:space="preserve">
-    <value>Holistic Approach</value>
-  </data>
-  <data name="Spinnen_Education_Holistic_Description" xml:space="preserve">
-    <value>How can children discover their talents, develop emotional strength and grow self-determined? Beyond performance pressure and outdated curricula.</value>
-  </data>
   <data name="Spinnen_Education_Holistic_Formats" xml:space="preserve">
     <value>Formats</value>
   </data>
@@ -845,12 +839,6 @@
   </data>
   <data name="Spinnen_Education_Future_Area4" xml:space="preserve">
     <value>Cultural education</value>
-  </data>
-  <data name="Spinnen_Projects_Title" xml:space="preserve">
-    <value>Exemplary Projects</value>
-  </data>
-  <data name="Spinnen_Projects_Description" xml:space="preserve">
-    <value>From local initiatives to international visions – the Spinnerei is a living ecosystem with space for small and large projects.</value>
   </data>
 
   <!-- Vision Pillars Section -->
