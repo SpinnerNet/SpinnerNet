@@ -119,16 +119,23 @@ dotnet run --project ./src/SpinnerNet.Web/SpinnerNet.Web.csproj
 - **Key Vault**: `kv-spinnernet-3lauxg`
 - **Primary Domain**: `bamberger-spinnerei.org` (to be configured)
 
-### Deployment Status (Last Updated: 2025-06-18)
+### Deployment Status (Last Updated: 2025-06-22)
 - ✅ **Architecture Separation**: Clean split between public site and Blazor app
 - ✅ **SpinnerNet.Web (Public)**: Razor Pages site with localization, status 200
 - ✅ **SpinnerNet.App (Blazor)**: Pure MudBlazor application, status 200
 - ✅ **MudBlazor Integration**: Properly configured with Material Design components
 - ✅ **Cross-linking**: Public site navigation points to Blazor app
 - ✅ **Health Checks**: Both applications operational
-- ✅ **Authentication Ready**: Cookie-based auth configured for both
+- ✅ **Azure AD Authentication**: Multi-tenant authentication with personal Microsoft accounts
 - ⏳ **Custom Domain**: bamberger-spinnerei.org to be configured
 - ⏳ **Feature Implementation**: Ready for user registration and AI personas
+
+### Azure AD Authentication Configuration
+- **App Registration**: `SpinnerNet-App` (Client ID stored in Key Vault)
+- **Sign-in Audience**: `AzureADandPersonalMicrosoftAccount` (multi-tenant)
+- **Supported Accounts**: Personal Microsoft accounts + Work/School from any Azure AD
+- **Authentication Endpoints**: `/Account/login` and `/Account/logout`
+- **Protected Routes**: Dashboard and other `[Authorize]` decorated pages
 
 ### DEPLOYMENT INSTRUCTIONS - TWO APPLICATIONS
 
@@ -324,6 +331,10 @@ var options = new DbContextOptionsBuilder<TestDbContext>()
 # Required
 OPENAI_API_KEY=your_openai_api_key
 
+# Azure AD Authentication (for SpinnerNet.App)
+AzureAd__ClientId=your_client_id
+AzureAd__Domain=your_azure_ad_domain
+
 # Optional
 COSMOS_DB_CONNECTION_STRING=your_cosmos_connection
 COSMOS_DB_DATABASE_NAME=SpinnerNetDb
@@ -339,6 +350,14 @@ COSMOS_DB_DATABASE_NAME=SpinnerNetDb
   "CosmosDb": {
     "ConnectionString": "",
     "DatabaseName": "SpinnerNetDb"
+  },
+  "AzureAd": {
+    "Instance": "https://login.microsoftonline.com/",
+    "Domain": "",
+    "TenantId": "common",
+    "ClientId": "",
+    "CallbackPath": "/signin-oidc",
+    "SignedOutCallbackPath": "/signout-callback-oidc"
   }
 }
 ```

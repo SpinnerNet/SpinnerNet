@@ -2,6 +2,16 @@
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="Icons.Material.Filled.Home">
         Home
     </MudNavLink>
+    
+    <AuthorizeView>
+        <Authorized>
+            <MudNavLink Href="/dashboard" Icon="Icons.Material.Filled.Dashboard">
+                Dashboard
+            </MudNavLink>
+            <MudDivider Class="my-2" />
+        </Authorized>
+    </AuthorizeView>
+    
     <MudNavLink Href="/counter" Icon="Icons.Material.Filled.Add">
         Counter
     </MudNavLink>

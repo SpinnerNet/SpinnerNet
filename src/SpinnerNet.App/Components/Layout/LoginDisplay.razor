@@ -1,0 +1,56 @@
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager Navigation
+@inject ILogger<LoginDisplay> Logger
+
+<AuthorizeView>
+    <Authorized>
+        <MudMenu Icon="Icons.Material.Filled.AccountCircle" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+            <ActivatorContent>
+                <MudButton Color="Color.Inherit" StartIcon="Icons.Material.Filled.AccountCircle">
+                    @context.User.Identity?.Name
+                </MudButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem Icon="Icons.Material.Filled.Person" Href="/Account/Profile">Profile</MudMenuItem>
+                <MudMenuItem Icon="Icons.Material.Filled.Settings" Href="/Account/Settings">Settings</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem Icon="Icons.Material.Filled.Logout" OnClick="LogoutAsync">Logout</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+    </Authorized>
+    <NotAuthorized>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   StartIcon="Icons.Material.Filled.Login"
+                   OnClick="LoginAsync">
+            Sign In
+        </MudButton>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private void LoginAsync()
+    {
+        try
+        {
+            Navigation.NavigateTo($"/Account/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}", forceLoad: true);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during login redirect");
+        }
+    }
+
+    private void LogoutAsync()
+    {
+        try
+        {
+            Navigation.NavigateTo("/Account/logout", forceLoad: true);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during logout redirect");
+        }
+    }
+}
