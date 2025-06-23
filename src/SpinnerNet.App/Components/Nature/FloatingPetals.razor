@@ -1,0 +1,216 @@
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+
+<div class="petals-container">
+    @for (int i = 0; i < _petalCount; i++)
+    {
+        var petalStyle = GetPetalStyle(i);
+        var petalType = GetPetalType(i);
+        
+        <div class="floating-petal @petalType" style="@petalStyle">
+            @if (petalType == "rose")
+            {
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 5C10 5 5 10 5 15C5 20 10 25 15 25C20 25 25 20 25 15C25 10 20 5 15 5Z" 
+                          fill="#f472b6" opacity="0.8"/>
+                    <path d="M15 8C12 8 9 11 9 15C9 19 12 22 15 22C18 22 21 19 21 15C21 11 18 8 15 8Z" 
+                          fill="#ec4899" opacity="0.6"/>
+                </svg>
+            }
+            else if (petalType == "daisy")
+            {
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="12.5" cy="12.5" rx="8" ry="12" 
+                             fill="#fbbf24" opacity="0.8" transform="rotate(45 12.5 12.5)"/>
+                    <circle cx="12.5" cy="12.5" r="4" fill="#f59e0b" opacity="0.9"/>
+                </svg>
+            }
+            else
+            {
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 4C14 4 8 8 8 14C8 20 14 24 14 24C14 24 20 20 20 14C20 8 14 4 14 4Z" 
+                          fill="#34d399" opacity="0.7"/>
+                    <path d="M14 8C14 8 10 10 10 14C10 18 14 20 14 20C14 20 18 18 18 14C18 10 14 8 14 8Z" 
+                          fill="#10b981" opacity="0.5"/>
+                </svg>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .petals-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .floating-petal {
+        position: absolute;
+        animation: float-and-spin var(--animation-duration) infinite linear;
+        animation-delay: var(--animation-delay);
+        opacity: 0;
+    }
+
+    @@keyframes float-and-spin {
+        0% {
+            transform: translateY(-100px) translateX(0) rotate(0deg) scale(1);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.8;
+        }
+        90% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(calc(100vh + 100px)) translateX(var(--drift)) rotate(360deg) scale(0.8);
+            opacity: 0;
+        }
+    }
+
+    /* Different petal types have slightly different animations */
+    .floating-petal.rose {
+        animation-name: float-and-sway;
+    }
+
+    @@keyframes float-and-sway {
+        0% {
+            transform: translateY(-100px) translateX(0) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.7;
+        }
+        25% {
+            transform: translateY(25vh) translateX(30px) rotate(90deg);
+        }
+        50% {
+            transform: translateY(50vh) translateX(-20px) rotate(180deg);
+        }
+        75% {
+            transform: translateY(75vh) translateX(40px) rotate(270deg);
+        }
+        90% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(calc(100vh + 100px)) translateX(0) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* Reduce motion for accessibility */
+    @@media (prefers-reduced-motion: reduce) {
+        .floating-petal {
+            animation: simple-fade 10s infinite;
+        }
+        
+        @@keyframes simple-fade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.5; }
+        }
+    }
+</style>
+
+@code {
+    [Parameter] public int PetalCount { get; set; } = 15;
+    [Parameter] public int MinDuration { get; set; } = 10;
+    [Parameter] public int MaxDuration { get; set; } = 20;
+
+    private int _petalCount;
+    private List<PetalInfo> _petals = new();
+    private Timer? _petalGeneratorTimer;
+
+    protected override void OnInitialized()
+    {
+        _petalCount = PetalCount;
+        GeneratePetals();
+        
+        // Start a timer to occasionally add new petals
+        _petalGeneratorTimer = new Timer(_ => 
+        {
+            InvokeAsync(() =>
+            {
+                if (_petals.Count < PetalCount * 1.5)
+                {
+                    AddNewPetal();
+                    StateHasChanged();
+                }
+            });
+        }, null, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(8));
+    }
+
+    private void GeneratePetals()
+    {
+        for (int i = 0; i < _petalCount; i++)
+        {
+            _petals.Add(CreatePetalInfo(i));
+        }
+    }
+
+    private PetalInfo CreatePetalInfo(int index)
+    {
+        var random = new Random(index + DateTime.Now.Millisecond);
+        return new PetalInfo
+        {
+            Id = Guid.NewGuid(),
+            Left = random.Next(0, 100),
+            Duration = random.Next(MinDuration, MaxDuration),
+            Delay = random.Next(0, MaxDuration),
+            Drift = random.Next(-100, 100),
+            Type = GetRandomPetalType(random)
+        };
+    }
+
+    private string GetRandomPetalType(Random random)
+    {
+        var types = new[] { "rose", "daisy", "leaf" };
+        return types[random.Next(types.Length)];
+    }
+
+    private void AddNewPetal()
+    {
+        _petals.Add(CreatePetalInfo(_petals.Count));
+        if (_petals.Count > PetalCount * 2)
+        {
+            _petals.RemoveAt(0);
+        }
+    }
+
+    private string GetPetalStyle(int index)
+    {
+        if (index >= _petals.Count) return "";
+        
+        var petal = _petals[index];
+        return $"left: {petal.Left}%; " +
+               $"--animation-duration: {petal.Duration}s; " +
+               $"--animation-delay: {petal.Delay}s; " +
+               $"--drift: {petal.Drift}px;";
+    }
+
+    private string GetPetalType(int index)
+    {
+        if (index >= _petals.Count) return "leaf";
+        return _petals[index].Type;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _petalGeneratorTimer?.Dispose();
+    }
+
+    private class PetalInfo
+    {
+        public Guid Id { get; set; }
+        public int Left { get; set; }
+        public int Duration { get; set; }
+        public int Delay { get; set; }
+        public int Drift { get; set; }
+        public string Type { get; set; } = "leaf";
+    }
+}

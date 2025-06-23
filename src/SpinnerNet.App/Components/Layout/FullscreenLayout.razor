@@ -1,0 +1,30 @@
+@inherits LayoutComponentBase
+@using MudBlazor
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div class="fullscreen-layout">
+    @Body
+</div>
+
+<style>
+    .fullscreen-layout {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    /* Override any global styles that might interfere */
+    .fullscreen-layout * {
+        box-sizing: border-box;
+    }
+</style>

@@ -1,0 +1,634 @@
+@page "/interview"
+@layout FullscreenLayout
+@rendermode InteractiveServer
+@using SpinnerNet.Shared.Localization
+@using Microsoft.AspNetCore.Components.Web
+@inject ILocalizationService LocalizationService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+
+<PageTitle>@LocalizationService.GetString("Interview_Title") - Spinner.Net</PageTitle>
+
+<div class="interview-container">
+    <!-- Floating flower petals -->
+    <FloatingPetals />
+    
+    <!-- Interview content -->
+    <div class="interview-content">
+        <div class="interview-header">
+            <div class="step-indicator">
+                @for (int i = 1; i <= _totalSteps; i++)
+                {
+                    <div class="step-dot @(i <= _currentStep ? "active" : "") @(i < _currentStep ? "completed" : "")">
+                        @if (i < _currentStep)
+                        {
+                            <span>✓</span>
+                        }
+                        else if (i == _currentStep)
+                        {
+                            <span>🌸</span>
+                        }
+                        else
+                        {
+                            <span></span>
+                        }
+                    </div>
+                }
+            </div>
+            <p class="step-text">@LocalizationService.GetString("Interview_StepOf", _currentStep, _totalSteps)</p>
+        </div>
+
+        <div class="interview-card">
+            @if (_currentStep == 1)
+            {
+                <div class="step-content animate-fade-in">
+                    <div class="step-icon animate-bloom">👋</div>
+                    <h2>@LocalizationService.GetString("Interview_Hello")</h2>
+                    <p>@LocalizationService.GetString("Interview_Introduction")</p>
+                    <p class="question">@LocalizationService.GetString("Interview_NameQuestion")</p>
+                    
+                    <div class="input-group">
+                        <input type="text" @bind="_userName" @onkeypress="@OnEnterPressed" 
+                               placeholder="@LocalizationService.GetString("Interview_NamePlaceholder")" 
+                               class="name-input" />
+                    </div>
+                </div>
+            }
+            else if (_currentStep == 2)
+            {
+                <div class="step-content animate-fade-in">
+                    <div class="step-icon animate-bloom">🌻</div>
+                    <h2>@LocalizationService.GetString("Interview_HelloWithName", _userName)</h2>
+                    <p class="question">@LocalizationService.GetString("Interview_PersonalityQuestion")</p>
+                    
+                    <div class="options-grid">
+                        <button class="option-button @(_selectedPersonality == "creative" ? "selected" : "")" 
+                                @onclick="@(() => SelectPersonality("creative"))">
+                            <span class="option-icon">🎨</span>
+                            <span class="option-text">@LocalizationService.GetString("Interview_Personality_Creative")</span>
+                        </button>
+                        
+                        <button class="option-button @(_selectedPersonality == "analytical" ? "selected" : "")" 
+                                @onclick="@(() => SelectPersonality("analytical"))">
+                            <span class="option-icon">🔍</span>
+                            <span class="option-text">@LocalizationService.GetString("Interview_Personality_Analytical")</span>
+                        </button>
+                        
+                        <button class="option-button @(_selectedPersonality == "social" ? "selected" : "")" 
+                                @onclick="@(() => SelectPersonality("social"))">
+                            <span class="option-icon">🤝</span>
+                            <span class="option-text">@LocalizationService.GetString("Interview_Personality_Social")</span>
+                        </button>
+                        
+                        <button class="option-button @(_selectedPersonality == "organized" ? "selected" : "")" 
+                                @onclick="@(() => SelectPersonality("organized"))">
+                            <span class="option-icon">📋</span>
+                            <span class="option-text">@LocalizationService.GetString("Interview_Personality_Organized")</span>
+                        </button>
+                    </div>
+                </div>
+            }
+            else if (_currentStep == 3)
+            {
+                <div class="step-content animate-fade-in">
+                    <div class="step-icon animate-bloom">💼</div>
+                    <h2>@LocalizationService.GetString("Interview_AlmostDone", _userName)</h2>
+                    <p class="question">@LocalizationService.GetString("Interview_UseQuestion")</p>
+                    
+                    <div class="options-list">
+                        <button class="list-option @(_selectedUse == "work" ? "selected" : "")" 
+                                @onclick="@(() => SelectUse("work"))">
+                            <span class="list-icon">💼</span>
+                            <span class="list-text">@LocalizationService.GetString("Interview_Use_Work")</span>
+                        </button>
+                        
+                        <button class="list-option @(_selectedUse == "personal" ? "selected" : "")" 
+                                @onclick="@(() => SelectUse("personal"))">
+                            <span class="list-icon">🏠</span>
+                            <span class="list-text">@LocalizationService.GetString("Interview_Use_Personal")</span>
+                        </button>
+                        
+                        <button class="list-option @(_selectedUse == "learning" ? "selected" : "")" 
+                                @onclick="@(() => SelectUse("learning"))">
+                            <span class="list-icon">📚</span>
+                            <span class="list-text">@LocalizationService.GetString("Interview_Use_Learning")</span>
+                        </button>
+                        
+                        <button class="list-option @(_selectedUse == "community" ? "selected" : "")" 
+                                @onclick="@(() => SelectUse("community"))">
+                            <span class="list-icon">👥</span>
+                            <span class="list-text">@LocalizationService.GetString("Interview_Use_Community")</span>
+                        </button>
+                    </div>
+                </div>
+            }
+            else if (_currentStep == 4)
+            {
+                <div class="step-content animate-fade-in">
+                    <div class="step-icon animate-bloom">🎉</div>
+                    <h2>@LocalizationService.GetString("Interview_Perfect", _userName)</h2>
+                    <p>@LocalizationService.GetString("Interview_AllReady")</p>
+                    
+                    <div class="summary-card">
+                        <div class="summary-item">
+                            <span class="summary-label">@LocalizationService.GetString("Interview_Summary_Name")</span>
+                            <span class="summary-value">@_userName</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">@LocalizationService.GetString("Interview_Summary_Type")</span>
+                            <span class="summary-value">@GetPersonalityText(_selectedPersonality)</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">@LocalizationService.GetString("Interview_Summary_Usage")</span>
+                            <span class="summary-value">@GetUseText(_selectedUse)</span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Navigation buttons -->
+            <div class="button-group">
+                @if (_currentStep > 1)
+                {
+                    <button class="btn btn-secondary" @onclick="PreviousStep">
+                        @LocalizationService.GetString("Interview_Back")
+                    </button>
+                }
+                
+                @if (_currentStep < _totalSteps)
+                {
+                    <button class="btn btn-primary" @onclick="NextStep" disabled="@(!CanProceed())">
+                        @LocalizationService.GetString("Interview_Continue")
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-primary btn-success" @onclick="CompleteInterview">
+                        @LocalizationService.GetString("Interview_StartApp")
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .interview-container {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: linear-gradient(135deg, #fef3c7 0%, #ecfccb 50%, #d1fae5 100%);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 2rem;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .interview-content {
+        position: relative;
+        z-index: 10;
+        max-width: 600px;
+        margin: 0 auto;
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    .interview-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .step-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .step-dot {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        border: 3px solid #e5e7eb;
+    }
+
+    .step-dot.active {
+        background: #10b981;
+        border-color: #10b981;
+        color: white;
+        animation: step-glow 2s ease-in-out infinite;
+    }
+
+    .step-dot.completed {
+        background: #059669;
+        border-color: #059669;
+        color: white;
+    }
+
+    .step-text {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .interview-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border: 2px solid #f0f9ff;
+        margin-bottom: 2rem;
+    }
+
+    .step-content {
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .step-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        animation: gentle-bounce 3s ease-in-out infinite;
+    }
+
+    .interview-card h2 {
+        color: #1f2937;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .interview-card p {
+        color: #6b7280;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .question {
+        color: #1f2937 !important;
+        font-weight: 500;
+        font-size: 1.2rem !important;
+    }
+
+    .input-group {
+        margin: 2rem 0;
+    }
+
+    .name-input {
+        width: 100%;
+        max-width: 300px;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .name-input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+
+    .option-button {
+        padding: 1.5rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .option-button:hover {
+        border-color: #10b981;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+    }
+
+    .option-button.selected {
+        border-color: #10b981;
+        background: #ecfdf5;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .option-icon {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .option-text {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+
+    .list-option {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+    }
+
+    .list-option:hover {
+        border-color: #10b981;
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+    }
+
+    .list-option.selected {
+        border-color: #10b981;
+        background: #ecfdf5;
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .list-icon {
+        font-size: 1.5rem;
+    }
+
+    .list-text {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .summary-card {
+        background: #f9fafb;
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        border: 1px solid #e5e7eb;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .summary-item:last-child {
+        border-bottom: none;
+    }
+
+    .summary-label {
+        font-weight: 500;
+        color: #6b7280;
+    }
+
+    .summary-value {
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+    }
+
+    .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    .btn-primary {
+        background: #10b981;
+        color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-success {
+        background: #059669;
+        animation: success-pulse 2s ease-in-out infinite;
+    }
+
+    .btn-secondary {
+        background: #f3f4f6;
+        color: #374151;
+        border: 2px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+        background: #e5e7eb;
+        transform: translateY(-2px);
+    }
+
+    .animate-bloom {
+        animation: bloom 0.8s ease-out;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.8s ease-out forwards;
+        opacity: 1; /* Ensure visibility */
+    }
+
+    @@keyframes gentle-bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    @@keyframes step-glow {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    }
+
+    @@keyframes bloom {
+        0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+        50% { transform: scale(1.1) rotate(10deg); }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @@keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes success-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    @@media (max-width: 768px) {
+        .interview-content {
+            padding: 1rem;
+        }
+        
+        .interview-card {
+            padding: 2rem 1.5rem;
+        }
+        
+        .interview-card h2 {
+            font-size: 1.5rem;
+        }
+        
+        .options-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .button-group {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+
+        .step-indicator {
+            gap: 0.5rem;
+        }
+
+        .step-dot {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+@code {
+    private int _currentStep = 1;
+    private int _totalSteps = 4;
+    private string _userName = "";
+    private string _selectedPersonality = "";
+    private string _selectedUse = "";
+
+    private bool CanProceed()
+    {
+        return _currentStep switch
+        {
+            1 => !string.IsNullOrWhiteSpace(_userName),
+            2 => !string.IsNullOrEmpty(_selectedPersonality),
+            3 => !string.IsNullOrEmpty(_selectedUse),
+            4 => true,
+            _ => false
+        };
+    }
+
+    private void NextStep()
+    {
+        if (CanProceed() && _currentStep < _totalSteps)
+        {
+            _currentStep++;
+            StateHasChanged();
+        }
+    }
+
+    private void PreviousStep()
+    {
+        if (_currentStep > 1)
+        {
+            _currentStep--;
+            StateHasChanged();
+        }
+    }
+
+    private void SelectPersonality(string personality)
+    {
+        _selectedPersonality = personality;
+        StateHasChanged();
+    }
+
+    private void SelectUse(string use)
+    {
+        _selectedUse = use;
+        StateHasChanged();
+    }
+
+    private async Task OnEnterPressed(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && CanProceed())
+        {
+            NextStep();
+        }
+    }
+
+    private void CompleteInterview()
+    {
+        // TODO: Save interview data
+        Navigation.NavigateTo("/");
+    }
+
+    private string GetPersonalityText(string personality)
+    {
+        return personality switch
+        {
+            "creative" => LocalizationService.GetString("Interview_Personality_Creative"),
+            "analytical" => LocalizationService.GetString("Interview_Personality_Analytical"),
+            "social" => LocalizationService.GetString("Interview_Personality_Social"),
+            "organized" => LocalizationService.GetString("Interview_Personality_Organized"),
+            _ => ""
+        };
+    }
+
+    private string GetUseText(string use)
+    {
+        return use switch
+        {
+            "work" => LocalizationService.GetString("Interview_Use_Work"),
+            "personal" => LocalizationService.GetString("Interview_Use_Personal"),
+            "learning" => LocalizationService.GetString("Interview_Use_Learning"),
+            "community" => LocalizationService.GetString("Interview_Use_Community"),
+            _ => ""
+        };
+    }
+}

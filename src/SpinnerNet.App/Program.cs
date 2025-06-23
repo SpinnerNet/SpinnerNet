@@ -4,6 +4,7 @@ using MudBlazor.Services;
 using Microsoft.AspNetCore.Antiforgery;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using SpinnerNet.Shared.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +87,9 @@ builder.Services.AddAntiforgery(options =>
 
 // Add required services
 builder.Services.AddHttpContextAccessor();
+
+// Add localization services
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
 
 // Add Azure credentials for Key Vault
 builder.Services.AddSingleton<DefaultAzureCredential>();

@@ -1,0 +1,628 @@
+@page "/"
+@layout FullscreenLayout
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Authorization
+@using SpinnerNet.Shared.Localization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+@inject ILocalizationService LocalizationService
+
+<PageTitle>@LocalizationService.GetString("Splash_Welcome") - Spinner.Net</PageTitle>
+
+<div class="splash-container">
+    @if (_isLoading)
+    {
+        <!-- Spider loading animation -->
+        <SpinnerNet.App.Components.Loading.SpiderLoading />
+    }
+    else if (_isAuthenticated)
+    {
+        <!-- Authenticated Dashboard Content -->
+        <FloatingPetals />
+        
+        <div class="dashboard-content">
+            <div class="welcome-section animate-fade-in">
+                <div class="welcome-header">
+                    <div class="flower-icon animate-bloom">🌻</div>
+                    <h1>@LocalizationService.GetString("Dashboard_Welcome", _userName)</h1>
+                    <p>@LocalizationService.GetString("Dashboard_Subtitle")</p>
+                </div>
+            </div>
+            
+            <!-- Quick actions -->
+            <div class="quick-actions animate-slide-up">
+                <div class="action-card">
+                    <div class="action-icon">💬</div>
+                    <h3>@LocalizationService.GetString("Dashboard_Action_Chat")</h3>
+                    <p>@LocalizationService.GetString("Dashboard_Action_Chat_Desc")</p>
+                    <button class="action-button" @onclick="StartChat">
+                        @LocalizationService.GetString("Dashboard_Action_Start")
+                    </button>
+                </div>
+                
+                <div class="action-card">
+                    <div class="action-icon">⏰</div>
+                    <h3>@LocalizationService.GetString("Dashboard_Action_Time")</h3>
+                    <p>@LocalizationService.GetString("Dashboard_Action_Time_Desc")</p>
+                    <button class="action-button" @onclick="ManageTime">
+                        @LocalizationService.GetString("Dashboard_Action_Manage")
+                    </button>
+                </div>
+                
+                <div class="action-card">
+                    <div class="action-icon">👥</div>
+                    <h3>@LocalizationService.GetString("Dashboard_Action_Community")</h3>
+                    <p>@LocalizationService.GetString("Dashboard_Action_Community_Desc")</p>
+                    <button class="action-button" @onclick="JoinCommunity">
+                        @LocalizationService.GetString("Dashboard_Action_Join")
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Recent activity -->
+            <div class="recent-activity animate-slide-up">
+                <h2>@LocalizationService.GetString("Dashboard_Recent_Title")</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">🎉</div>
+                        <div class="activity-content">
+                            <h4>@LocalizationService.GetString("Dashboard_Recent_Welcome")</h4>
+                            <p>@LocalizationService.GetString("Dashboard_Recent_Welcome_Desc")</p>
+                            <span class="activity-time">@LocalizationService.GetString("Dashboard_Recent_Now")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (_showAuthSelection)
+    {
+        <!-- Floating flower petals for auth selection -->
+        <FloatingPetals />
+        
+        <!-- Main splash content -->
+        <div class="splash-content">
+            <!-- Authentication method selection -->
+            <div class="auth-selection animate-fade-in">
+                <div class="welcome-logo">
+                    <div class="flower-icon">🌺</div>
+                </div>
+                
+                <div class="welcome-text">
+                    <h1>@LocalizationService.GetString("Splash_WelcomeHeading")</h1>
+                    <p>@LocalizationService.GetString("Splash_AuthQuestion")</p>
+                </div>
+                
+                <div class="auth-buttons">
+                    <button class="auth-button microsoft-button animate-slide-in-1" @onclick="LoginWithMicrosoft">
+                        <div class="auth-flower">🌸</div>
+                        <span class="auth-icon">🏢</span>
+                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Microsoft")</span>
+                        <div class="button-glow"></div>
+                    </button>
+                    
+                    <button class="auth-button google-button animate-slide-in-2" @onclick="LoginWithGoogle">
+                        <div class="auth-flower">🌻</div>
+                        <span class="auth-icon">📧</span>
+                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Google")</span>
+                        <div class="button-glow"></div>
+                    </button>
+                    
+                    <button class="auth-button guest-button animate-slide-in-3" @onclick="ContinueAsGuest">
+                        <div class="auth-flower">🌺</div>
+                        <span class="auth-icon">👋</span>
+                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Guest")</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .splash-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #fef3c7 0%, #ecfccb 50%, #d1fae5 100%);
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    .splash-content {
+        text-align: center;
+        z-index: 10;
+        position: relative;
+        max-width: 400px;
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .welcome-logo {
+        margin-bottom: 2rem;
+    }
+
+    .flower-icon {
+        font-size: 4rem;
+        animation: gentle-bounce 2s ease-in-out infinite;
+    }
+
+    .welcome-text h1 {
+        color: #1f2937;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .welcome-text p {
+        color: #6b7280;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .loading-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+
+    .loading-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #34d399;
+        animation: loading-bounce 1.4s ease-in-out infinite both;
+    }
+
+    .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+    .auth-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .auth-button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1.2rem 2rem;
+        border: none;
+        border-radius: 16px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .auth-flower {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        font-size: 1.2rem;
+        animation: flower-float 3s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    .button-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 16px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .microsoft-button {
+        background: #0078d4;
+        color: white;
+    }
+
+    .microsoft-button .button-glow {
+        background: linear-gradient(45deg, rgba(0, 120, 212, 0.2), rgba(16, 110, 190, 0.2));
+    }
+
+    .microsoft-button:hover {
+        background: #106ebe;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 120, 212, 0.4);
+    }
+
+    .microsoft-button:hover .button-glow {
+        opacity: 1;
+    }
+
+    .microsoft-button:hover .auth-flower {
+        animation: flower-bloom 0.6s ease-out;
+    }
+
+    .google-button {
+        background: #ea4335;
+        color: white;
+    }
+
+    .google-button .button-glow {
+        background: linear-gradient(45deg, rgba(234, 67, 53, 0.2), rgba(211, 59, 44, 0.2));
+    }
+
+    .google-button:hover {
+        background: #d33b2c;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(234, 67, 53, 0.4);
+    }
+
+    .google-button:hover .button-glow {
+        opacity: 1;
+    }
+
+    .google-button:hover .auth-flower {
+        animation: flower-bloom 0.6s ease-out;
+    }
+
+    .guest-button {
+        background: #f3f4f6;
+        color: #374151;
+        border: 2px solid #e5e7eb;
+    }
+
+    .guest-button .button-glow {
+        background: linear-gradient(45deg, rgba(107, 114, 128, 0.1), rgba(156, 163, 175, 0.1));
+    }
+
+    .guest-button:hover {
+        background: #e5e7eb;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
+    }
+
+    .guest-button:hover .button-glow {
+        opacity: 1;
+    }
+
+    .guest-button:hover .auth-flower {
+        animation: flower-bloom 0.6s ease-out;
+    }
+
+    .auth-icon {
+        font-size: 1.2rem;
+    }
+
+    .animate-bloom {
+        animation: bloom 0.8s ease-out;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.8s ease-out forwards;
+        opacity: 1; /* Ensure visibility */
+    }
+
+    @@keyframes gentle-bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @@keyframes loading-bounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); }
+    }
+
+    @@keyframes bloom {
+        0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+        50% { transform: scale(1.1) rotate(10deg); }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @@keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes flower-float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-3px) rotate(5deg); }
+        50% { transform: translateY(-6px) rotate(0deg); }
+        75% { transform: translateY(-3px) rotate(-5deg); }
+    }
+
+    @@keyframes flower-bloom {
+        0% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.3) rotate(180deg); }
+        100% { transform: scale(1) rotate(360deg); }
+    }
+
+    @@keyframes slide-in-stagger {
+        0% { 
+            opacity: 0; 
+            transform: translateX(-50px) scale(0.8); 
+        }
+        100% { 
+            opacity: 1; 
+            transform: translateX(0) scale(1); 
+        }
+    }
+
+    .animate-slide-in-1 {
+        animation: slide-in-stagger 0.6s ease-out 0.2s both;
+    }
+
+    .animate-slide-in-2 {
+        animation: slide-in-stagger 0.6s ease-out 0.4s both;
+    }
+
+    .animate-slide-in-3 {
+        animation: slide-in-stagger 0.6s ease-out 0.6s both;
+    }
+
+    /* Dashboard Styles */
+    .dashboard-content {
+        position: relative;
+        z-index: 10;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .welcome-section {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .welcome-header {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border: 2px solid #f0f9ff;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .action-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border: 2px solid #f0f9ff;
+        transition: all 0.3s ease;
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .action-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        animation: gentle-bounce 3s ease-in-out infinite;
+    }
+
+    .action-card h3 {
+        color: #1f2937;
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .action-card p {
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .action-button {
+        background: #10b981;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .action-button:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .recent-activity {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border: 2px solid #f0f9ff;
+    }
+
+    .recent-activity h2 {
+        color: #1f2937;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f9fafb;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .activity-icon {
+        font-size: 1.5rem;
+        margin-top: 0.2rem;
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-content h4 {
+        color: #1f2937;
+        margin-bottom: 0.25rem;
+        font-size: 1.1rem;
+    }
+
+    .activity-content p {
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .activity-time {
+        color: #9ca3af;
+        font-size: 0.8rem;
+    }
+
+    .animate-slide-up {
+        animation: slide-up 0.8s ease-out;
+        animation-delay: 0.2s;
+        animation-fill-mode: both;
+    }
+
+    @@keyframes slide-up {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-content {
+            padding: 1rem;
+        }
+        
+        .welcome-header {
+            padding: 2rem 1.5rem;
+        }
+        
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+        
+        .action-card {
+            padding: 1.5rem;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .splash-content {
+            padding: 1rem;
+        }
+        
+        .welcome-text h1 {
+            font-size: 1.5rem;
+        }
+        
+        .flower-icon {
+            font-size: 3rem;
+        }
+        
+        .auth-button {
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+@code {
+    private bool _isLoading = true;
+    private bool _showAuthSelection = false;
+    private bool _isAuthenticated = false;
+    private string _userName = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Show loading with 3 second delay + animation time
+        await Task.Delay(4500);
+        
+        // Check if user is already authenticated
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            // User is authenticated, show main app
+            _isAuthenticated = true;
+            _userName = authState.User.Identity.Name ?? LocalizationService.GetString("Dashboard_Default_Name");
+        }
+
+        // Show authentication selection or main app
+        _isLoading = false;
+        if (!_isAuthenticated)
+        {
+            _showAuthSelection = true;
+        }
+        StateHasChanged();
+    }
+
+    private async Task LoginWithMicrosoft()
+    {
+        // Implement Microsoft authentication
+        // For now, redirect to interview
+        Navigation.NavigateTo("/interview");
+    }
+
+    private async Task LoginWithGoogle()
+    {
+        // Implement Google authentication  
+        // For now, redirect to interview
+        Navigation.NavigateTo("/interview");
+    }
+
+    private async Task ContinueAsGuest()
+    {
+        // Continue as guest, go to interview
+        Navigation.NavigateTo("/interview");
+    }
+
+    private void StartChat()
+    {
+        // Navigate to chat feature
+        Navigation.NavigateTo("/chat");
+    }
+
+    private void ManageTime()
+    {
+        // Navigate to time management
+        Navigation.NavigateTo("/time");
+    }
+
+    private void JoinCommunity()
+    {
+        // Navigate to community features
+        Navigation.NavigateTo("/community");
+    }
+}

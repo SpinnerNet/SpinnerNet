@@ -1664,4 +1664,107 @@
     <value>Was du weißt, kann anderen beim Wachsen helfen</value>
   </data>
 
+  <!-- Splash Screen -->
+  <data name="Splash_Welcome" xml:space="preserve">
+    <value>Willkommen bei Spinner.Net</value>
+  </data>
+  <data name="Splash_Loading" xml:space="preserve">
+    <value>Einen Moment bitte...</value>
+  </data>
+  <data name="Splash_WelcomeHeading" xml:space="preserve">
+    <value>Herzlich Willkommen!</value>
+  </data>
+  <data name="Splash_AuthQuestion" xml:space="preserve">
+    <value>Wie möchtest du dich anmelden?</value>
+  </data>
+  <data name="Splash_Auth_Microsoft" xml:space="preserve">
+    <value>Mit Microsoft-Konto</value>
+  </data>
+  <data name="Splash_Auth_Google" xml:space="preserve">
+    <value>Mit Google-Konto</value>
+  </data>
+  <data name="Splash_Auth_Guest" xml:space="preserve">
+    <value>Als Gast weitermachen</value>
+  </data>
+
+  <!-- Interview -->
+  <data name="Interview_StepOf" xml:space="preserve">
+    <value>Schritt {0} von {1}</value>
+  </data>
+  <data name="Interview_Hello" xml:space="preserve">
+    <value>Hallo! Schön, dass du da bist!</value>
+  </data>
+  <data name="Interview_Introduction" xml:space="preserve">
+    <value>Ich bin dein freundlicher Assistent und helfe dir dabei, alles einzurichten. Das dauert nur ein paar Minuten.</value>
+  </data>
+  <data name="Interview_NameQuestion" xml:space="preserve">
+    <value>Wie soll ich dich nennen?</value>
+  </data>
+  <data name="Interview_NamePlaceholder" xml:space="preserve">
+    <value>Dein Name...</value>
+  </data>
+  <data name="Interview_HelloWithName" xml:space="preserve">
+    <value>Hallo {0}! 🎉</value>
+  </data>
+  <data name="Interview_PersonalityQuestion" xml:space="preserve">
+    <value>Was beschreibt dich am besten?</value>
+  </data>
+  <data name="Interview_Personality_Creative" xml:space="preserve">
+    <value>Kreativ &amp; Künstlerisch</value>
+  </data>
+  <data name="Interview_Personality_Analytical" xml:space="preserve">
+    <value>Analytisch &amp; Logisch</value>
+  </data>
+  <data name="Interview_Personality_Social" xml:space="preserve">
+    <value>Sozial &amp; Kommunikativ</value>
+  </data>
+  <data name="Interview_Personality_Organized" xml:space="preserve">
+    <value>Organisiert &amp; Strukturiert</value>
+  </data>
+  <data name="Interview_AlmostDone" xml:space="preserve">
+    <value>Fast geschafft, {0}!</value>
+  </data>
+  <data name="Interview_UseQuestion" xml:space="preserve">
+    <value>Wofür wirst du Spinner.Net hauptsächlich nutzen?</value>
+  </data>
+  <data name="Interview_Use_Work" xml:space="preserve">
+    <value>Für die Arbeit</value>
+  </data>
+  <data name="Interview_Use_Personal" xml:space="preserve">
+    <value>Für persönliche Projekte</value>
+  </data>
+  <data name="Interview_Use_Learning" xml:space="preserve">
+    <value>Zum Lernen &amp; Entdecken</value>
+  </data>
+  <data name="Interview_Use_Community" xml:space="preserve">
+    <value>Für Community &amp; Austausch</value>
+  </data>
+  <data name="Interview_Perfect" xml:space="preserve">
+    <value>Perfekt, {0}!</value>
+  </data>
+  <data name="Interview_AllReady" xml:space="preserve">
+    <value>Alles ist bereit für dich. Willkommen bei Spinner.Net!</value>
+  </data>
+  <data name="Interview_Summary_Name" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="Interview_Summary_Type" xml:space="preserve">
+    <value>Typ:</value>
+  </data>
+  <data name="Interview_Summary_Usage" xml:space="preserve">
+    <value>Nutzung:</value>
+  </data>
+  <data name="Interview_Back" xml:space="preserve">
+    <value>← Zurück</value>
+  </data>
+  <data name="Interview_LetsGo" xml:space="preserve">
+    <value>Los geht's!</value>
+  </data>
+  <data name="Interview_Continue" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="Interview_StartApp" xml:space="preserve">
+    <value>App starten! 🚀</value>
+  </data>
+
 </root>

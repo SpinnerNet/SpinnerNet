@@ -1317,4 +1317,187 @@
     <value>Get in touch</value>
   </data>
 
+  <!-- Splash Screen -->
+  <data name="Splash_Welcome" xml:space="preserve">
+    <value>Welcome to Spinner.Net</value>
+  </data>
+  <data name="Splash_Loading" xml:space="preserve">
+    <value>One moment please...</value>
+  </data>
+  <data name="Splash_WelcomeHeading" xml:space="preserve">
+    <value>Welcome!</value>
+  </data>
+  <data name="Splash_AuthQuestion" xml:space="preserve">
+    <value>How would you like to sign in?</value>
+  </data>
+  <data name="Splash_Auth_Microsoft" xml:space="preserve">
+    <value>With Microsoft Account</value>
+  </data>
+  <data name="Splash_Auth_Google" xml:space="preserve">
+    <value>With Google Account</value>
+  </data>
+  <data name="Splash_Auth_Guest" xml:space="preserve">
+    <value>Continue as Guest</value>
+  </data>
+
+  <!-- Interview -->
+  <data name="Interview_StepOf" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="Interview_Hello" xml:space="preserve">
+    <value>Hello! Nice to meet you!</value>
+  </data>
+  <data name="Interview_Introduction" xml:space="preserve">
+    <value>I'm your friendly assistant and I'll help you get everything set up. This will only take a few minutes.</value>
+  </data>
+  <data name="Interview_NameQuestion" xml:space="preserve">
+    <value>What should I call you?</value>
+  </data>
+  <data name="Interview_NamePlaceholder" xml:space="preserve">
+    <value>Your name...</value>
+  </data>
+  <data name="Interview_HelloWithName" xml:space="preserve">
+    <value>Hello {0}! 🎉</value>
+  </data>
+  <data name="Interview_PersonalityQuestion" xml:space="preserve">
+    <value>What describes you best?</value>
+  </data>
+  <data name="Interview_Personality_Creative" xml:space="preserve">
+    <value>Creative &amp; Artistic</value>
+  </data>
+  <data name="Interview_Personality_Analytical" xml:space="preserve">
+    <value>Analytical &amp; Logical</value>
+  </data>
+  <data name="Interview_Personality_Social" xml:space="preserve">
+    <value>Social &amp; Communicative</value>
+  </data>
+  <data name="Interview_Personality_Organized" xml:space="preserve">
+    <value>Organized &amp; Structured</value>
+  </data>
+  <data name="Interview_AlmostDone" xml:space="preserve">
+    <value>Almost done, {0}!</value>
+  </data>
+  <data name="Interview_UseQuestion" xml:space="preserve">
+    <value>What will you mainly use Spinner.Net for?</value>
+  </data>
+  <data name="Interview_Use_Work" xml:space="preserve">
+    <value>For work</value>
+  </data>
+  <data name="Interview_Use_Personal" xml:space="preserve">
+    <value>For personal projects</value>
+  </data>
+  <data name="Interview_Use_Learning" xml:space="preserve">
+    <value>For learning &amp; exploring</value>
+  </data>
+  <data name="Interview_Use_Community" xml:space="preserve">
+    <value>For community &amp; exchange</value>
+  </data>
+  <data name="Interview_Perfect" xml:space="preserve">
+    <value>Perfect, {0}!</value>
+  </data>
+  <data name="Interview_AllReady" xml:space="preserve">
+    <value>Everything is ready for you. Welcome to Spinner.Net!</value>
+  </data>
+  <data name="Interview_Summary_Name" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="Interview_Summary_Type" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="Interview_Summary_Usage" xml:space="preserve">
+    <value>Usage:</value>
+  </data>
+  <data name="Interview_Back" xml:space="preserve">
+    <value>← Back</value>
+  </data>
+  <data name="Interview_LetsGo" xml:space="preserve">
+    <value>Let's go!</value>
+  </data>
+  <data name="Interview_Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Interview_StartApp" xml:space="preserve">
+    <value>Start App! 🚀</value>
+  </data>
+
+  <!-- Loading Screen -->
+  <data name="Loading_Message" xml:space="preserve">
+    <value>Weaving your digital experience...</value>
+  </data>
+
+  <!-- Dashboard -->
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Dashboard_Welcome" xml:space="preserve">
+    <value>Welcome back, {0}!</value>
+  </data>
+  <data name="Dashboard_Subtitle" xml:space="preserve">
+    <value>Ready to grow together?</value>
+  </data>
+  <data name="Dashboard_Default_Name" xml:space="preserve">
+    <value>Friend</value>
+  </data>
+  <data name="Dashboard_Action_Chat" xml:space="preserve">
+    <value>AI Chat</value>
+  </data>
+  <data name="Dashboard_Action_Chat_Desc" xml:space="preserve">
+    <value>Connect with your personal AI companion for guidance and conversation.</value>
+  </data>
+  <data name="Dashboard_Action_Time" xml:space="preserve">
+    <value>Time Banking</value>
+  </data>
+  <data name="Dashboard_Action_Time_Desc" xml:space="preserve">
+    <value>Manage your time contributions and exchanges within the community.</value>
+  </data>
+  <data name="Dashboard_Action_Community" xml:space="preserve">
+    <value>Community</value>
+  </data>
+  <data name="Dashboard_Action_Community_Desc" xml:space="preserve">
+    <value>Join conversations and collaborate with fellow community members.</value>
+  </data>
+  <data name="Dashboard_Action_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Dashboard_Action_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Dashboard_Action_Join" xml:space="preserve">
+    <value>Join</value>
+  </data>
+  <data name="Dashboard_Recent_Title" xml:space="preserve">
+    <value>Recent Activity</value>
+  </data>
+  <data name="Dashboard_Recent_Welcome" xml:space="preserve">
+    <value>Welcome to Spinner.Net!</value>
+  </data>
+  <data name="Dashboard_Recent_Welcome_Desc" xml:space="preserve">
+    <value>You've successfully joined our community. Your journey begins now!</value>
+  </data>
+  <data name="Dashboard_Recent_Now" xml:space="preserve">
+    <value>Just now</value>
+  </data>
+
+  <!-- Interview Page -->
+  <data name="Interview_Title" xml:space="preserve">
+    <value>Interview</value>
+  </data>
+  <data name="Interview_Welcome" xml:space="preserve">
+    <value>Welcome to the Interview!</value>
+  </data>
+  <data name="Interview_Coming_Soon" xml:space="preserve">
+    <value>The full interview experience is coming soon. For now, let's get you started!</value>
+  </data>
+
+  <!-- App Index -->
+  <data name="App_Title" xml:space="preserve">
+    <value>Main App</value>
+  </data>
+  <data name="App_Welcome" xml:space="preserve">
+    <value>Welcome to Spinner.Net</value>
+  </data>
+  <data name="App_Description" xml:space="preserve">
+    <value>Your digital community platform is ready to use.</value>
+  </data>
+
 </root>
