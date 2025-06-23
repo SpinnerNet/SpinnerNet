@@ -32,6 +32,53 @@
 **ARCHITECTURE**: Vertical slice - one file per feature
 **AI**: Only via Semantic Kernel, never direct HTTP
 
+## 🌍 LOCALIZATION SETUP
+
+**CRITICAL**: NO hardcoded strings in Blazor components!
+
+### Blazor Component Pattern
+```razor
+@inject ILocalizationService LocalizationService
+
+<h1>@LocalizationService.GetString("Splash_Welcome")</h1>
+<p>@LocalizationService.GetString("Splash_Loading")</p>
+```
+
+### Program.cs Registration
+```csharp
+using SpinnerNet.Shared.Localization;
+
+// Add localization services
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+```
+
+### .resx Files (SpinnerNet.Shared/Resources/)
+- **Strings.resx**: English (default)
+- **Strings.de.resx**: German
+- **Strings.fr.resx**: French  
+- **Strings.es.resx**: Spanish
+
+### XML Encoding Required
+```xml
+<!-- WRONG -->
+<value>Innovation & Community</value>
+
+<!-- CORRECT -->  
+<value>Innovation &amp; Community</value>
+```
+
+### Usage Examples
+```razor
+<!-- Simple text -->
+@LocalizationService.GetString("Nav_Home")
+
+<!-- With parameters -->
+@LocalizationService.GetString("Welcome_User", userName)
+
+<!-- PageTitle -->
+<PageTitle>@LocalizationService.GetString("Splash_Welcome") - Spinner.Net</PageTitle>
+```
+
 ## 🚀 Deploy SpinnerNet.App
 ```bash
 cd src && dotnet publish SpinnerNet.App/*.csproj -c Release -o publish
