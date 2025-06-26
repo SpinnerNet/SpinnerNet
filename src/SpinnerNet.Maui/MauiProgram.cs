@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using MudBlazor.Services;
 using SpinnerNet.Maui.Extensions;

@@ -128,56 +128,56 @@ public static class CreatePersona
         {
             try
             {
-                var personaId = Guid.NewGuid().ToString();
-                var documentId = $"persona_{request.UserId}_{personaId}";
+                var personaid = Guid.NewGuid().ToString();
+                var documentid = $"persona_{request.UserId}_{personaid}";
 
                 var personaDocument = new PersonaDocument
                 {
-                    Id = documentId,
-                    Type = "persona",
+                    id = documentid,
+                    type = "persona",
                     UserId = request.UserId,
-                    PersonaId = personaId,
-                    IsDefault = request.IsDefault,
-                    BasicInfo = new PersonaBasicInfo
+                    personaId = personaid,
+                    isDefault = request.IsDefault,
+                    basicInfo = new PersonaBasicInfo
                     {
-                        DisplayName = request.DisplayName,
-                        Age = request.Age,
-                        CulturalBackground = request.CulturalBackground,
-                        Occupation = request.Occupation,
-                        Interests = request.Interests,
-                        Languages = new LanguageInfo
+                        displayName = request.DisplayName,
+                        age = request.Age,
+                        culturalBackground = request.CulturalBackground,
+                        occupation = request.Occupation,
+                        interests = request.Interests,
+                        languages = new LanguageInfo
                         {
-                            MotherTongue = request.MotherTongue,
-                            Preferred = request.PreferredLanguage,
-                            Spoken = request.SpokenLanguages.Any() ? request.SpokenLanguages : new List<string> { request.MotherTongue },
-                            Proficiency = request.SpokenLanguages.ToDictionary(lang => lang, _ => "Native")
+                            motherTongue = request.MotherTongue,
+                            preferred = request.PreferredLanguage,
+                            spoken = request.SpokenLanguages.Any() ? request.SpokenLanguages : new List<string> { request.MotherTongue },
+                            proficiency = request.SpokenLanguages.ToDictionary(lang => lang, _ => "Native")
                         }
                     },
-                    TypeLeapConfig = new TypeLeapConfiguration
+                    typeLeapConfig = new TypeLeapConfiguration
                     {
-                        UIComplexityLevel = request.UIComplexityLevel,
-                        FontSizePreferences = request.FontSizePreferences,
-                        ColorPreferences = request.ColorPreferences,
-                        EnableAnimations = request.EnableAnimations,
-                        NavigationStyle = request.NavigationStyle,
-                        AgeAdaptations = CreateAgeAdaptations(request.Age)
+                        uiComplexityLevel = request.UIComplexityLevel,
+                        fontSizePreferences = request.FontSizePreferences,
+                        colorPreferences = request.ColorPreferences,
+                        enableAnimations = request.EnableAnimations,
+                        navigationStyle = request.NavigationStyle,
+                        ageAdaptations = CreateAgeAdaptations(request.Age)
                     },
-                    LearningPreferences = new LearningPreferences
+                    learningPreferences = new LearningPreferences
                     {
-                        PreferredLearningStyle = request.PreferredLearningStyle,
-                        PacePreference = request.PacePreference,
-                        DifficultyLevel = request.DifficultyLevel
+                        preferredLearningStyle = request.PreferredLearningStyle,
+                        pacePreference = request.PacePreference,
+                        difficultyLevel = request.DifficultyLevel
                     },
-                    PrivacySettings = new PrivacySettings
+                    privacySettings = new PrivacySettings
                     {
-                        DataSharing = request.DataSharing,
-                        AIInteraction = request.AIInteraction,
-                        EmailAccess = request.EmailAccess,
-                        ConsentTimestamp = DateTime.UtcNow
+                        dataSharing = request.DataSharing,
+                        aiInteraction = request.AIInteraction,
+                        emailAccess = request.EmailAccess,
+                        consentTimestamp = DateTime.UtcNow
                     },
-                    BuddyRelationships = new List<BuddyRelationship>(),
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    buddyRelationships = new List<BuddyRelationship>(),
+                    createdAt = DateTime.UtcNow,
+                    updatedAt = DateTime.UtcNow
                 };
 
                 // TODO: Save to Cosmos DB when service is available
@@ -189,7 +189,7 @@ public static class CreatePersona
                 return new Result
                 {
                     Success = true,
-                    PersonaId = personaId
+                    PersonaId = personaid
                 };
             }
             catch (Exception ex)
@@ -202,21 +202,21 @@ public static class CreatePersona
             }
         }
 
-        private Dictionary<string, object> CreateAgeAdaptations(int age)
+        private Dictionary<string, string> CreateAgeAdaptations(int age)
         {
-            var adaptations = new Dictionary<string, object>();
+            var adaptations = new Dictionary<string, string>();
 
             if (age < 18)
             {
-                adaptations["parentalConsent"] = true;
+                adaptations["parentalConsent"] = "true";
                 adaptations["contentFiltering"] = "strict";
-                adaptations["timeRestrictions"] = true;
+                adaptations["timeRestrictions"] = "true";
             }
             else if (age >= 65)
             {
-                adaptations["largerClickTargets"] = true;
-                adaptations["simplifiedInterface"] = true;
-                adaptations["enhancedContrast"] = true;
+                adaptations["largerClickTargets"] = "true";
+                adaptations["simplifiedInterface"] = "true";
+                adaptations["enhancedContrast"] = "true";
             }
 
             return adaptations;

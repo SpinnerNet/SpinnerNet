@@ -3,10 +3,14 @@
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Components.Authorization
 @using SpinnerNet.Shared.Localization
+@using SpinnerNet.Core.Features.Personas
+@using MediatR
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 @inject ILocalizationService LocalizationService
+@inject IMediator Mediator
+@inject ILogger<Splash> Logger
 
 <PageTitle>@LocalizationService.GetString("Splash_Welcome") - Spinner.Net</PageTitle>
 
@@ -62,7 +66,13 @@
             
             <!-- Recent activity -->
             <div class="recent-activity animate-slide-up">
-                <h2>@LocalizationService.GetString("Dashboard_Recent_Title")</h2>
+                <div class="activity-header">
+                    <h2>@LocalizationService.GetString("Dashboard_Recent_Title")</h2>
+                    <button class="signout-button" @onclick="SignOut">
+                        <span class="signout-icon">🚪</span>
+                        @LocalizationService.GetString("Dashboard_SignOut")
+                    </button>
+                </div>
                 <div class="activity-list">
                     <div class="activity-item">
                         <div class="activity-icon">🎉</div>
@@ -95,26 +105,24 @@
                 </div>
                 
                 <div class="auth-buttons">
-                    <button class="auth-button microsoft-button animate-slide-in-1" @onclick="LoginWithMicrosoft">
+                    <button class="auth-button work-button animate-slide-in-1" @onclick="LoginWithWorkAccount">
                         <div class="auth-flower">🌸</div>
                         <span class="auth-icon">🏢</span>
-                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Microsoft")</span>
+                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_WorkSchool")</span>
                         <div class="button-glow"></div>
                     </button>
                     
-                    <button class="auth-button google-button animate-slide-in-2" @onclick="LoginWithGoogle">
+                    <button class="auth-button microsoft-button animate-slide-in-2" @onclick="LoginWithPersonalAccount">
                         <div class="auth-flower">🌻</div>
-                        <span class="auth-icon">📧</span>
-                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Google")</span>
+                        <span class="auth-icon">👤</span>
+                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Personal")</span>
                         <div class="button-glow"></div>
                     </button>
                     
-                    <button class="auth-button guest-button animate-slide-in-3" @onclick="ContinueAsGuest">
-                        <div class="auth-flower">🌺</div>
-                        <span class="auth-icon">👋</span>
-                        <span class="auth-text">@LocalizationService.GetString("Splash_Auth_Guest")</span>
-                        <div class="button-glow"></div>
-                    </button>
+                    <div class="coming-soon-note animate-slide-in-3">
+                        <span class="coming-soon-icon">🚀</span>
+                        <span class="coming-soon-text">@LocalizationService.GetString("Splash_Auth_MoreSoon")</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -231,6 +239,29 @@
         pointer-events: none;
     }
 
+    .work-button {
+        background: #5B2C6F;
+        color: white;
+    }
+
+    .work-button .button-glow {
+        background: linear-gradient(45deg, rgba(91, 44, 111, 0.2), rgba(74, 35, 90, 0.2));
+    }
+
+    .work-button:hover {
+        background: #4A235A;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(91, 44, 111, 0.4);
+    }
+
+    .work-button:hover .button-glow {
+        opacity: 1;
+    }
+
+    .work-button:hover .auth-flower {
+        animation: flower-bloom 0.6s ease-out;
+    }
+
     .microsoft-button {
         background: #0078d4;
         color: white;
@@ -254,50 +285,26 @@
         animation: flower-bloom 0.6s ease-out;
     }
 
-    .google-button {
-        background: #ea4335;
+    .linkedin-button {
+        background: #0A66C2;
         color: white;
     }
 
-    .google-button .button-glow {
-        background: linear-gradient(45deg, rgba(234, 67, 53, 0.2), rgba(211, 59, 44, 0.2));
+    .linkedin-button .button-glow {
+        background: linear-gradient(45deg, rgba(10, 102, 194, 0.2), rgba(8, 82, 156, 0.2));
     }
 
-    .google-button:hover {
-        background: #d33b2c;
+    .linkedin-button:hover {
+        background: #08529C;
         transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(234, 67, 53, 0.4);
+        box-shadow: 0 8px 25px rgba(10, 102, 194, 0.4);
     }
 
-    .google-button:hover .button-glow {
+    .linkedin-button:hover .button-glow {
         opacity: 1;
     }
 
-    .google-button:hover .auth-flower {
-        animation: flower-bloom 0.6s ease-out;
-    }
-
-    .guest-button {
-        background: #f3f4f6;
-        color: #374151;
-        border: 2px solid #e5e7eb;
-    }
-
-    .guest-button .button-glow {
-        background: linear-gradient(45deg, rgba(107, 114, 128, 0.1), rgba(156, 163, 175, 0.1));
-    }
-
-    .guest-button:hover {
-        background: #e5e7eb;
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
-    }
-
-    .guest-button:hover .button-glow {
-        opacity: 1;
-    }
-
-    .guest-button:hover .auth-flower {
+    .linkedin-button:hover .auth-flower {
         animation: flower-bloom 0.6s ease-out;
     }
 
@@ -556,56 +563,226 @@
             font-size: 0.9rem;
         }
     }
-</style>
-
+    
+    /* New styles for coming soon and sign out */
+    .coming-soon-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        color: #6b7280;
+        border-radius: 16px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 2px dashed #d1d5db;
+        opacity: 0.8;
+    }
+    
+    .coming-soon-icon {
+        font-size: 1.1rem;
+    }
+    
+    .activity-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .signout-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+    }
+    
+    .signout-button:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    
+    .signout-icon {
+        font-size: 1rem;
+    }</style>
 @code {
     private bool _isLoading = true;
     private bool _showAuthSelection = false;
     private bool _isAuthenticated = false;
     private string _userName = "";
+    private bool _hasPersona = false;
 
     protected override async Task OnInitializedAsync()
     {
-        // Show loading with 3 second delay + animation time
+        Logger.LogInformation("🏠 Splash page starting OnInitializedAsync...");
+        Logger.LogInformation("📍 Current URL: {Url}", Navigation.Uri);
+        
+        // Show loading with delay + animation time
         await Task.Delay(4500);
+        
+        Logger.LogInformation("⏰ Loading delay completed");
+        
+        // Always stop loading first
+        _isLoading = false;
         
         // Check if user is already authenticated
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         
+        Logger.LogInformation("User authenticated: {IsAuthenticated}", authState.User.Identity?.IsAuthenticated);
+        Logger.LogInformation("User identity name: {UserName}", authState.User.Identity?.Name);
+        
         if (authState.User.Identity?.IsAuthenticated == true)
         {
-            // User is authenticated, show main app
+            Logger.LogInformation("User is authenticated, checking persona...");
+            
+            // User is authenticated, check if they have a persona
             _isAuthenticated = true;
-            _userName = authState.User.Identity.Name ?? LocalizationService.GetString("Dashboard_Default_Name");
+            _userName = authState.User.Identity.Name ?? 
+                       authState.User.FindFirst("name")?.Value ?? 
+                       authState.User.FindFirst("preferred_username")?.Value ?? 
+                       LocalizationService.GetString("Dashboard_Default_Name");
+            
+            Logger.LogInformation("User name resolved to: {UserName}", _userName);
+            
+            // Check if user has a persona with retry logic (for race condition handling)
+            try
+            {
+                _hasPersona = await CheckUserHasPersonaWithRetry(authState.User);
+                
+                Logger.LogInformation("User has persona: {HasPersona}", _hasPersona);
+                
+                if (!_hasPersona)
+                {
+                    Logger.LogInformation("❌ No persona found after retries, redirecting to interview");
+                    // New user without persona - redirect to interview
+                    Navigation.NavigateTo("/interview", forceLoad: true);
+                    return;
+                }
+                Logger.LogInformation("✅ User has persona, will show dashboard");
+                // User has persona - will show dashboard
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error checking persona");
+                // If persona check fails, assume no persona and redirect to interview
+                Navigation.NavigateTo("/interview", forceLoad: true);
+                return;
+            }
         }
-
-        // Show authentication selection or main app
-        _isLoading = false;
-        if (!_isAuthenticated)
+        else
         {
+            Logger.LogInformation("User is not authenticated, showing auth selection");
+            // User is not authenticated - show auth selection
             _showAuthSelection = true;
         }
+        
         StateHasChanged();
     }
 
-    private async Task LoginWithMicrosoft()
+    private void LoginWithWorkAccount()
     {
-        // Implement Microsoft authentication
-        // For now, redirect to interview
-        Navigation.NavigateTo("/interview");
+        // Redirect to Azure AD login with work/school account hint
+        var loginUrl = "/MicrosoftIdentity/Account/SignIn?domain_hint=organizations";
+        Navigation.NavigateTo(loginUrl, forceLoad: true);
     }
 
-    private async Task LoginWithGoogle()
+    private void LoginWithPersonalAccount()
     {
-        // Implement Google authentication  
-        // For now, redirect to interview
-        Navigation.NavigateTo("/interview");
+        // Redirect to Azure AD login with personal account hint
+        var loginUrl = "/MicrosoftIdentity/Account/SignIn?domain_hint=consumers";
+        Navigation.NavigateTo(loginUrl, forceLoad: true);
     }
 
-    private async Task ContinueAsGuest()
+    private async Task<bool> CheckUserHasPersonaWithRetry(System.Security.Claims.ClaimsPrincipal user)
     {
-        // Continue as guest, go to interview
-        Navigation.NavigateTo("/interview");
+        const int maxRetries = 3;
+        const int baseDelayMs = 1000;
+        
+        for (int attempt = 1; attempt <= maxRetries; attempt++)
+        {
+            Logger.LogInformation("Persona check attempt {Attempt}/{MaxRetries}", attempt, maxRetries);
+            
+            var hasPersona = await CheckUserHasPersona(user);
+            
+            if (hasPersona)
+            {
+                Logger.LogInformation("Persona found on attempt {Attempt}", attempt);
+                return true;
+            }
+            
+            if (attempt < maxRetries)
+            {
+                var delay = baseDelayMs * attempt; // Progressive delay
+                Logger.LogInformation("Persona not found, waiting {Delay}ms before retry", delay);
+                await Task.Delay(delay);
+            }
+        }
+        
+        Logger.LogWarning("No persona found after {MaxRetries} attempts", maxRetries);
+        return false;
+    }
+    
+    private async Task<bool> CheckUserHasPersona(System.Security.Claims.ClaimsPrincipal user)
+    {
+        try
+        {
+            Logger.LogInformation("Starting persona check...");
+            
+            // Get user ID from claims with detailed logging
+            var oidClaim = user.FindFirst("oid")?.Value;
+            var subClaim = user.FindFirst("sub")?.Value;
+            var nameIdentifierClaim = user.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+            
+            Logger.LogInformation("🆔 Splash claim values - oid: '{OidClaim}', sub: '{SubClaim}', nameidentifier: '{NameIdentifierClaim}'", 
+                oidClaim, subClaim, nameIdentifierClaim);
+            
+            var userId = oidClaim ?? subClaim ?? nameIdentifierClaim;
+            Logger.LogInformation("🆔 Selected UserId for persona check: '{UserId}'", userId);
+                        
+            if (string.IsNullOrEmpty(userId))
+            {
+                Logger.LogWarning("No user ID found in claims, returning false");
+                return false;
+            }
+            
+            // Query for persona using MediatR
+            var query = new CheckUserHasPersona.Command { UserId = userId };
+            Logger.LogInformation("Sending persona check query via MediatR...");
+            var result = await Mediator.Send(query);
+            
+            Logger.LogInformation("Persona check result - Success: {Success}, HasPersona: {HasPersona}", result.Success, result.HasPersona);
+            
+            if (result.Success)
+            {
+                return result.HasPersona;
+            }
+            
+            Logger.LogWarning("Persona check query failed with error: {Error}", result.ErrorMessage);
+            // If there's an error, assume no persona to be safe
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Exception during persona check");
+            // If there's an error, assume no persona to be safe
+            return false;
+        }
+    }
+    
+    private void SignOut()
+    {
+        Navigation.NavigateTo("/MicrosoftIdentity/Account/SignOut", forceLoad: true);
     }
 
     private void StartChat()

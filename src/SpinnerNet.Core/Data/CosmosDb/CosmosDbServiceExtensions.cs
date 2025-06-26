@@ -57,7 +57,8 @@ public static class CosmosDbServiceExtensions
         // Register repositories
         services.AddScoped<ICosmosRepository<UserDocument>, CosmosRepository<UserDocument>>();
         services.AddScoped<ICosmosRepository<PersonaDocument>, CosmosRepository<PersonaDocument>>();
-        services.AddScoped<ICosmosRepository<BuddyDocument>, CosmosRepository<BuddyDocument>>();
+        // COMMENTED OUT FOR SPRINT 1 - BUDDY FEATURES ARE FUTURE SPRINT
+        // services.AddScoped<ICosmosRepository<BuddyDocument>, CosmosRepository<BuddyDocument>>();
         services.AddScoped<ICosmosRepository<EmailThreadDocument>, CosmosRepository<EmailThreadDocument>>();
         services.AddScoped<ICosmosRepository<BuddyMemoryDocument>, CosmosRepository<BuddyMemoryDocument>>();
 

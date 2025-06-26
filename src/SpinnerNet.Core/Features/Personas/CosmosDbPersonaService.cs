@@ -23,49 +23,49 @@ public class CosmosDbPersonaService : IPersonaService
 
         var personaDocument = new PersonaDocument
         {
-            Id = documentId,
+            id = documentId,
             UserId = userId,
-            PersonaId = personaId,
-            IsDefault = true, // First persona is default
-            BasicInfo = new PersonaBasicInfo
+            personaId = personaId,
+            isDefault = true, // First persona is default
+            basicInfo = new PersonaBasicInfo
             {
-                DisplayName = request.DisplayName,
-                Age = request.Age,
-                CulturalBackground = request.CulturalBackground,
-                Occupation = "",
-                Interests = request.Interests.ToList(),
-                Languages = new LanguageInfo
+                displayName = request.DisplayName,
+                age = request.Age,
+                culturalBackground = request.CulturalBackground,
+                occupation = "",
+                interests = request.Interests.ToList(),
+                languages = new LanguageInfo
                 {
-                    MotherTongue = request.PrimaryLanguage,
-                    Preferred = request.PrimaryLanguage,
-                    Spoken = new List<string> { request.PrimaryLanguage }.Concat(request.AdditionalLanguages).Distinct().ToList(),
-                    Proficiency = new Dictionary<string, string> { { request.PrimaryLanguage, "Native" } }
+                    motherTongue = request.PrimaryLanguage,
+                    preferred = request.PrimaryLanguage,
+                    spoken = new List<string> { request.PrimaryLanguage }.Concat(request.AdditionalLanguages).Distinct().ToList(),
+                    proficiency = new Dictionary<string, string> { { request.PrimaryLanguage, "Native" } }
                 }
             },
-            TypeLeapConfig = new TypeLeapConfiguration
+            typeLeapConfig = new TypeLeapConfiguration
             {
-                UIComplexityLevel = request.UIComplexity,
-                FontSizePreferences = "Medium",
-                ColorPreferences = request.ColorScheme,
-                EnableAnimations = request.EnableAnimations,
-                NavigationStyle = "Standard"
+                uiComplexityLevel = request.UIComplexity,
+                fontSizePreferences = "Medium",
+                colorPreferences = request.ColorScheme,
+                enableAnimations = request.EnableAnimations,
+                navigationStyle = "Standard"
             },
-            LearningPreferences = new LearningPreferences
+            learningPreferences = new LearningPreferences
             {
-                PreferredLearningStyle = request.LearningStyle,
-                PacePreference = "SelfPaced",
-                DifficultyLevel = "Intermediate"
+                preferredLearningStyle = request.LearningStyle,
+                pacePreference = "SelfPaced",
+                difficultyLevel = "Intermediate"
             },
-            PrivacySettings = new PrivacySettings
+            privacySettings = new PrivacySettings
             {
-                DataSharing = request.PrivacyLevel == "High" ? "None" : 
+                dataSharing = request.PrivacyLevel == "High" ? "None" : 
                              request.PrivacyLevel == "Low" ? "Open" : "Selective",
-                AIInteraction = "Standard",
-                EmailAccess = "None",
-                ConsentTimestamp = DateTime.UtcNow
+                aiInteraction = "Standard",
+                emailAccess = "None",
+                consentTimestamp = DateTime.UtcNow
             },
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            createdAt = DateTime.UtcNow,
+            updatedAt = DateTime.UtcNow
         };
 
         await _personaRepository.CreateOrUpdateAsync(personaDocument, userId);
@@ -76,7 +76,7 @@ public class CosmosDbPersonaService : IPersonaService
     public async Task<UserPersona?> GetPersonaAsync(int personaId)
     {
         var personaDocuments = await _personaRepository.QueryWithSqlAsync(
-            $"SELECT * FROM c WHERE c.personaId = '{personaId}'");
+            $"SELECT * FROM c WHERE c.personaid = '{personaId}'");
 
         var personaDocument = personaDocuments.FirstOrDefault();
         return personaDocument != null ? MapToUserPersona(personaDocument) : null;
@@ -85,7 +85,7 @@ public class CosmosDbPersonaService : IPersonaService
     public async Task<UserPersona?> GetActivePersonaAsync(string userId)
     {
         var personaDocuments = await _personaRepository.QueryWithSqlAsync(
-            $"SELECT * FROM c WHERE c.userId = '{userId}' AND c.isDefault = true",
+            $"SELECT * FROM c WHERE c.UserId = '{userId}' AND c.isDefault = true",
             partitionKey: userId);
 
         var personaDocument = personaDocuments.FirstOrDefault();
@@ -103,7 +103,7 @@ public class CosmosDbPersonaService : IPersonaService
                 return false;
 
             var updatedDocument = MapToPersonaDocument(persona, existingDocument);
-            updatedDocument.UpdatedAt = DateTime.UtcNow;
+            updatedDocument.updatedAt = DateTime.UtcNow;
 
             await _personaRepository.CreateOrUpdateAsync(updatedDocument, persona.UserId);
             return true;
@@ -120,25 +120,25 @@ public class CosmosDbPersonaService : IPersonaService
         {
             // First, set all personas for this user to non-default
             var allPersonas = await _personaRepository.QueryWithSqlAsync(
-                $"SELECT * FROM c WHERE c.userId = '{userId}'",
+                $"SELECT * FROM c WHERE c.UserId = '{userId}'",
                 partitionKey: userId);
 
             foreach (var persona in allPersonas)
             {
-                if (persona.IsDefault)
+                if (persona.isDefault)
                 {
-                    persona.IsDefault = false;
-                    persona.UpdatedAt = DateTime.UtcNow;
+                    persona.isDefault = false;
+                    persona.updatedAt = DateTime.UtcNow;
                     await _personaRepository.CreateOrUpdateAsync(persona, userId);
                 }
             }
 
             // Then set the specified persona as default
-            var targetPersona = allPersonas.FirstOrDefault(p => p.PersonaId == personaId.ToString());
+            var targetPersona = allPersonas.FirstOrDefault(p => p.personaId == personaId.ToString());
             if (targetPersona != null)
             {
-                targetPersona.IsDefault = true;
-                targetPersona.UpdatedAt = DateTime.UtcNow;
+                targetPersona.isDefault = true;
+                targetPersona.updatedAt = DateTime.UtcNow;
                 await _personaRepository.CreateOrUpdateAsync(targetPersona, userId);
                 return true;
             }
@@ -187,34 +187,34 @@ public class CosmosDbPersonaService : IPersonaService
     private UserPersona MapToUserPersona(PersonaDocument document)
     {
         // Generate a numeric ID from PersonaId string for compatibility
-        var numericId = Math.Abs(document.PersonaId.GetHashCode());
+        var numericId = Math.Abs(document.personaId.GetHashCode());
 
         return new UserPersona
         {
             Id = numericId,
             UserId = document.UserId,
-            DigitalName = document.BasicInfo.DisplayName,
-            Age = document.BasicInfo.Age,
+            DigitalName = document.basicInfo.displayName,
+            Age = document.basicInfo.age,
             DateOfBirth = null, // Not stored in PersonaDocument
-            CulturalBackground = document.BasicInfo.CulturalBackground,
-            PrimaryLanguages = JsonSerializer.Serialize(document.BasicInfo.Languages.Spoken),
+            CulturalBackground = document.basicInfo.culturalBackground,
+            PrimaryLanguages = JsonSerializer.Serialize(document.basicInfo.languages.spoken),
             PrimaryTimeZone = "UTC", // Default since not stored
-            PassionsAndInterests = string.Join(", ", document.BasicInfo.Interests),
-            LearningStyle = document.LearningPreferences.PreferredLearningStyle,
+            PassionsAndInterests = string.Join(", ", document.basicInfo.interests),
+            LearningStyle = document.learningPreferences.preferredLearningStyle,
             CommunicationPreferences = "Friendly", // Default since not stored in PersonaDocument
-            UIComplexityLevel = document.TypeLeapConfig.UIComplexityLevel,
-            ColorPreferences = document.TypeLeapConfig.ColorPreferences,
-            FontSizePreferences = document.TypeLeapConfig.FontSizePreferences,
-            EnableAnimations = document.TypeLeapConfig.EnableAnimations,
-            NavigationStyle = document.TypeLeapConfig.NavigationStyle,
+            UIComplexityLevel = document.typeLeapConfig.uiComplexityLevel,
+            ColorPreferences = document.typeLeapConfig.colorPreferences,
+            FontSizePreferences = document.typeLeapConfig.fontSizePreferences,
+            EnableAnimations = document.typeLeapConfig.enableAnimations,
+            NavigationStyle = document.typeLeapConfig.navigationStyle,
             DataSovereigntyLevel = "Balanced", // Default mapping
-            DefaultSharingProfile = document.PrivacySettings.DataSharing,
-            RequireExplicitConsent = document.PrivacySettings.ConsentTimestamp.HasValue,
+            DefaultSharingProfile = document.privacySettings.dataSharing,
+            RequireExplicitConsent = document.privacySettings.consentTimestamp != default(DateTime),
             EnableProactiveAssistance = true, // Default since not stored
             CompanionPersonality = "Helpful", // Default since not stored
             PreferredInteractionStyle = "Conversational", // Default since not stored
-            CreatedAt = document.CreatedAt,
-            UpdatedAt = document.UpdatedAt,
+            CreatedAt = document.createdAt,
+            UpdatedAt = document.updatedAt,
             PersonalityProfile = "", // Default since not stored
             DataRetentionPreference = "Standard" // Default since not stored
         };
@@ -222,20 +222,20 @@ public class CosmosDbPersonaService : IPersonaService
 
     private PersonaDocument MapToPersonaDocument(UserPersona persona, PersonaDocument existingDocument)
     {
-        existingDocument.BasicInfo.DisplayName = persona.DigitalName;
-        existingDocument.BasicInfo.Age = persona.Age;
-        existingDocument.BasicInfo.CulturalBackground = persona.CulturalBackground;
-        existingDocument.BasicInfo.Interests = persona.PassionsAndInterests.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
+        existingDocument.basicInfo.displayName = persona.DigitalName;
+        existingDocument.basicInfo.age = persona.Age;
+        existingDocument.basicInfo.culturalBackground = persona.CulturalBackground;
+        existingDocument.basicInfo.interests = persona.PassionsAndInterests.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
 
-        existingDocument.TypeLeapConfig.UIComplexityLevel = persona.UIComplexityLevel;
-        existingDocument.TypeLeapConfig.ColorPreferences = persona.ColorPreferences;
-        existingDocument.TypeLeapConfig.FontSizePreferences = persona.FontSizePreferences;
-        existingDocument.TypeLeapConfig.EnableAnimations = persona.EnableAnimations;
-        existingDocument.TypeLeapConfig.NavigationStyle = persona.NavigationStyle;
+        existingDocument.typeLeapConfig.uiComplexityLevel = persona.UIComplexityLevel;
+        existingDocument.typeLeapConfig.colorPreferences = persona.ColorPreferences;
+        existingDocument.typeLeapConfig.fontSizePreferences = persona.FontSizePreferences;
+        existingDocument.typeLeapConfig.enableAnimations = persona.EnableAnimations;
+        existingDocument.typeLeapConfig.navigationStyle = persona.NavigationStyle;
 
-        existingDocument.LearningPreferences.PreferredLearningStyle = persona.LearningStyle;
+        existingDocument.learningPreferences.preferredLearningStyle = persona.LearningStyle;
 
-        existingDocument.PrivacySettings.DataSharing = persona.DefaultSharingProfile;
+        existingDocument.privacySettings.dataSharing = persona.DefaultSharingProfile;
 
         return existingDocument;
     }

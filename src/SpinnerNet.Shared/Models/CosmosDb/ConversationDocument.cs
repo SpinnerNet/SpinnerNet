@@ -1,84 +1,72 @@
-using System.Text.Json.Serialization;
+// Removed System.Text.Json.Serialization - using direct property names for Cosmos DB (Microsoft NoSQL pattern)
 
 namespace SpinnerNet.Shared.Models.CosmosDb;
 
 /// <summary>
 /// Cosmos DB document representing a conversation between user and AI buddy
-/// Container: Conversations, Partition Key: /userId
+/// Container: Conversations, Partition Key: /UserId
 /// </summary>
 public class ConversationDocument
 {
     /// <summary>
     /// Document ID (conversation_${conversationId})
     /// </summary>
-    [JsonPropertyName("id")]
-    public string Id { get; set; } = string.Empty;
+    public string id { get; set; } = string.Empty;
 
     /// <summary>
     /// Document type for discriminator
     /// </summary>
-    [JsonPropertyName("type")]
-    public string Type { get; set; } = "conversation";
+    public string type { get; set; } = "conversation";
 
     /// <summary>
     /// Conversation identifier
     /// </summary>
-    [JsonPropertyName("conversationId")]
-    public string ConversationId { get; set; } = string.Empty;
+    public string conversationId { get; set; } = string.Empty;
 
     /// <summary>
     /// User identifier (partition key)
     /// </summary>
-    [JsonPropertyName("userId")]
     public string UserId { get; set; } = string.Empty;
 
     /// <summary>
     /// AI buddy participating in this conversation
     /// </summary>
-    [JsonPropertyName("buddyId")]
-    public string BuddyId { get; set; } = string.Empty;
+    public string buddyId { get; set; } = string.Empty;
 
     /// <summary>
     /// When the conversation was started
     /// </summary>
-    [JsonPropertyName("startedAt")]
-    public DateTime StartedAt { get; set; } = DateTime.UtcNow;
+    public DateTime startedAt { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// When the last message was sent
     /// </summary>
-    [JsonPropertyName("lastMessageAt")]
-    public DateTime LastMessageAt { get; set; } = DateTime.UtcNow;
+    public DateTime lastMessageAt { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Whether the conversation is currently active
     /// </summary>
-    [JsonPropertyName("isActive")]
-    public bool IsActive { get; set; } = true;
+    public bool isActive { get; set; } = true;
 
     /// <summary>
     /// Messages in this conversation
     /// </summary>
-    [JsonPropertyName("messages")]
-    public List<ConversationMessage> Messages { get; set; } = new();
+    public List<ConversationMessage> messages { get; set; } = new();
 
     /// <summary>
     /// Total number of messages in the conversation
     /// </summary>
-    [JsonPropertyName("messageCount")]
-    public int MessageCount { get; set; } = 0;
+    public int messageCount { get; set; } = 0;
 
     /// <summary>
     /// Current topic or context of the conversation
     /// </summary>
-    [JsonPropertyName("currentTopic")]
-    public string? CurrentTopic { get; set; }
+    public string? currentTopic { get; set; }
 
     /// <summary>
     /// Conversation metadata and analytics
     /// </summary>
-    [JsonPropertyName("metadata")]
-    public ConversationMetadata Metadata { get; set; } = new();
+    public ConversationMetadata metadata { get; set; } = new();
 }
 
 /// <summary>
@@ -89,38 +77,32 @@ public class ConversationMessage
     /// <summary>
     /// Unique message identifier
     /// </summary>
-    [JsonPropertyName("messageId")]
-    public string MessageId { get; set; } = string.Empty;
+    public string messageId { get; set; } = string.Empty;
 
     /// <summary>
     /// Who sent the message (user or buddy)
     /// </summary>
-    [JsonPropertyName("sender")]
-    public MessageSender Sender { get; set; } = MessageSender.User;
+    public MessageSender sender { get; set; } = MessageSender.User;
 
     /// <summary>
     /// The message content
     /// </summary>
-    [JsonPropertyName("content")]
-    public string Content { get; set; } = string.Empty;
+    public string content { get; set; } = string.Empty;
 
     /// <summary>
     /// Type of message (text, action, system, etc.)
     /// </summary>
-    [JsonPropertyName("messageType")]
-    public MessageType MessageType { get; set; } = MessageType.Text;
+    public MessageType messageType { get; set; } = MessageType.Text;
 
     /// <summary>
     /// When the message was sent
     /// </summary>
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public DateTime timestamp { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Message metadata (emotion, confidence, etc.)
     /// </summary>
-    [JsonPropertyName("metadata")]
-    public Dictionary<string, object> Metadata { get; set; } = new();
+    public Dictionary<string, object> metadata { get; set; } = new();
 }
 
 /// <summary>
@@ -166,36 +148,30 @@ public class ConversationMetadata
     /// <summary>
     /// Average response time from user (seconds)
     /// </summary>
-    [JsonPropertyName("averageUserResponseTime")]
-    public double AverageUserResponseTime { get; set; } = 0.0;
+    public double averageUserResponseTime { get; set; } = 0.0;
 
     /// <summary>
     /// Average response time from buddy (seconds)
     /// </summary>
-    [JsonPropertyName("averageBuddyResponseTime")]
-    public double AverageBuddyResponseTime { get; set; } = 0.0;
+    public double averageBuddyResponseTime { get; set; } = 0.0;
 
     /// <summary>
     /// Most frequently discussed topics
     /// </summary>
-    [JsonPropertyName("frequentTopics")]
-    public List<string> FrequentTopics { get; set; } = new();
+    public List<string> frequentTopics { get; set; } = new();
 
     /// <summary>
     /// User satisfaction indicators
     /// </summary>
-    [JsonPropertyName("satisfactionScore")]
-    public double SatisfactionScore { get; set; } = 0.0;
+    public double satisfactionScore { get; set; } = 0.0;
 
     /// <summary>
     /// Number of tasks created through this conversation
     /// </summary>
-    [JsonPropertyName("tasksCreated")]
-    public int TasksCreated { get; set; } = 0;
+    public int tasksCreated { get; set; } = 0;
 
     /// <summary>
     /// Conversation language
     /// </summary>
-    [JsonPropertyName("language")]
-    public string Language { get; set; } = "en";
+    public string language { get; set; } = "en";
 }

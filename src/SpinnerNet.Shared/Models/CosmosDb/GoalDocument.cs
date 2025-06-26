@@ -1,147 +1,105 @@
-using System.Text.Json.Serialization;
+// Removed System.Text.Json.Serialization - using direct property names for Cosmos DB (Microsoft NoSQL pattern)
 
 namespace SpinnerNet.Shared.Models.CosmosDb;
 
 /// <summary>
 /// Cosmos DB document for storing user goals with SMART criteria and ZeitCoin integration
 /// Supports AI-generated insights, milestone tracking, and productivity optimization
-/// Container: Goals, Partition Key: /userId
+/// Container: Goals, Partition Key: /UserId
 /// </summary>
 public class GoalDocument
 {
-    [JsonPropertyName("id")]
-    public string Id { get; set; } = string.Empty;
+    public string id { get; set; } = string.Empty;
 
-    [JsonPropertyName("type")]
-    public string Type { get; set; } = "goal";
+    public string type { get; set; } = "goal";
 
-    [JsonPropertyName("userId")]
     public string UserId { get; set; } = string.Empty;
 
-    [JsonPropertyName("title")]
-    public string Title { get; set; } = string.Empty;
+    public string title { get; set; } = string.Empty;
 
-    [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public string? description { get; set; }
 
-    [JsonPropertyName("category")]
-    public string Category { get; set; } = "Personal";
+    public string category { get; set; } = "Personal";
 
-    [JsonPropertyName("priority")]
-    public string Priority { get; set; } = "Medium"; // Low, Medium, High, Critical
+    public string priority { get; set; } = "Medium"; // Low, Medium, High, Critical
 
-    [JsonPropertyName("status")]
-    public string Status { get; set; } = "Active"; // Active, Completed, Paused, Cancelled
+    public string status { get; set; } = "Active"; // Active, Completed, Paused, Cancelled
 
-    [JsonPropertyName("progress")]
-    public double Progress { get; set; } = 0.0; // 0.0 to 1.0 (percentage)
+    public double progress { get; set; } = 0.0; // 0.0 to 1.0 (percentage)
 
     // SMART Criteria Properties
-    [JsonPropertyName("targetValue")]
-    public double? TargetValue { get; set; }
+    public double? targetValue { get; set; }
 
-    [JsonPropertyName("targetUnit")]
-    public string? TargetUnit { get; set; }
+    public string? targetUnit { get; set; }
 
-    [JsonPropertyName("targetDate")]
-    public DateTime? TargetDate { get; set; }
+    public DateTime? targetDate { get; set; }
 
-    [JsonPropertyName("estimatedHours")]
-    public int? EstimatedHours { get; set; }
+    public int? estimatedHours { get; set; }
 
-    [JsonPropertyName("actualHours")]
-    public double? ActualHours { get; set; }
+    public double? actualHours { get; set; }
 
     // ZeitCoin Integration
-    [JsonPropertyName("isZeitCoinEligible")]
-    public bool IsZeitCoinEligible { get; set; } = true;
+    public bool isZeitCoinEligible { get; set; } = true;
 
-    [JsonPropertyName("zeitCoinMultiplier")]
-    public double ZeitCoinMultiplier { get; set; } = 1.0;
+    public double zeitCoinMultiplier { get; set; } = 1.0;
 
-    [JsonPropertyName("zeitCoinPointsEarned")]
-    public int ZeitCoinPointsEarned { get; set; } = 0;
+    public int zeitCoinPointsEarned { get; set; } = 0;
 
-    [JsonPropertyName("zeitCoinProjectedPoints")]
-    public int ZeitCoinProjectedPoints { get; set; } = 0;
+    public int zeitCoinProjectedPoints { get; set; } = 0;
 
     // Organization
-    [JsonPropertyName("tags")]
-    public List<string> Tags { get; set; } = new();
+    public List<string> tags { get; set; } = new();
 
-    [JsonPropertyName("linkedTaskIds")]
-    public List<string> LinkedTaskIds { get; set; } = new();
+    public List<string> linkedTaskIds { get; set; } = new();
 
-    [JsonPropertyName("parentGoalId")]
-    public string? ParentGoalId { get; set; }
+    public string? parentGoalId { get; set; }
 
-    [JsonPropertyName("childGoalIds")]
-    public List<string> ChildGoalIds { get; set; } = new();
+    public List<string> childGoalIds { get; set; } = new();
 
     // AI Enhancement
-    [JsonPropertyName("aiInsightsEnabled")]
-    public bool AiInsightsEnabled { get; set; } = true;
+    public bool aiInsightsEnabled { get; set; } = true;
 
-    [JsonPropertyName("smartnessScore")]
-    public int SmartnessScore { get; set; } = 5; // 1-10 how SMART the goal is
+    public int smartnessScore { get; set; } = 5; // 1-10 how SMART the goal is
 
-    [JsonPropertyName("feasibilityScore")]
-    public int FeasibilityScore { get; set; } = 7; // 1-10 how achievable
+    public int feasibilityScore { get; set; } = 7; // 1-10 how achievable
 
-    [JsonPropertyName("aiSuggestions")]
-    public List<string> AiSuggestions { get; set; } = new();
+    public List<string> aiSuggestions { get; set; } = new();
 
-    [JsonPropertyName("riskFactors")]
-    public List<string> RiskFactors { get; set; } = new();
+    public List<string> riskFactors { get; set; } = new();
 
     // Tracking
-    [JsonPropertyName("completedAt")]
-    public DateTime? CompletedAt { get; set; }
+    public DateTime? completedAt { get; set; }
 
-    [JsonPropertyName("lastProgressUpdate")]
-    public DateTime? LastProgressUpdate { get; set; }
+    public DateTime? lastProgressUpdate { get; set; }
 
-    [JsonPropertyName("progressUpdates")]
-    public List<ProgressUpdate> ProgressUpdates { get; set; } = new();
+    public List<ProgressUpdate> progressUpdates { get; set; } = new();
 
-    [JsonPropertyName("milestones")]
-    public List<Milestone> Milestones { get; set; } = new();
+    public List<Milestone> milestones { get; set; } = new();
 
     // Analytics
-    [JsonPropertyName("viewCount")]
-    public int ViewCount { get; set; } = 0;
+    public int viewCount { get; set; } = 0;
 
-    [JsonPropertyName("editCount")]
-    public int EditCount { get; set; } = 0;
+    public int editCount { get; set; } = 0;
 
-    [JsonPropertyName("shareCount")]
-    public int ShareCount { get; set; } = 0;
+    public int shareCount { get; set; } = 0;
 
-    [JsonPropertyName("motivationLevel")]
-    public int MotivationLevel { get; set; } = 5; // 1-10 user-reported motivation
+    public int motivationLevel { get; set; } = 5; // 1-10 user-reported motivation
 
     // Standard fields
-    [JsonPropertyName("createdAt")]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime createdAt { get; set; } = DateTime.UtcNow;
 
-    [JsonPropertyName("updatedAt")]
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 
-    [JsonPropertyName("version")]
-    public int Version { get; set; } = 1;
+    public int version { get; set; } = 1;
 
-    [JsonPropertyName("metadata")]
-    public Dictionary<string, object> Metadata { get; set; } = new();
+    public Dictionary<string, object> metadata { get; set; } = new();
 
-    [JsonPropertyName("isDeleted")]
-    public bool IsDeleted { get; set; } = false;
+    public bool isDeleted { get; set; } = false;
 
     // Cosmos DB required fields
-    [JsonPropertyName("_etag")]
     public string? ETag { get; set; }
 
-    [JsonPropertyName("ttl")]
-    public int? TimeToLive { get; set; }
+    public int? ttl { get; set; }
 
 }
 
@@ -150,32 +108,23 @@ public class GoalDocument
 /// </summary>
 public class ProgressUpdate
 {
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public DateTime timestamp { get; set; } = DateTime.UtcNow;
 
-    [JsonPropertyName("progressValue")]
-    public double ProgressValue { get; set; } // 0.0 to 1.0
+    public double progressValue { get; set; } // 0.0 to 1.0
 
-    [JsonPropertyName("notes")]
-    public string? Notes { get; set; }
+    public string? notes { get; set; }
 
-    [JsonPropertyName("hoursWorked")]
-    public double? HoursWorked { get; set; }
+    public double? hoursWorked { get; set; }
 
-    [JsonPropertyName("completedTasks")]
-    public int CompletedTasks { get; set; } = 0;
+    public int completedTasks { get; set; } = 0;
 
-    [JsonPropertyName("zeitCoinPointsEarned")]
-    public int ZeitCoinPointsEarned { get; set; } = 0;
+    public int zeitCoinPointsEarned { get; set; } = 0;
 
-    [JsonPropertyName("mood")]
-    public string? Mood { get; set; } // Motivated, Frustrated, Confident, etc.
+    public string? mood { get; set; } // Motivated, Frustrated, Confident, etc.
 
-    [JsonPropertyName("challenges")]
-    public List<string> Challenges { get; set; } = new();
+    public List<string> challenges { get; set; } = new();
 
-    [JsonPropertyName("wins")]
-    public List<string> Wins { get; set; } = new();
+    public List<string> wins { get; set; } = new();
 }
 
 /// <summary>
@@ -183,45 +132,31 @@ public class ProgressUpdate
 /// </summary>
 public class Milestone
 {
-    [JsonPropertyName("id")]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string id { get; set; } = Guid.NewGuid().ToString();
 
-    [JsonPropertyName("title")]
-    public string Title { get; set; } = string.Empty;
+    public string title { get; set; } = string.Empty;
 
-    [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public string? description { get; set; }
 
-    [JsonPropertyName("targetDate")]
-    public DateTime? TargetDate { get; set; }
+    public DateTime? targetDate { get; set; }
 
-    [JsonPropertyName("targetValue")]
-    public double? TargetValue { get; set; }
+    public double? targetValue { get; set; }
 
-    [JsonPropertyName("targetUnit")]
-    public string? TargetUnit { get; set; }
+    public string? targetUnit { get; set; }
 
-    [JsonPropertyName("isCompleted")]
-    public bool IsCompleted { get; set; } = false;
+    public bool isCompleted { get; set; } = false;
 
-    [JsonPropertyName("completedAt")]
-    public DateTime? CompletedAt { get; set; }
+    public DateTime? completedAt { get; set; }
 
-    [JsonPropertyName("progress")]
-    public double Progress { get; set; } = 0.0;
+    public double progress { get; set; } = 0.0;
 
-    [JsonPropertyName("zeitCoinPointsEarned")]
-    public int ZeitCoinPointsEarned { get; set; } = 0;
+    public int zeitCoinPointsEarned { get; set; } = 0;
 
-    [JsonPropertyName("linkedTaskIds")]
-    public List<string> LinkedTaskIds { get; set; } = new();
+    public List<string> linkedTaskIds { get; set; } = new();
 
-    [JsonPropertyName("notes")]
-    public string? Notes { get; set; }
+    public string? notes { get; set; }
 
-    [JsonPropertyName("createdAt")]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime createdAt { get; set; } = DateTime.UtcNow;
 
-    [JsonPropertyName("updatedAt")]
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 }

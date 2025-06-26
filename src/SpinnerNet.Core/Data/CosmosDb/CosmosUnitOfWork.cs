@@ -90,7 +90,7 @@ public class CosmosUnitOfWork : ICosmosUnitOfWork
         {
             CreateOperation<UserDocument> => "Users",
             CreateOperation<PersonaDocument> => "Personas", 
-            CreateOperation<BuddyDocument> => "Personas",
+            // CreateOperation<BuddyDocument> => "Personas", // COMMENTED OUT FOR SPRINT 1
             CreateOperation<EmailThreadDocument> => "EmailData",
             CreateOperation<BuddyMemoryDocument> => "BuddyMemory",
             _ => throw new InvalidOperationException($"Unknown operation type: {firstOperation.GetType()}")
@@ -201,10 +201,10 @@ public static class CosmosUnitOfWorkExtensions
         => unitOfWork.GetRepository<PersonaDocument>();
 
     /// <summary>
-    /// Get buddy repository
+    /// Get buddy repository - COMMENTED OUT FOR SPRINT 1 SIMPLIFICATION
     /// </summary>
-    public static ICosmosRepository<BuddyDocument> Buddies(this ICosmosUnitOfWork unitOfWork)
-        => unitOfWork.GetRepository<BuddyDocument>();
+    // public static ICosmosRepository<BuddyDocument> Buddies(this ICosmosUnitOfWork unitOfWork)
+    //     => unitOfWork.GetRepository<BuddyDocument>();
 
     /// <summary>
     /// Get email repository

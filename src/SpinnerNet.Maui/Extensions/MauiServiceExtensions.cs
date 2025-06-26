@@ -77,29 +77,32 @@ public static class MauiServiceExtensions
             return new CosmosRepository<PersonaDocument>(cosmosClient, options, logger);
         });
 
-        services.AddSingleton<ICosmosRepository<BuddyDocument>>(provider =>
-        {
-            var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
-            var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
-            var logger = provider.GetRequiredService<ILogger<CosmosRepository<BuddyDocument>>>();
-            return new CosmosRepository<BuddyDocument>(cosmosClient, options, logger);
-        });
+        // COMMENTED OUT FOR SPRINT 1 - BUDDY FEATURES ARE FUTURE SPRINT
+        // services.AddSingleton<ICosmosRepository<BuddyDocument>>(provider =>
+        // {
+        //     var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
+        //     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
+        //     var logger = provider.GetRequiredService<ILogger<CosmosRepository<BuddyDocument>>>();
+        //     return new CosmosRepository<BuddyDocument>(cosmosClient, options, logger);
+        // });
 
-        services.AddSingleton<ICosmosRepository<TaskDocument>>(provider =>
-        {
-            var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
-            var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
-            var logger = provider.GetRequiredService<ILogger<CosmosRepository<TaskDocument>>>();
-            return new CosmosRepository<TaskDocument>(cosmosClient, options, logger);
-        });
+        // COMMENTED OUT FOR SPRINT 1 - TASK FEATURES ARE FUTURE SPRINT
+        // services.AddSingleton<ICosmosRepository<TaskDocument>>(provider =>
+        // {
+        //     var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
+        //     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
+        //     var logger = provider.GetRequiredService<ILogger<CosmosRepository<TaskDocument>>>();
+        //     return new CosmosRepository<TaskDocument>(cosmosClient, options, logger);
+        // });
 
-        services.AddSingleton<ICosmosRepository<GoalDocument>>(provider =>
-        {
-            var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
-            var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
-            var logger = provider.GetRequiredService<ILogger<CosmosRepository<GoalDocument>>>();
-            return new CosmosRepository<GoalDocument>(cosmosClient, options, logger);
-        });
+        // COMMENTED OUT FOR SPRINT 1 - GOAL FEATURES ARE FUTURE SPRINT
+        // services.AddSingleton<ICosmosRepository<GoalDocument>>(provider =>
+        // {
+        //     var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
+        //     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
+        //     var logger = provider.GetRequiredService<ILogger<CosmosRepository<GoalDocument>>>();
+        //     return new CosmosRepository<GoalDocument>(cosmosClient, options, logger);
+        // });
 
         services.AddSingleton<ICosmosRepository<BuddyMemoryDocument>>(provider =>
         {

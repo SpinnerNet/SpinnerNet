@@ -17,7 +17,7 @@ public class LogoutModel : PageModel
     {
         if (User.Identity?.IsAuthenticated == true)
         {
-            var userName = User.Identity.Name ?? "Unknown";
+            var username = User.Identity.Name ?? "Unknown";
             await HttpContext.SignOutAsync("Cookies");
             _logger.LogInformation("User {UserName} signed out", userName);
         }
@@ -29,7 +29,7 @@ public class LogoutModel : PageModel
     {
         if (User.Identity?.IsAuthenticated == true)
         {
-            var userName = User.Identity.Name ?? "Unknown";
+            var username = User.Identity.Name ?? "Unknown";
             await HttpContext.SignOutAsync("Cookies");
             _logger.LogInformation("User {UserName} signed out", userName);
         }

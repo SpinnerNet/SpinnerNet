@@ -30,14 +30,14 @@ public class LoginModel : PageModel
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 
-        [Display(Name = "Remember me?")]
+        [Display(name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
 
     public void OnGet()
     {
         // Clear any existing error message
-        ErrorMessage = null;
+        Errormessage = null;
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -66,14 +66,14 @@ public class LoginModel : PageModel
             }
             else
             {
-                ErrorMessage = "Invalid email or password.";
+                Errormessage = "Invalid email or password.";
                 return Page();
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during login attempt");
-            ErrorMessage = "An error occurred during login. Please try again.";
+            Errormessage = "An error occurred during login. Please try again.";
             return Page();
         }
     }

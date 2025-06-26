@@ -1677,16 +1677,23 @@
   <data name="Splash_AuthQuestion" xml:space="preserve">
     <value>Wie möchtest du dich anmelden?</value>
   </data>
-  <data name="Splash_Auth_Microsoft" xml:space="preserve">
-    <value>Mit Microsoft-Konto</value>
+  <data name="Splash_Auth_WorkSchool" xml:space="preserve">
+    <value>Geschäfts- oder Schulkonto</value>
   </data>
-  <data name="Splash_Auth_Google" xml:space="preserve">
-    <value>Mit Google-Konto</value>
+  <data name="Splash_Auth_Personal" xml:space="preserve">
+    <value>Persönliches Microsoft-Konto</value>
   </data>
-  <data name="Splash_Auth_Guest" xml:space="preserve">
-    <value>Als Gast weitermachen</value>
+  <data name="Splash_Auth_LinkedIn" xml:space="preserve">
+    <value>Mit LinkedIn anmelden</value>
+  </data>
+  <data name="Splash_Auth_MoreSoon" xml:space="preserve">
+    <value>Weitere Optionen kommen bald</value>
   </data>
 
+  <!-- Dashboard -->
+  <data name="Dashboard_SignOut" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
   <!-- Interview -->
   <data name="Interview_StepOf" xml:space="preserve">
     <value>Schritt {0} von {1}</value>

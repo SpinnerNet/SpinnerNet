@@ -64,7 +64,7 @@ public static class RegisterUser
         [JsonPropertyName("success")]
         public bool Success { get; init; }
 
-        [JsonPropertyName("userId")]
+        [JsonPropertyName("Guid.NewGuid().ToString()")]
         public string? UserId { get; init; }
 
         [JsonPropertyName("user")]
@@ -214,7 +214,7 @@ public static class RegisterUser
 
                 // 3. Check if user already exists
                 var existingUsers = await _userRepository.QueryAsync(
-                    u => u.Email == request.Email,
+                    u => u.email == request.Email,
                     maxResults: 1,
                     cancellationToken: cancellationToken);
 
@@ -225,7 +225,7 @@ public static class RegisterUser
                 }
 
                 // 4. Generate user ID
-                var userId = $"user_{Guid.NewGuid():N}";
+                var userid = $"user_{Guid.NewGuid():N}";
 
                 // 5. Hash password (in production, use proper password hashing)
                 var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
@@ -239,54 +239,54 @@ public static class RegisterUser
                 // 8. Create user document with age-aware configuration
                 var userDocument = new UserDocument
                 {
-                    Id = $"user_{userId}",
-                    UserId = userId,
-                    Email = request.Email.ToLowerInvariant(),
-                    DisplayName = request.DisplayName,
-                    Age = age,
-                    BirthDate = request.BirthDate,
-                    IsMinor = isMinor,
-                    CreatedAt = DateTime.UtcNow,
-                    IsActive = true,
-                    AuthProviders = new List<AuthProvider>
+                    id = $"user_{Guid.NewGuid().ToString()}",
+                    UserId = Guid.NewGuid().ToString(),
+                    email = request.Email.ToLowerInvariant(),
+                    displayName = request.DisplayName,
+                    age = age,
+                    birthDate = request.BirthDate,
+                    isMinor = isMinor,
+                    createdAt = DateTime.UtcNow,
+                    isActive = true,
+                    authProviders = new List<AuthProvider>
                     {
                         new()
                         {
-                            Provider = "local",
-                            ProviderId = userId,
-                            Email = request.Email.ToLowerInvariant(),
-                            PasswordHash = passwordHash
+                            provider = "local",
+                            providerId = Guid.NewGuid().ToString(),
+                            email = request.Email.ToLowerInvariant(),
+                            passwordHash = passwordHash
                         }
                     },
-                    Preferences = new UserPreferences
+                    preferences = new UserPreferences
                     {
-                        Language = request.Language,
-                        Timezone = request.Timezone,
-                        Notifications = new NotificationPreferences
+                        language = request.Language,
+                        timezone = request.Timezone,
+                        notifications = new NotificationPreferences
                         {
-                            Email = true,
-                            Push = false
+                            email = true,
+                            push = false
                         }
                     },
-                    DataSovereignty = dataSovereigntySettings,
-                    SafetySettings = safetySettings,
-                    ParentalControls = isMinor ? new ParentalControlSettings
+                    dataSovereignty = dataSovereigntySettings,
+                    safetySettings = safetySettings,
+                    parentalControls = isMinor ? new ParentalControlSettings
                     {
-                        ParentEmail = request.ParentalEmail,
-                        ConsentVerifiedAt = DateTime.UtcNow,
-                        NotificationLevel = age < 16 ? "all" : "important",
-                        RequiresOversight = age < 16
+                        parentEmail = request.ParentalEmail,
+                        consentVerifiedAt = DateTime.UtcNow,
+                        notificationLevel = age < 16 ? "all" : "important",
+                        requiresOversight = age < 16
                     } : null
                 };
 
                 // 9. Store user based on data residency preference
                 var createdUser = await _userRepository.CreateOrUpdateAsync(
                     userDocument,
-                    userId,
+                    Guid.NewGuid().ToString(),
                     cancellationToken);
 
                 _logger.LogInformation("User registered successfully: {UserId}, Age: {Age}, IsMinor: {IsMinor}", 
-                    userId, age, isMinor);
+                    Guid.NewGuid().ToString(), age, isMinor);
 
                 return Result.SuccessResult(createdUser);
             }
@@ -308,12 +308,12 @@ public static class RegisterUser
         {
             return new DataSovereigntySettings
             {
-                PreferredRegion = preference.ToString().ToLowerInvariant(),
-                DataResidency = age < 18 ? "local_first" : preference.ToString().ToLowerInvariant(),
-                AiProcessingLocation = age < 16 ? "local_only" : age < 18 ? "local_preferred" : "hybrid",
-                EncryptionRequired = age < 18,
-                ThirdPartyDataSharing = false, // Always false for privacy
-                DataRetentionDays = age < 18 ? 30 : 365 // Shorter retention for minors
+                preferredRegion = preference.ToString().ToLowerInvariant(),
+                dataResidency = age < 18 ? "local_first" : preference.ToString().ToLowerInvariant(),
+                aiProcessingLocation = age < 16 ? "local_only" : age < 18 ? "local_preferred" : "hybrid",
+                encryptionRequired = age < 18,
+                thirdPartyDataSharing = false, // Always false for privacy
+                dataRetentionDays = age < 18 ? 30 : 365 // Shorter retention for minors
             };
         }
 
@@ -321,24 +321,24 @@ public static class RegisterUser
         {
             return new UserSafetySettings
             {
-                MaxContentLevel = age switch
+                maxContentLevel = age switch
                 {
                     < 13 => "safe",
                     < 16 => "mild", 
                     < 18 => "moderate",
                     _ => "adult"
                 },
-                ContentFilteringEnabled = true,
-                SafeModeEnabled = age < 18,
-                ParentalNotificationsEnabled = age < 18,
-                RestrictedTopics = age < 18 ? new List<string> 
+                contentFilteringEnabled = true,
+                safeModeEnabled = age < 18,
+                parentalNotificationsEnabled = age < 18,
+                restrictedTopics = age < 18 ? new List<string> 
                 { 
                     "adult_content", 
                     "explicit_relationships",
                     age < 16 ? "dating" : null!,
                     age < 13 ? "personal_health" : null! 
                 }.Where(t => t != null).ToList() : new List<string>(),
-                AllowedInteractionTypes = age < 13 ? new List<string> 
+                allowedInteractionTypes = age < 13 ? new List<string> 
                 { 
                     "educational", 
                     "family_safe", 
