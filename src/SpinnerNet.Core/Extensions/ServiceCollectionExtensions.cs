@@ -72,21 +72,23 @@ public static class ServiceCollectionExtensions
             return new CosmosRepository<PersonaDocument>(cosmosClient, options, logger);
         });
 
-        services.AddSingleton<ICosmosRepository<BuddyDocument>>(provider =>
-        {
-            var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
-            var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
-            var logger = provider.GetRequiredService<ILogger<CosmosRepository<BuddyDocument>>>();
-            return new CosmosRepository<BuddyDocument>(cosmosClient, options, logger);
-        });
+        // COMMENTED OUT FOR SPRINT 1 - BUDDY FEATURES ARE FUTURE SPRINT
+        // services.AddSingleton<ICosmosRepository<BuddyDocument>>(provider =>
+        // {
+        //     var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
+        //     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
+        //     var logger = provider.GetRequiredService<ILogger<CosmosRepository<BuddyDocument>>>();
+        //     return new CosmosRepository<BuddyDocument>(cosmosClient, options, logger);
+        // });
 
-        services.AddSingleton<ICosmosRepository<TaskDocument>>(provider =>
-        {
-            var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
-            var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
-            var logger = provider.GetRequiredService<ILogger<CosmosRepository<TaskDocument>>>();
-            return new CosmosRepository<TaskDocument>(cosmosClient, options, logger);
-        });
+        // COMMENTED OUT FOR SPRINT 1 - TASK FEATURES ARE FUTURE SPRINT
+        // services.AddSingleton<ICosmosRepository<TaskDocument>>(provider =>
+        // {
+        //     var cosmosClient = provider.GetRequiredService<Microsoft.Azure.Cosmos.CosmosClient>();
+        //     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<CosmosDbOptions>>();
+        //     var logger = provider.GetRequiredService<ILogger<CosmosRepository<TaskDocument>>>();
+        //     return new CosmosRepository<TaskDocument>(cosmosClient, options, logger);
+        // });
 
         services.AddSingleton<ICosmosRepository<BuddyMemoryDocument>>(provider =>
         {
@@ -123,8 +125,10 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    /*
     /// <summary>
     /// Add SQLite Entity Framework for Sprint 1 development
+    /// COMMENTED OUT FOR SPRINT 1 - Using Cosmos DB instead
     /// </summary>
     /// <param name="services">Service collection</param>
     /// <param name="connectionString">SQLite connection string</param>
@@ -138,6 +142,7 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+    */
 }
 
 /// <summary>

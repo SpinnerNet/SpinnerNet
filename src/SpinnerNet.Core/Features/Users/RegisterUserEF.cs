@@ -1,3 +1,10 @@
+/*
+ * COMMENTED OUT FOR SPRINT 1 - USING COSMOS DB INSTEAD OF ENTITY FRAMEWORK
+ * This Entity Framework version is for future use when SQL database is needed
+ * Currently using RegisterUser.cs with Cosmos DB
+ */
+
+/*
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -30,23 +37,11 @@ public static class RegisterUserEF
         [JsonPropertyName("birthDate")]
         public DateTime BirthDate { get; init; }
 
-        [JsonPropertyName("language")]
-        public string Language { get; init; } = "en";
-
-        [JsonPropertyName("timezone")]
-        public string Timezone { get; init; } = "UTC";
-
-        [JsonPropertyName("dataResidencyPreference")]
-        public string DataResidencyPreference { get; init; } = "Local";
-
         [JsonPropertyName("acceptTerms")]
         public bool AcceptTerms { get; init; }
 
         [JsonPropertyName("acceptPrivacyPolicy")]
         public bool AcceptPrivacyPolicy { get; init; }
-
-        [JsonPropertyName("acceptDataProcessing")]
-        public bool AcceptDataProcessing { get; init; }
 
         // Parental consent for minors
         [JsonPropertyName("parentalEmail")]
@@ -54,9 +49,6 @@ public static class RegisterUserEF
 
         [JsonPropertyName("parentalConsentToken")]
         public string? ParentalConsentToken { get; init; }
-
-        [JsonPropertyName("isParentalConsentVerified")]
-        public bool IsParentalConsentVerified { get; init; }
     }
 
     // 2. Result (Output)
@@ -68,64 +60,45 @@ public static class RegisterUserEF
         [JsonPropertyName("userId")]
         public string? UserId { get; init; }
 
-        [JsonPropertyName("user")]
-        public User? User { get; init; }
+        [JsonPropertyName("message")]
+        public string? Message { get; init; }
 
-        [JsonPropertyName("errorMessage")]
-        public string? ErrorMessage { get; init; }
+        [JsonPropertyName("errors")]
+        public Dictionary<string, string[]>? Errors { get; init; }
 
-        [JsonPropertyName("validationErrors")]
-        public Dictionary<string, string[]>? ValidationErrors { get; init; }
+        public static Result SuccessResult(string userId) =>
+            new() { Success = true, UserId = userId };
 
-        public static Result SuccessResult(User user) =>
-            new() { Success = true, UserId = user.Id, User = user };
+        public static Result Failure(string message) =>
+            new() { Success = false, Message = message };
 
-        public static Result Failure(string errorMessage) =>
-            new() { Success = false, ErrorMessage = errorMessage };
-
-        public static Result ValidationFailure(Dictionary<string, string[]> validationErrors) =>
-            new() { Success = false, ValidationErrors = validationErrors };
+        public static Result ValidationFailure(Dictionary<string, string[]> errors) =>
+            new() { Success = false, Errors = errors };
     }
 
-    // 3. Validator (Input Validation)
+    // 3. Validator
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email is required")
-                .EmailAddress().WithMessage("Email must be a valid email address")
-                .MaximumLength(255).WithMessage("Email must not exceed 255 characters");
+                .EmailAddress().WithMessage("Invalid email format");
 
             RuleFor(x => x.DisplayName)
                 .NotEmpty().WithMessage("Display name is required")
-                .MinimumLength(2).WithMessage("Display name must be at least 2 characters")
-                .MaximumLength(100).WithMessage("Display name must not exceed 100 characters");
+                .Length(2, 100).WithMessage("Display name must be between 2 and 100 characters");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required")
                 .MinimumLength(8).WithMessage("Password must be at least 8 characters")
-                .MaximumLength(128).WithMessage("Password must not exceed 128 characters")
-                .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]")
-                .WithMessage("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
+                .Matches("[A-Z]").WithMessage("Password must contain at least one uppercase letter")
+                .Matches("[a-z]").WithMessage("Password must contain at least one lowercase letter")
+                .Matches("[0-9]").WithMessage("Password must contain at least one number")
+                .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character");
 
             RuleFor(x => x.BirthDate)
-                .NotEmpty().WithMessage("Birth date is required")
-                .LessThan(DateTime.UtcNow).WithMessage("Birth date must be in the past")
-                .GreaterThan(DateTime.UtcNow.AddYears(-120)).WithMessage("Birth date must be within reasonable range")
-                .Must(BeAtLeastMinimumAge).WithMessage("You must be at least 13 years old to register");
-
-            RuleFor(x => x.Language)
-                .NotEmpty().WithMessage("Language is required")
-                .Length(2, 5).WithMessage("Language must be a valid language code (2-5 characters)");
-
-            RuleFor(x => x.Timezone)
-                .NotEmpty().WithMessage("Timezone is required")
-                .MaximumLength(50).WithMessage("Timezone must not exceed 50 characters");
-
-            RuleFor(x => x.DataResidencyPreference)
-                .NotEmpty().WithMessage("Data residency preference is required")
-                .Must(BeValidDataResidencyPreference).WithMessage("Data residency preference must be a valid option");
+                .Must(BeAValidAge).WithMessage("You must be at least 13 years old to register");
 
             RuleFor(x => x.AcceptTerms)
                 .Equal(true).WithMessage("You must accept the terms of service");
@@ -133,52 +106,36 @@ public static class RegisterUserEF
             RuleFor(x => x.AcceptPrivacyPolicy)
                 .Equal(true).WithMessage("You must accept the privacy policy");
 
-            RuleFor(x => x.AcceptDataProcessing)
-                .Equal(true).WithMessage("You must accept data processing terms");
-
-            // Parental consent validation for minors
+            // Parental consent required for minors
             RuleFor(x => x.ParentalEmail)
-                .NotEmpty().WithMessage("Parental email is required for users under 18")
-                .EmailAddress().WithMessage("Parental email must be a valid email address")
-                .When(x => CalculateAge(x.BirthDate) < 18);
-
-            RuleFor(x => x.ParentalConsentToken)
-                .NotEmpty().WithMessage("Parental consent verification is required for users under 18")
-                .When(x => CalculateAge(x.BirthDate) < 18);
-
-            RuleFor(x => x.IsParentalConsentVerified)
-                .Equal(true).WithMessage("Parental consent must be verified for users under 18")
-                .When(x => CalculateAge(x.BirthDate) < 18);
+                .NotEmpty()
+                .EmailAddress()
+                .When(x => IsMinor(x.BirthDate))
+                .WithMessage("Parental consent email is required for users under 18");
         }
 
-        private static bool BeAtLeastMinimumAge(DateTime birthDate)
+        private bool BeAValidAge(DateTime birthDate)
         {
-            return CalculateAge(birthDate) >= 13;
+            var age = DateTime.Today.Year - birthDate.Year;
+            if (birthDate.Date > DateTime.Today.AddYears(-age)) age--;
+            return age >= 13;
         }
 
-        private static int CalculateAge(DateTime birthDate)
+        private bool IsMinor(DateTime birthDate)
         {
-            var age = DateTime.UtcNow.Year - birthDate.Year;
-            if (DateTime.UtcNow.DayOfYear < birthDate.DayOfYear) age--;
-            return age;
-        }
-
-        private static bool BeValidDataResidencyPreference(string preference)
-        {
-            var validPreferences = new[] { "Local", "EU", "US", "UserRegion", "Hybrid" };
-            return validPreferences.Contains(preference);
+            var age = DateTime.Today.Year - birthDate.Year;
+            if (birthDate.Date > DateTime.Today.AddYears(-age)) age--;
+            return age < 18;
         }
     }
 
-    // 4. Handler (Business Logic + Data Access)
+    // 4. Handler (Business Logic)
     public class Handler : IRequestHandler<Command, Result>
     {
         private readonly SpinnerNetDbContext _dbContext;
         private readonly ILogger<Handler> _logger;
 
-        public Handler(
-            SpinnerNetDbContext dbContext,
-            ILogger<Handler> logger)
+        public Handler(SpinnerNetDbContext dbContext, ILogger<Handler> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -188,207 +145,93 @@ public static class RegisterUserEF
         {
             try
             {
-                _logger.LogInformation("Starting user registration for email: {Email}", request.Email);
-
-                // 1. Calculate user age
-                var age = CalculateAge(request.BirthDate);
-                var isMinor = age < 18;
-
-                _logger.LogInformation("User registration: Age {Age}, IsMinor: {IsMinor}", age, isMinor);
-
-                // 2. Verify parental consent for minors
-                if (isMinor)
-                {
-                    if (!request.IsParentalConsentVerified || 
-                        string.IsNullOrEmpty(request.ParentalEmail) || 
-                        string.IsNullOrEmpty(request.ParentalConsentToken))
-                    {
-                        _logger.LogWarning("Registration attempt for minor without proper parental consent");
-                        return Result.Failure("Parental consent verification is required for users under 18");
-                    }
-
-                    // TODO: In production, verify the parental consent token
-                    // var isConsentValid = await _parentalConsentService.VerifyConsentAsync(
-                    //     request.ParentalConsentToken, request.ParentalEmail);
-                    // if (!isConsentValid) return Result.Failure("Invalid parental consent");
-                }
-
-                // 3. Check if user already exists
-                var existingUser = await _dbContext.SpinnerNetUsers
-                    .FirstOrDefaultAsync(u => u.Email == request.Email.ToLowerInvariant(), cancellationToken);
+                // Check if email already exists
+                var existingUser = await _dbContext.Users
+                    .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
                 if (existingUser != null)
                 {
-                    _logger.LogWarning("Registration attempt for existing email: {Email}", request.Email);
-                    return Result.Failure("A user with this email address already exists");
+                    return Result.Failure("An account with this email already exists");
                 }
 
-                // 4. Generate user ID
-                var userId = $"user_{Guid.NewGuid():N}";
+                // Calculate age
+                var age = DateTime.Today.Year - request.BirthDate.Year;
+                if (request.BirthDate.Date > DateTime.Today.AddYears(-age)) age--;
 
-                // 5. Hash password
-                var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-                // 6. Create age-appropriate data sovereignty settings
-                var dataSovereigntySettings = CreateAgeAppropriateDataSettings(age, request.DataResidencyPreference);
-
-                // 7. Create age-appropriate safety settings
-                var safetySettings = CreateAgeAppropriateSafetySettings(age);
-
-                // 8. Create parental controls for minors
-                var parentalControls = isMinor ? CreateParentalControls(age, request.ParentalEmail) : null;
-
-                // 9. Create user entity
+                // Create new user
                 var user = new User
                 {
-                    Id = userId,
-                    Email = request.Email.ToLowerInvariant(),
+                    Id = Guid.NewGuid().ToString(),
+                    Email = request.Email,
                     DisplayName = request.DisplayName,
-                    PasswordHash = passwordHash,
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
                     BirthDate = request.BirthDate,
                     Age = age,
-                    IsMinor = isMinor,
-                    PreferredLanguage = request.Language,
-                    TimeZone = request.Timezone,
-                    DataResidencyPreference = request.DataResidencyPreference,
-                    DataSovereigntySettings = dataSovereigntySettings,
-                    SafetySettings = safetySettings,
-                    ParentalControls = parentalControls,
-                    ParentalEmail = isMinor ? request.ParentalEmail : null,
-                    ParentalConsentVerifiedAt = isMinor ? DateTime.UtcNow : null,
-                    IsActive = true,
+                    IsMinor = age < 18,
                     CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    LastLoginAt = DateTime.UtcNow,
+                    IsActive = true,
+                    HasCompletedOnboarding = false,
+                    AcceptedTermsAt = DateTime.UtcNow,
+                    AcceptedPrivacyPolicyAt = DateTime.UtcNow
                 };
 
-                // 10. Save to database
-                _dbContext.SpinnerNetUsers.Add(user);
+                // Handle parental consent for minors
+                if (user.IsMinor)
+                {
+                    user.RequiresParentalConsent = true;
+                    user.ParentalConsentEmail = request.ParentalEmail;
+                    user.ParentalConsentToken = Guid.NewGuid().ToString();
+                    user.ParentalConsentRequestedAt = DateTime.UtcNow;
+                    
+                    // TODO: Send parental consent email
+                    _logger.LogInformation("Parental consent required for user {UserId}. Token: {Token}", 
+                        user.Id, user.ParentalConsentToken);
+                }
+
+                _dbContext.Users.Add(user);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                _logger.LogInformation("User registered successfully: {UserId}, Age: {Age}, IsMinor: {IsMinor}", 
-                    userId, age, isMinor);
-
-                return Result.SuccessResult(user);
+                _logger.LogInformation("User {UserId} registered successfully", user.Id);
+                return Result.SuccessResult(user.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error registering user with email: {Email}", request.Email);
-                return Result.Failure("An error occurred during registration. Please try again.");
+                _logger.LogError(ex, "Failed to register user");
+                return Result.Failure("An error occurred during registration");
             }
-        }
-
-        private static int CalculateAge(DateTime birthDate)
-        {
-            var age = DateTime.UtcNow.Year - birthDate.Year;
-            if (DateTime.UtcNow.DayOfYear < birthDate.DayOfYear) age--;
-            return age;
-        }
-
-        private static DataSovereigntySettings CreateAgeAppropriateDataSettings(int age, string preference)
-        {
-            return new DataSovereigntySettings
-            {
-                PreferredRegion = preference.ToLowerInvariant(),
-                DataResidency = age < 18 ? "local_first" : preference.ToLowerInvariant(),
-                AiProcessingLocation = age < 16 ? "local_only" : age < 18 ? "local_preferred" : "hybrid",
-                EncryptionRequired = age < 18,
-                ThirdPartyDataSharing = false, // Always false for privacy
-                DataRetentionDays = age < 18 ? 30 : 365 // Shorter retention for minors
-            };
-        }
-
-        private static SafetySettings CreateAgeAppropriateSafetySettings(int age)
-        {
-            return new SafetySettings
-            {
-                MaxContentLevel = age switch
-                {
-                    < 13 => "safe",
-                    < 16 => "mild", 
-                    < 18 => "moderate",
-                    _ => "adult"
-                },
-                ContentFilteringEnabled = true,
-                SafeModeEnabled = age < 18,
-                ParentalNotificationsEnabled = age < 18,
-                RestrictedTopics = age < 18 ? new List<string> 
-                { 
-                    "adult_content", 
-                    "explicit_relationships",
-                    age < 16 ? "dating" : null!,
-                    age < 13 ? "personal_health" : null! 
-                }.Where(t => t != null).ToList() : new List<string>(),
-                AllowedInteractionTypes = age < 13 ? new List<string> 
-                { 
-                    "educational", 
-                    "family_safe", 
-                    "creative" 
-                } : new List<string>()
-            };
-        }
-
-        private static ParentalControls CreateParentalControls(int age, string? parentEmail)
-        {
-            return new ParentalControls
-            {
-                ParentEmail = parentEmail,
-                ConsentVerifiedAt = DateTime.UtcNow,
-                NotificationLevel = age < 16 ? "all" : "important",
-                RequiresOversight = age < 16,
-                AllowedContentCategories = new List<string> 
-                { 
-                    "educational", 
-                    "entertainment", 
-                    age >= 13 ? "social" : null! 
-                }.Where(c => c != null).ToList()
-            };
         }
     }
 
-    // 5. Endpoint (HTTP API)
-    [ApiController]
-    [Route("api/users")]
-    public class Endpoint : ControllerBase
+    // 5. Endpoint (Controller)
+    public static class Endpoint
     {
-        private readonly IMediator _mediator;
-
-        public Endpoint(IMediator mediator)
+        public static async Task<IActionResult> Handle(
+            [FromBody] Command command,
+            [FromServices] IMediator mediator,
+            [FromServices] IValidator<Command> validator,
+            CancellationToken cancellationToken)
         {
-            _mediator = mediator;
-        }
-
-        /// <summary>
-        /// Register a new user (Sprint 1 SQLite version)
-        /// </summary>
-        /// <param name="command">User registration data</param>
-        /// <returns>Registration result</returns>
-        [HttpPost("register-ef")]
-        [ProducesResponseType(typeof(Result), 201)]
-        [ProducesResponseType(typeof(Result), 400)]
-        [ProducesResponseType(typeof(Result), 409)]
-        public async Task<ActionResult<Result>> Register([FromBody] Command command)
-        {
-            var result = await _mediator.Send(command);
-
-            if (!result.Success)
+            // Validate
+            var validationResult = await validator.ValidateAsync(command, cancellationToken);
+            if (!validationResult.IsValid)
             {
-                if (result.ErrorMessage?.Contains("already exists") == true)
-                {
-                    return Conflict(result);
-                }
-
-                if (result.ValidationErrors != null)
-                {
-                    return BadRequest(result);
-                }
-
-                return BadRequest(result);
+                var errors = validationResult.Errors
+                    .GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorMessage).ToArray()
+                    );
+                return new BadRequestObjectResult(Result.ValidationFailure(errors));
             }
 
-            return CreatedAtAction(
-                nameof(Register),
-                new { id = result.UserId },
-                result);
+            // Handle
+            var result = await mediator.Send(command, cancellationToken);
+            
+            return result.Success 
+                ? new OkObjectResult(result)
+                : new BadRequestObjectResult(result);
         }
     }
 }
+*/

@@ -1,3 +1,10 @@
+/*
+ * COMMENTED OUT FOR SPRINT 1 - USING COSMOS DB INSTEAD OF ENTITY FRAMEWORK
+ * This Entity Framework DbContext is for future use when SQL database is needed
+ * Currently using Cosmos DB for all data storage
+ */
+
+/*
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SpinnerNet.Shared.Models;
@@ -150,3 +157,4 @@ public class SpinnerNetDbContext : IdentityDbContext<ApplicationUser>
         // Add any default data seeding here if needed
     }
 }
+*/
