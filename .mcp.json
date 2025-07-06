@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "safari": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/Users/peterclinton/Desktop/mcp-safari-server/dist/index.js"],
+      "env": {}
+    },
+    "Context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    }
+  }
+}
