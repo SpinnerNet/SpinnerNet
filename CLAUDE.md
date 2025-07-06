@@ -11,18 +11,33 @@
 - App: spinnernet-app-3lauxg.azurewebsites.net
 - KeyVault: kv-spinnernet-3lauxg
 
-## ✅ DONE - SPRINT 1 COMPLETE
-- Azure AD multi-tenant auth (personal + work accounts)
-- Authentication endpoints: /Account/login, /Account/logout
-- User registration with Cosmos DB (using direct PascalCase properties)
-- Basic persona creation workflow via interview flow
-- Clean build with zero errors (achieved via strategic feature commenting)
-- Successfully deployed to Azure: https://spinnernet-app-3lauxg.azurewebsites.net
+### 🔄 Project Awareness & Context & Research
+- **Always read `PLANNING.md`** at the start of a new conversation to understand the project's architecture, goals, style, and constraints.
+- **Check `TASK.md`** before starting a new task. If the task isn’t listed, add it with a brief description and today's date.
+- **Use consistent naming conventions, file structure, and architecture patterns** as described in `PLANNING.md`.
+- **LLM Models** - Always look for the models page from the documentation links mentioned below and find the model that is mentioned in the initial.md - do not change models, find the exact model name to use in the code.
+- **Always scrape around 30-100 pages in total when doing research**
+- **Take my tech as sacred truth, for example if I say a model name then research that model name for LLM usage - don't assume from your own knowledge at any point** 
+- **For Maximum efficiency, whenever you need to perform multiple independent operations, such as research, invole all relevant tools simultaneously, rather that sequentially.**
+- 
+### 🧱 Code Structure & Modularity
+- **Never create a file longer than 500 lines of code.** If a file approaches this limit, refactor by splitting it into modules or helper files.
+- **When creating AI prompts do not hardcode examples but make everything dynamic or based off the context of what the prompt is for**
+- **Agents should be designed as intelligent human beings** by giving them decision making, ability to do detailed research using Jina, and not just your basic propmts that generate absolute shit. This is absolutely vital.
+
+### 🧠 AI Behavior Rules
+- **Never assume missing context. Ask questions if uncertain.**
+- **Never hallucinate libraries or functions** – only use known, verified .net packages.
+- **Always confirm file paths and module names** exist before referencing them in code or tests.
+- **Never delete or overwrite existing code** unless explicitly instructed to or if part of a task from `TASK.md`.
+
+### Design
+- Stick to the design system inside Designsystem.md - must be adhered to at all times for building any new features.
 
 ## 🏃 CURRENT STATE - SPRINT 1 MVP
 **ACTIVE FEATURES (Working & Deployed)**:
 - User registration via Azure AD authentication 
-- Interview flow for persona creation (4-step process)
+- Interview flow for persona creation
 - Basic dashboard navigation
 - Cosmos DB storage with Microsoft NoSQL patterns
 
@@ -44,8 +59,9 @@
 **MUDBLAZOR**: Follow official docs exactly - no custom CSS overrides
 **TEXT**: ALL in .resx files (XML-encoded: & → &amp;)
 **ARCHITECTURE**: Vertical slice - one file per feature  
-**AI**: Only via Semantic Kernel, never direct HTTP
+**AI**: WebLLM client-side + TypeLeap real-time interface (ultra-low latency)
 **COSMOS DB**: Direct PascalCase properties (Microsoft NoSQL pattern), NO JsonPropertyName attributes
+**SCREENSHOTS**: Save to /tmp/ folder, delete immediately after usage to avoid clutter
 
 ## 🌍 LOCALIZATION SETUP
 
@@ -147,15 +163,21 @@ cd src && dotnet publish SpinnerNet.App/*.csproj -c Release -o publish
 cd publish && zip -r ../deployment.zip . && cd ..
 az webapp deploy -g rg-spinnernet-proto -n spinnernet-app-3lauxg --src-path deployment.zip --type zip
 ```
+## 📚 DOCUMENTATION LOOKUP PRIORITY - CRITICAL
 
-## 🔧 Build & Test
-- **Clean build**: `dotnet build` (0 errors achieved)
-- **Deploy status**: ✅ Working at https://spinnernet-app-3lauxg.azurewebsites.net
-- **Test flow**: Register → Interview (4 steps) → Persona creation → Dashboard
+When you need to look up documentation for any library, framework, or technology:
 
-## 📋 Sprint 1 Architecture Decisions
-- **Database**: Cosmos DB only (Entity Framework commented out)
-- **Authentication**: Azure AD multi-tenant
-- **Features**: Minimal viable - user registration + persona creation only
-- **Error strategy**: Comment out non-essential features rather than fix
-- **Deployment**: Single Blazor app with MudBlazor UI
+1. **CONTEXT7 MCP FIRST**: ALWAYS use `mcp__context7__resolve-library-id` and `mcp__context7__get-library-docs` tools before anything else
+   - These tools provide up-to-date, curated documentation with code snippets
+   - Much faster and more reliable than web search
+   - Example: For MudBlazor docs, use context7 MCP instead of searching the web
+
+2. **WebFetch Last Resort**: For specific documentation URLs when needed
+   - Use when you have a direct URL to fetch
+   - Good for specific pages or sections
+
+3. **WebSearch Fallback**: Only use web search if context7 MCP doesn't have the library
+   - Use when context7 returns no results or library not available
+   - Good for finding official documentation sites
+
+**CRITICAL RULE**: Never use WebSearch without first attempting context7 MCP documentation lookup! This saves time and provides better results.

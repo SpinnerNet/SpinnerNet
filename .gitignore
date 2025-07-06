@@ -99,3 +99,6 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 .fake
+
+# Context Engineering
+INITIAL.md
