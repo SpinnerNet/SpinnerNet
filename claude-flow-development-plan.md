@@ -35,11 +35,14 @@ Timeline: 3-4 days
 ```
 
 #### Tasks:
-1. **Finish Persona Creation Flow**
-   - [ ] Wire up PersonaCreationWizard to backend
-   - [ ] Implement InitializePersonaCreation handler
-   - [ ] Test persona storage in Cosmos DB
-   - [ ] Add error handling and validation
+1. **Implement Chat-Based Persona Creation with AI Buddy**
+   - [ ] Replace wizard flow with conversational chat interface
+   - [ ] Integrate Semantic Kernel for AI orchestration
+   - [ ] Configure OpenAI connection with Azure KeyVault
+   - [ ] Create natural conversation flow for persona discovery
+   - [ ] Implement context-aware questioning based on user responses
+   - [ ] Store conversation history in Cosmos DB
+   - [ ] Extract persona traits from conversation using AI analysis
 
 2. **Dashboard Implementation**
    - [ ] Create dashboard layout with MudBlazor
