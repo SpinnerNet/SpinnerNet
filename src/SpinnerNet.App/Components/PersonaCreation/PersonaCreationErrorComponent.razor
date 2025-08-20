@@ -1,0 +1,54 @@
+@using SpinnerNet.Shared.Localization
+@inject ILocalizationService LocalizationService
+
+<MudCard Class="pa-6 text-center" Elevation="1">
+    <MudCardContent>
+        <div class="mb-4">
+            <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" Size="Size.Large" />
+        </div>
+        
+        <MudText Typo="Typo.h5" Class="mb-3" Color="Color.Error">
+            @LocalizationService.GetString("WebLLM_ErrorTitle")
+        </MudText>
+        
+        <MudAlert Severity="Severity.Error" Class="mb-4">
+            @ErrorMessage
+        </MudAlert>
+        
+        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+            @LocalizationService.GetString("WebLLM_ErrorDescription")
+        </MudText>
+        
+        <div class="d-flex justify-center gap-2">
+            @if (OnRetry.HasDelegate)
+            {
+                <MudButton Variant="Variant.Filled" 
+                          Color="Color.Primary" 
+                          OnClick="OnRetry"
+                          StartIcon="@Icons.Material.Filled.Refresh">
+                    @LocalizationService.GetString("Common_Retry")
+                </MudButton>
+            }
+            
+            @if (OnSkip.HasDelegate)
+            {
+                <MudButton Variant="Variant.Outlined" 
+                          Color="Color.Secondary" 
+                          OnClick="OnSkip"
+                          StartIcon="@Icons.Material.Filled.SkipNext">
+                    @LocalizationService.GetString("Common_SkipForNow")
+                </MudButton>
+            }
+        </div>
+        
+        <MudText Typo="Typo.caption" Class="mt-3" Color="Color.Secondary">
+            @LocalizationService.GetString("WebLLM_SkipWarning")
+        </MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public string ErrorMessage { get; set; } = "";
+    [Parameter] public EventCallback OnRetry { get; set; }
+    [Parameter] public EventCallback OnSkip { get; set; }
+}

@@ -1,0 +1,374 @@
+@using SpinnerNet.Shared.Localization
+@using System.Text.Json
+@inject ILocalizationService LocalizationService
+@inject ILogger<PersonaReviewStep> Logger
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h6" Class="mb-2">
+            @LocalizationService.GetString("PersonaCreation_Review_Header")
+        </MudText>
+        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+            @LocalizationService.GetString("PersonaCreation_Review_Description")
+        </MudText>
+    </MudItem>
+
+    @if (GeneratedPersona != null)
+    {
+        <MudItem xs="12">
+            <MudCard Outlined="true" Class="mb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <div class="d-flex align-center">
+                            <MudIcon Icon="@Icons.Material.Filled.Person" 
+                                    Color="Color.Primary" 
+                                    Size="Size.Medium" 
+                                    Class="mr-3" />
+                            <div>
+                                <MudText Typo="Typo.h6">@GetPersonaName()</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @LocalizationService.GetString("PersonaCreation_GeneratedOn") @GetGenerationDate()
+                                </MudText>
+                            </div>
+                        </div>
+                    </CardHeaderContent>
+                </MudCardHeader>
+
+                <MudCardContent>
+                    <MudTabs Elevation="1" Rounded="true" Centered="true">
+                        <MudTabPanel Text="@LocalizationService.GetString("PersonaCreation_Review_PersonaTab")">
+                            <div class="pa-4">
+                                <MudText Typo="Typo.body1" Style="white-space: pre-wrap; line-height: 1.6;">
+                                    @GetPersonaContent()
+                                </MudText>
+                            </div>
+                        </MudTabPanel>
+
+                        <MudTabPanel Text="@LocalizationService.GetString("PersonaCreation_Review_DetailsTab")">
+                            <div class="pa-4">
+                                <MudSimpleTable Dense="true" Hover="true">
+                                    <tbody>
+                                        @foreach (var detail in GetPersonaDetails())
+                                        {
+                                            <tr>
+                                                <td style="font-weight: 500; width: 30%;">@detail.Key</td>
+                                                <td>@detail.Value</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </MudSimpleTable>
+                            </div>
+                        </MudTabPanel>
+
+                        <MudTabPanel Text="@LocalizationService.GetString("PersonaCreation_Review_SourceTab")">
+                            <div class="pa-4">
+                                <MudText Typo="Typo.subtitle2" Class="mb-3">
+                                    @LocalizationService.GetString("PersonaCreation_Review_BasicInfo")
+                                </MudText>
+                                
+                                @foreach (var info in GetBasicInfo())
+                                {
+                                    <MudChip T="string" Class="ma-1" Size="Size.Small" Label="true">
+                                        <strong>@info.Key:</strong> @info.Value
+                                    </MudChip>
+                                }
+
+                                <MudDivider Class="my-4" />
+
+                                <MudText Typo="Typo.subtitle2" Class="mb-3">
+                                    @LocalizationService.GetString("PersonaCreation_Review_InterviewResponses")
+                                </MudText>
+                                
+                                @foreach (var answer in GetInterviewAnswers())
+                                {
+                                    <MudPaper Class="pa-3 mb-3" Elevation="1">
+                                        <MudText Typo="Typo.subtitle2" Class="mb-1">@answer.Key</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary">@answer.Value</MudText>
+                                    </MudPaper>
+                                }
+                            </div>
+                        </MudTabPanel>
+                    </MudTabs>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudCard Class="pa-4" Elevation="2">
+                <MudCardContent>
+                    <div class="text-center">
+                        <MudIcon Icon="@Icons.Material.Filled.ThumbsUpDown" 
+                                Color="Color.Primary" 
+                                Size="Size.Large" 
+                                Class="mb-3" />
+                        
+                        <MudText Typo="Typo.h6" Class="mb-2">
+                            @LocalizationService.GetString("PersonaCreation_Review_FeedbackTitle")
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+                            @LocalizationService.GetString("PersonaCreation_Review_FeedbackDescription")
+                        </MudText>
+
+                        <MudRating @bind-SelectedValue="_rating" 
+                                  MaxValue="5" 
+                                  Size="Size.Large"
+                                  Color="Color.Warning"
+                                  EmptyIcon="@Icons.Material.Outlined.Star"
+                                  FullIcon="@Icons.Material.Filled.Star" />
+
+                        <div class="mt-3">
+                            <MudTextField @bind-Value="_feedback"
+                                         Label="@LocalizationService.GetString("PersonaCreation_Review_FeedbackLabel")"
+                                         Placeholder="@LocalizationService.GetString("PersonaCreation_Review_FeedbackPlaceholder")"
+                                         Lines="3"
+                                         MaxLength="500" />
+                        </div>
+
+                        <div class="d-flex justify-center gap-3 mt-4">
+                            <MudButton Variant="Variant.Outlined" 
+                                      Color="Color.Warning" 
+                                      StartIcon="@Icons.Material.Filled.ThumbDown"
+                                      OnClick="RejectPersona"
+                                      Disabled="@_isProcessing">
+                                @LocalizationService.GetString("PersonaCreation_Review_Reject")
+                            </MudButton>
+                            
+                            <MudButton Variant="Variant.Filled" 
+                                      Color="Color.Success" 
+                                      StartIcon="@Icons.Material.Filled.ThumbUp"
+                                      OnClick="ApprovePersona"
+                                      Disabled="@_isProcessing">
+                                @if (_isProcessing)
+                                {
+                                    <MudProgressCircular Size="Size.Small" Class="mr-2" />
+                                }
+                                @LocalizationService.GetString("PersonaCreation_Review_Approve")
+                            </MudButton>
+                        </div>
+                    </div>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    }
+    else
+    {
+        <MudItem xs="12">
+            <MudAlert Severity="Severity.Info">
+                @LocalizationService.GetString("PersonaCreation_Review_NoPersona")
+            </MudAlert>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Parameter] public object? GeneratedPersona { get; set; }
+    [Parameter] public EventCallback OnPersonaApproved { get; set; }
+    [Parameter] public EventCallback OnPersonaRejected { get; set; }
+
+    private int _rating = 0;
+    private string _feedback = "";
+    private bool _isProcessing = false;
+
+    private string GetPersonaName()
+    {
+        try
+        {
+            if (GeneratedPersona == null) return "";
+            
+            var json = JsonSerializer.Serialize(GeneratedPersona);
+            var doc = JsonDocument.Parse(json);
+            
+            if (doc.RootElement.TryGetProperty("BasicInfo", out var basicInfo) &&
+                basicInfo.TryGetProperty("displayName", out var displayName))
+            {
+                return displayName.GetString() ?? LocalizationService.GetString("PersonaCreation_UnnamedPersona");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to extract persona name");
+        }
+        
+        return LocalizationService.GetString("PersonaCreation_UnnamedPersona");
+    }
+
+    private string GetGenerationDate()
+    {
+        try
+        {
+            if (GeneratedPersona == null) return "";
+            
+            var json = JsonSerializer.Serialize(GeneratedPersona);
+            var doc = JsonDocument.Parse(json);
+            
+            if (doc.RootElement.TryGetProperty("GeneratedAt", out var generatedAt) &&
+                DateTime.TryParse(generatedAt.GetString(), out var date))
+            {
+                return date.ToString("yyyy-MM-dd HH:mm");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to extract generation date");
+        }
+        
+        return DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+    }
+
+    private string GetPersonaContent()
+    {
+        try
+        {
+            if (GeneratedPersona == null) return "";
+            
+            var json = JsonSerializer.Serialize(GeneratedPersona);
+            var doc = JsonDocument.Parse(json);
+            
+            if (doc.RootElement.TryGetProperty("Content", out var content))
+            {
+                return content.GetString() ?? "";
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to extract persona content");
+        }
+        
+        return LocalizationService.GetString("PersonaCreation_ContentNotAvailable");
+    }
+
+    private List<KeyValuePair<string, string>> GetPersonaDetails()
+    {
+        var details = new List<KeyValuePair<string, string>>();
+        
+        try
+        {
+            if (GeneratedPersona == null) return details;
+            
+            var json = JsonSerializer.Serialize(GeneratedPersona);
+            var doc = JsonDocument.Parse(json);
+            
+            details.Add(new KeyValuePair<string, string>(
+                LocalizationService.GetString("PersonaCreation_Detail_ID"),
+                doc.RootElement.TryGetProperty("Id", out var id) ? id.GetString() ?? "" : ""));
+            
+            details.Add(new KeyValuePair<string, string>(
+                LocalizationService.GetString("PersonaCreation_Detail_UserAge"),
+                doc.RootElement.TryGetProperty("UserAge", out var age) ? age.GetInt32().ToString() : ""));
+            
+            details.Add(new KeyValuePair<string, string>(
+                LocalizationService.GetString("PersonaCreation_Detail_ContentLength"),
+                GetPersonaContent().Length.ToString() + " " + LocalizationService.GetString("Common_Characters")));
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to extract persona details");
+        }
+        
+        return details;
+    }
+
+    private List<KeyValuePair<string, string>> GetBasicInfo()
+    {
+        var basicInfo = new List<KeyValuePair<string, string>>();
+        
+        try
+        {
+            if (GeneratedPersona == null) return basicInfo;
+            
+            var json = JsonSerializer.Serialize(GeneratedPersona);
+            var doc = JsonDocument.Parse(json);
+            
+            if (doc.RootElement.TryGetProperty("BasicInfo", out var basicInfoElement))
+            {
+                foreach (var property in basicInfoElement.EnumerateObject())
+                {
+                    basicInfo.Add(new KeyValuePair<string, string>(
+                        property.Name,
+                        property.Value.ToString()));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to extract basic info");
+        }
+        
+        return basicInfo;
+    }
+
+    private List<KeyValuePair<string, string>> GetInterviewAnswers()
+    {
+        var answers = new List<KeyValuePair<string, string>>();
+        
+        try
+        {
+            if (GeneratedPersona == null) return answers;
+            
+            var json = JsonSerializer.Serialize(GeneratedPersona);
+            var doc = JsonDocument.Parse(json);
+            
+            if (doc.RootElement.TryGetProperty("InterviewAnswers", out var answersElement))
+            {
+                foreach (var property in answersElement.EnumerateObject())
+                {
+                    answers.Add(new KeyValuePair<string, string>(
+                        property.Name,
+                        property.Value.GetString() ?? ""));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to extract interview answers");
+        }
+        
+        return answers;
+    }
+
+    private async Task ApprovePersona()
+    {
+        _isProcessing = true;
+        
+        try
+        {
+            Logger.LogInformation("Persona approved with rating {Rating}", _rating);
+            
+            // TODO: Save feedback and rating with the persona
+            
+            await OnPersonaApproved.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to approve persona");
+        }
+        finally
+        {
+            _isProcessing = false;
+        }
+    }
+
+    private async Task RejectPersona()
+    {
+        _isProcessing = true;
+        
+        try
+        {
+            Logger.LogInformation("Persona rejected with rating {Rating} and feedback: {Feedback}", 
+                _rating, _feedback);
+            
+            // TODO: Save rejection feedback for improvement
+            
+            await OnPersonaRejected.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to reject persona");
+        }
+        finally
+        {
+            _isProcessing = false;
+        }
+    }
+}

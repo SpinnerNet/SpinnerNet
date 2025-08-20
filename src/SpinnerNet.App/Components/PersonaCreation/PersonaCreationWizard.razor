@@ -1,0 +1,520 @@
+@page "/persona-creation"
+@using SpinnerNet.App.Services
+@using SpinnerNet.App.Components.AgeAdaptive
+@using SpinnerNet.App.Components.PersonaCreation
+@using SpinnerNet.Shared.Localization
+@using SpinnerNet.Core.Features.PersonaCreation
+@using MediatR
+@using MudBlazor
+@using System
+@inject SpinnerNet.App.Services.WebLLM.IWebLLMService WebLLMService
+@inject IAgeAdaptiveThemeService ThemeService
+@inject ILocalizationService LocalizationService
+@inject IMediator Mediator
+@inject ILogger<PersonaCreationWizard> Logger
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
+
+<PageTitle>@LocalizationService.GetString("PersonaCreation_Title") - Spinner.Net</PageTitle>
+
+<AgeAdaptiveContainer Age="@_userAge" ApplyTheme="true">
+    <MudContainer MaxWidth="MaxWidth.Large" Class="pa-4">
+        
+        @if (!_webLLMInitialized && !_webLLMError)
+        {
+            <PersonaCreationLoadingComponent 
+                IsLoading="@_webLLMLoading"
+                Progress="@_webLLMProgress"
+                StatusMessage="@_webLLMStatus"
+                OnRetry="InitializeWebLLMAsync" />
+        }
+        else if (_webLLMError)
+        {
+            <PersonaCreationErrorComponent 
+                ErrorMessage="@_lastError"
+                OnRetry="InitializeWebLLMAsync"
+                OnSkip="() => _webLLMInitialized = true" />
+        }
+        else
+        {
+            <MudCard Class="persona-wizard-card" Elevation="2">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <div class="d-flex align-center">
+                            <MudIcon Icon="@Icons.Material.Filled.Psychology" Class="mr-3" />
+                            <div>
+                                <MudText Typo="Typo.h4">@LocalizationService.GetString("PersonaCreation_WizardTitle")</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    @LocalizationService.GetString("PersonaCreation_WizardSubtitle")
+                                </MudText>
+                            </div>
+                        </div>
+                    </CardHeaderContent>
+                </MudCardHeader>
+
+                <MudCardContent>
+                    <MudStepper @ref="_stepper" 
+                               id="persona-creation-stepper"
+                               data-testid="persona-stepper"
+                               ActiveIndex="@_activeStepIndex"
+                               NonLinear="false"
+                               ShowResetButton="false"
+                               CompletedStepColor="Color.Success"
+                               CurrentStepColor="Color.Primary"
+                               OnPreviewInteraction="OnStepPreview">
+                        <ChildContent>
+                            <MudStep Title="@LocalizationService.GetString("PersonaCreation_BasicInfoTitle")"
+                                SecondaryText="@LocalizationService.GetString("PersonaCreation_BasicInfoDescription")"
+                                Completed="@(_activeStepIndex > 0)">
+                            <PersonaBasicInfoStep 
+                                @ref="_basicInfoStep"
+                                UserAge="@_userAge"
+                                OnAgeChanged="OnUserAgeChanged"
+                                OnValidationChanged="OnStepValidationChanged" />
+                        </MudStep>
+
+                        <MudStep Title="@LocalizationService.GetString("PersonaCreation_InterviewTitle")"
+                                SecondaryText="@LocalizationService.GetString("PersonaCreation_InterviewDescription")"
+                                Completed="@(_activeStepIndex > 1)">
+                            <PersonaInterviewStep 
+                                @ref="_interviewStep"
+                                UserAge="@_userAge"
+                                Questions="@_ageAdaptiveQuestions"
+                                OnAnswersChanged="OnInterviewAnswersChanged" />
+                        </MudStep>
+
+                        <MudStep Title="@LocalizationService.GetString("PersonaCreation_AIGenerationTitle")"
+                                SecondaryText="@LocalizationService.GetString("PersonaCreation_AIGenerationDescription")"
+                                Completed="@(_activeStepIndex > 2)">
+                            <PersonaAIGenerationStep 
+                                @ref="_aiGenerationStep"
+                                UserAge="@_userAge"
+                                BasicInfo="@_basicInfo"
+                                InterviewAnswers="@_interviewAnswers"
+                                WebLLMService="@WebLLMService"
+                                OnPersonaGenerated="OnPersonaGenerated" />
+                        </MudStep>
+
+                        <MudStep Title="@LocalizationService.GetString("PersonaCreation_ReviewTitle")"
+                                SecondaryText="@LocalizationService.GetString("PersonaCreation_ReviewDescription")"
+                                Completed="@_personaCompleted">
+                            <PersonaReviewStep 
+                                @ref="_reviewStep"
+                                GeneratedPersona="@_generatedPersona"
+                                OnPersonaApproved="OnPersonaApproved"
+                                OnPersonaRejected="OnPersonaRejected" />
+                        </MudStep>
+                        </ChildContent>
+
+                        <CompletedContent>
+                            <div class="text-center pa-6">
+                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Large" Class="mb-3" />
+                                <MudText Typo="Typo.h5" Class="mb-2">@LocalizationService.GetString("PersonaCreation_CompletedTitle")</MudText>
+                                <MudText Typo="Typo.body1" Color="Color.Secondary">
+                                    @LocalizationService.GetString("PersonaCreation_CompletedDescription")
+                                </MudText>
+                                <MudButton Variant="Variant.Filled" 
+                                          Color="Color.Primary" 
+                                          Class="mt-4"
+                                          OnClick="NavigateToDashboard">
+                                    @LocalizationService.GetString("PersonaCreation_GoToDashboard")
+                                </MudButton>
+                            </div>
+                        </CompletedContent>
+                    </MudStepper>
+                </MudCardContent>
+
+                <MudCardActions Class="pa-4">
+                    <div class="d-flex justify-center w-100">
+                        <MudButton 
+                            Variant="Variant.Text" 
+                            Color="Color.Secondary"
+                            OnClick="SaveDraft"
+                            Disabled="@_isProcessing"
+                            @attributes="@(new Dictionary<string, object> { { "id", "save-draft-button" } })">
+                            @LocalizationService.GetString("PersonaCreation_SaveDraft")
+                        </MudButton>
+                    </div>
+                </MudCardActions>
+            </MudCard>
+        }
+    </MudContainer>
+</AgeAdaptiveContainer>
+
+@code {
+    // MudStepper reference
+    private MudStepper? _stepper;
+
+    // Step components
+    private PersonaBasicInfoStep? _basicInfoStep;
+    private PersonaInterviewStep? _interviewStep;
+    private PersonaAIGenerationStep? _aiGenerationStep;
+    private PersonaReviewStep? _reviewStep;
+
+    // State
+    private int _activeStepIndex = 0;
+    private bool _currentStepValid = false;
+    private bool _isProcessing = false;
+    private bool _personaCompleted = false;
+    private int _userAge = 18;
+    private string _sessionId = string.Empty;
+
+    // WebLLM state
+    private bool _webLLMInitialized = false;
+    private bool _webLLMLoading = true;
+    private bool _webLLMError = false;
+    private int _webLLMProgress = 0;
+    private string _webLLMStatus = "Initializing AI...";
+    private string _lastError = string.Empty;
+
+    // Data
+    private Dictionary<string, object> _basicInfo = new();
+    private List<string> _ageAdaptiveQuestions = new();
+    private Dictionary<string, string> _interviewAnswers = new();
+    private object? _generatedPersona = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _sessionId = Guid.NewGuid().ToString();
+            Logger.LogInformation("Starting persona creation wizard for session {SessionId}", _sessionId);
+
+            // Subscribe to WebLLM events
+            WebLLMService.StatusUpdated += OnWebLLMStatusUpdated;
+            WebLLMService.ProgressUpdated += OnWebLLMProgressUpdated;
+            WebLLMService.ErrorOccurred += OnWebLLMErrorOccurred;
+
+            // Initialize WebLLM
+            await InitializeWebLLMAsync();
+
+            // Initialize age-adaptive questions
+            await LoadAgeAdaptiveQuestions();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to initialize persona creation wizard");
+            _webLLMError = true;
+            _lastError = ex.Message;
+        }
+    }
+
+    private async Task InitializeWebLLMAsync()
+    {
+        try
+        {
+            _webLLMLoading = true;
+            _webLLMError = false;
+            _lastError = string.Empty;
+
+            Logger.LogInformation("Initializing WebLLM for session {SessionId}", _sessionId);
+            
+            _webLLMInitialized = await WebLLMService.InitializeAsync(_sessionId);
+            
+            if (!_webLLMInitialized)
+            {
+                _webLLMError = true;
+                _lastError = WebLLMService.LastError ?? "Failed to initialize AI engine";
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "WebLLM initialization failed");
+            _webLLMError = true;
+            _lastError = ex.Message;
+        }
+        finally
+        {
+            _webLLMLoading = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task LoadAgeAdaptiveQuestions()
+    {
+        try
+        {
+            var command = new InitializePersonaCreationCommand(
+                UserId: "current-user", // TODO: Get from auth context
+                UserAge: _userAge,
+                PreferredLanguage: "en"
+            );
+
+            var result = await Mediator.Send(command);
+            if (result.Success)
+            {
+                _ageAdaptiveQuestions = result.InitialQuestions;
+                Logger.LogInformation("Loaded {QuestionCount} age-adaptive questions for age {Age}", 
+                    _ageAdaptiveQuestions.Count, _userAge);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load age-adaptive questions");
+            // Fallback to default questions
+            _ageAdaptiveQuestions = GetDefaultQuestionsForAge(_userAge);
+        }
+    }
+
+    private List<string> GetDefaultQuestionsForAge(int age)
+    {
+        if (age < 13) 
+            return new List<string>
+            {
+                "What's your favorite thing to do?",
+                "What makes you really happy?",
+                "What do you like to learn about?"
+            };
+        if (age < 18) 
+            return new List<string>
+            {
+                "What are your main interests?",
+                "What motivates you?",
+                "How do you like to spend your free time?"
+            };
+        if (age < 65) 
+            return new List<string>
+            {
+                "What are your primary goals?",
+                "How do you prefer to organize your time?",
+                "What motivates you most in your work?"
+            };
+        return new List<string>
+        {
+            "What experiences have shaped you?",
+            "What brings you satisfaction?",
+            "What would you like your legacy to be?"
+        };
+    }
+
+    #region Event Handlers
+
+    private async void OnWebLLMStatusUpdated(string status)
+    {
+        _webLLMStatus = status;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async void OnWebLLMProgressUpdated(SpinnerNet.App.Services.WebLLM.WebLLMProgress progress)
+    {
+        _webLLMProgress = (int)(progress.Progress * 100);
+        _webLLMStatus = progress.Text;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async void OnWebLLMErrorOccurred(string error)
+    {
+        _webLLMError = true;
+        _lastError = error;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnUserAgeChanged(int newAge)
+    {
+        if (_userAge != newAge)
+        {
+            _userAge = newAge;
+            await LoadAgeAdaptiveQuestions();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void OnStepValidationChanged(bool isValid)
+    {
+        _currentStepValid = isValid;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnInterviewAnswersChanged(Dictionary<string, string> answers)
+    {
+        _interviewAnswers = answers;
+        _currentStepValid = answers.Values.All(a => !string.IsNullOrWhiteSpace(a));
+    }
+
+    private void OnPersonaGenerated(object persona)
+    {
+        _generatedPersona = persona;
+        _currentStepValid = true;
+    }
+
+    private async Task OnPersonaApproved()
+    {
+        await CompletePersonaCreation();
+    }
+
+    private async Task OnPersonaRejected()
+    {
+        // Go back to AI generation step (step 2)
+        while (_activeStepIndex > 2 && _stepper != null)
+        {
+            await _stepper.PreviousStepAsync();
+            _activeStepIndex--;
+        }
+        _currentStepValid = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    #endregion
+
+    #region Navigation
+
+    private async Task OnStepPreview(StepperInteractionEventArgs args)
+    {
+        // Collect data from current step before navigation
+        await CollectCurrentStepData();
+        
+        // Allow navigation and update active step
+        args.Cancel = false;
+        _activeStepIndex = args.StepIndex;
+        
+        // Update validation for new step
+        _currentStepValid = await ValidateCurrentStep();
+        
+        await InvokeAsync(StateHasChanged);
+        
+        Logger.LogInformation("Navigated to step {Step}", _activeStepIndex + 1);
+    }
+
+    private async Task<bool> ValidateCurrentStep()
+    {
+        var isValid = _activeStepIndex switch
+        {
+            0 => _basicInfoStep?.IsValid() ?? false,
+            1 => _interviewAnswers.Values.All(a => !string.IsNullOrWhiteSpace(a)),
+            2 => _generatedPersona != null,
+            3 => true, // Review step is always valid once reached
+            _ => false
+        };
+        
+        Logger.LogInformation("Step {Step} validation: {IsValid}", _activeStepIndex + 1, isValid);
+        return isValid;
+    }
+
+    private async Task CollectCurrentStepData()
+    {
+        switch (_activeStepIndex)
+        {
+            case 0:
+                if (_basicInfoStep != null)
+                {
+                    _basicInfo = await _basicInfoStep.GetBasicInfoAsync();
+                }
+                break;
+            case 1:
+                // Interview answers already collected via event
+                break;
+            case 2:
+                // Persona already generated via event
+                break;
+        }
+    }
+
+    private async Task NavigateToDashboard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    #endregion
+
+    #region Completion
+
+    private async Task SaveDraft()
+    {
+        _isProcessing = true;
+        try
+        {
+            // TODO: Implement draft saving
+            Logger.LogInformation("Saving persona creation draft for session {SessionId}", _sessionId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to save draft");
+        }
+        finally
+        {
+            _isProcessing = false;
+        }
+    }
+
+    private async Task CompletePersonaCreation()
+    {
+        _isProcessing = true;
+        
+        try
+        {
+            Logger.LogInformation("Completing persona creation for session {SessionId}", _sessionId);
+            
+            // Mark persona as completed
+            _personaCompleted = true;
+            
+            // TODO: Save persona to database
+            // TODO: Navigate to persona dashboard or use stepper completion
+            
+            Logger.LogInformation("Persona creation completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to complete persona creation");
+            // TODO: Show error message
+        }
+        finally
+        {
+            _isProcessing = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    #endregion
+
+    public async ValueTask DisposeAsync()
+    {
+        // Unsubscribe from events
+        if (WebLLMService != null)
+        {
+            WebLLMService.StatusUpdated -= OnWebLLMStatusUpdated;
+            WebLLMService.ProgressUpdated -= OnWebLLMProgressUpdated;
+            WebLLMService.ErrorOccurred -= OnWebLLMErrorOccurred;
+        }
+    }
+}
+
+<style>
+    .persona-wizard-card {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .step-content {
+        min-height: 400px;
+        padding: 1rem 0;
+    }
+
+    .mud-progress-linear-step {
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    @@media (max-width: 768px) {
+        .step-content {
+            min-height: 300px;
+        }
+        
+        .persona-wizard-card .mud-card-actions {
+            padding: 1rem !important;
+        }
+        
+        .persona-wizard-card .mud-card-actions .d-flex {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .persona-wizard-card .mud-card-actions .d-flex > div:first-child {
+            order: 2;
+        }
+        
+        .persona-wizard-card .mud-card-actions .d-flex > div:last-child {
+            order: 1;
+            justify-content: center;
+        }
+    }
+</style>

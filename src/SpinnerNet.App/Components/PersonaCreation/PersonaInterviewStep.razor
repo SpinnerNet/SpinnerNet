@@ -1,0 +1,192 @@
+@using SpinnerNet.Shared.Localization
+@inject ILocalizationService LocalizationService
+@inject ILogger<PersonaInterviewStep> Logger
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h6" Class="mb-2">
+            @LocalizationService.GetString("PersonaCreation_Interview_Header")
+        </MudText>
+        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+            @GetAgeAdaptiveIntroduction()
+        </MudText>
+    </MudItem>
+
+    @if (Questions?.Any() == true)
+    {
+        @for (int i = 0; i < Questions.Count; i++)
+        {
+            var questionIndex = i;
+            var question = Questions[i];
+
+            <MudItem xs="12" Class="mb-3">
+                <MudCard Outlined="true" Class="pa-4">
+                    <MudCardContent>
+                        <MudText Typo="Typo.subtitle1" Class="mb-3">
+                            @GetQuestionPrefix(questionIndex + 1) @question
+                        </MudText>
+
+                        <MudTextField @bind-Value="@(_answers[questionIndex])"
+                            Placeholder="@GetAnswerPlaceholder(questionIndex)" Lines="@GetLinesForAge()" MaxLength="1000"
+                            Immediate="true" OnBlur="() => OnAnswerChanged(questionIndex)" />
+
+                        @if (!string.IsNullOrWhiteSpace(_answers[questionIndex]))
+                        {
+                            <div class="d-flex justify-end mt-2">
+                                <MudChip T="string" Color="Color.Success" Size="Size.Small" Icon="@Icons.Material.Filled.Check">
+                                    @LocalizationService.GetString("PersonaCreation_AnswerComplete")
+                                </MudChip>
+                            </div>
+                        }
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    }
+    else
+    {
+        <MudItem xs="12">
+            <MudAlert Severity="Severity.Info">
+                @LocalizationService.GetString("PersonaCreation_LoadingQuestions")
+            </MudAlert>
+        </MudItem>
+    }
+
+    <MudItem xs="12">
+        <MudProgressLinear Value="@GetCompletionPercentage()" Color="Color.Primary" Class="mb-2" />
+        <MudText Typo="Typo.caption" Color="Color.Secondary">
+            @GetProgressText()
+        </MudText>
+    </MudItem>
+
+    @if (!string.IsNullOrEmpty(_validationMessage))
+    {
+        <MudItem xs="12">
+            <MudAlert Severity="@_validationSeverity" Class="mt-2">
+                @_validationMessage
+            </MudAlert>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Parameter] public int UserAge { get; set; } = 18;
+    [Parameter] public List<string> Questions { get; set; } = new();
+    [Parameter] public EventCallback<Dictionary<string, string>> OnAnswersChanged { get; set; }
+
+    private string[] _answers = Array.Empty<string>();
+    private string _validationMessage = "";
+    private Severity _validationSeverity = Severity.Info;
+
+    protected override void OnParametersSet()
+    {
+        if (Questions?.Any() == true && _answers.Length != Questions.Count)
+        {
+            _answers = new string[Questions.Count];
+            Logger.LogInformation("Initialized {QuestionCount} interview questions for age {Age}",
+            Questions.Count, UserAge);
+        }
+    }
+
+    private async Task OnAnswerChanged(int questionIndex)
+    {
+        if (questionIndex >= 0 && questionIndex < _answers.Length)
+        {
+            var answersDictionary = new Dictionary<string, string>();
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                answersDictionary[Questions[i]] = _answers[i] ?? "";
+            }
+
+            await OnAnswersChanged.InvokeAsync(answersDictionary);
+            UpdateValidationMessage();
+            StateHasChanged();
+        }
+    }
+
+    private void UpdateValidationMessage()
+    {
+        var completedAnswers = _answers.Count(a => !string.IsNullOrWhiteSpace(a));
+        var totalQuestions = Questions?.Count ?? 0;
+
+        if (completedAnswers == totalQuestions && totalQuestions > 0)
+        {
+            _validationMessage = LocalizationService.GetString("PersonaCreation_AllAnswersComplete");
+            _validationSeverity = Severity.Success;
+        }
+        else if (completedAnswers > 0)
+        {
+            _validationMessage = string.Format(
+            LocalizationService.GetString("PersonaCreation_PartialAnswersComplete"),
+            completedAnswers, totalQuestions);
+            _validationSeverity = Severity.Info;
+        }
+        else
+        {
+            _validationMessage = LocalizationService.GetString("PersonaCreation_NoAnswersYet");
+            _validationSeverity = Severity.Warning;
+        }
+    }
+
+    private string GetAgeAdaptiveIntroduction()
+    {
+        if (UserAge < 13)
+            return LocalizationService.GetString("PersonaCreation_Interview_ChildIntro");
+        if (UserAge < 18)
+            return LocalizationService.GetString("PersonaCreation_Interview_TeenIntro");
+        if (UserAge < 65)
+            return LocalizationService.GetString("PersonaCreation_Interview_AdultIntro");
+        return LocalizationService.GetString("PersonaCreation_Interview_SeniorIntro");
+    }
+
+    private string GetQuestionPrefix(int number)
+    {
+        if (UserAge < 13)
+            return $"🌟 {number}. ";
+        if (UserAge < 18)
+            return $"💭 {number}. ";
+        if (UserAge < 65)
+            return $"{number}. ";
+        return $"Question {number}: ";
+    }
+
+    private string GetAnswerPlaceholder(int questionIndex)
+    {
+        if (UserAge < 13)
+            return LocalizationService.GetString("PersonaCreation_ChildAnswerPlaceholder");
+        if (UserAge < 18)
+            return LocalizationService.GetString("PersonaCreation_TeenAnswerPlaceholder");
+        if (UserAge < 65)
+            return LocalizationService.GetString("PersonaCreation_AdultAnswerPlaceholder");
+        return LocalizationService.GetString("PersonaCreation_SeniorAnswerPlaceholder");
+    }
+
+    private int GetLinesForAge()
+    {
+        if (UserAge < 13)
+            return 2;
+        if (UserAge < 18)
+            return 3;
+        if (UserAge < 65)
+            return 4;
+        return 3;
+    }
+
+    private double GetCompletionPercentage()
+    {
+        if (Questions?.Any() != true) return 0;
+
+        var completedAnswers = _answers.Count(a => !string.IsNullOrWhiteSpace(a));
+        return (completedAnswers / (double)Questions.Count) * 100;
+    }
+
+    private string GetProgressText()
+    {
+        if (Questions?.Any() != true) return "";
+
+        var completedAnswers = _answers.Count(a => !string.IsNullOrWhiteSpace(a));
+        return string.Format(
+        LocalizationService.GetString("PersonaCreation_ProgressText"),
+        completedAnswers, Questions.Count);
+    }
+}

@@ -1,0 +1,51 @@
+@using SpinnerNet.Shared.Localization
+@inject ILocalizationService LocalizationService
+
+<MudCard Class="pa-6 text-center" Elevation="1">
+    <MudCardContent>
+        <div class="mb-4">
+            <MudIcon Icon="@Icons.Material.Filled.Psychology" Color="Color.Primary" Size="Size.Large" />
+        </div>
+        
+        <MudText Typo="Typo.h5" Class="mb-3">
+            @LocalizationService.GetString("WebLLM_LoadingTitle")
+        </MudText>
+        
+        @if (IsLoading)
+        {
+            <MudProgressLinear Color="Color.Primary" Value="@Progress" Class="mb-3" />
+            <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+                @StatusMessage
+            </MudText>
+            <MudText Typo="Typo.caption">
+                @LocalizationService.GetString("WebLLM_LoadingDescription")
+            </MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.body1" Class="mb-4">
+                @LocalizationService.GetString("WebLLM_InitializingMessage")
+            </MudText>
+            <MudProgressCircular Color="Color.Primary" />
+        }
+        
+        @if (OnRetry.HasDelegate)
+        {
+            <div class="mt-4">
+                <MudButton Variant="Variant.Text" 
+                          Color="Color.Secondary" 
+                          OnClick="OnRetry"
+                          StartIcon="@Icons.Material.Filled.Refresh">
+                    @LocalizationService.GetString("Common_Retry")
+                </MudButton>
+            </div>
+        }
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public int Progress { get; set; }
+    [Parameter] public string StatusMessage { get; set; } = "";
+    [Parameter] public EventCallback OnRetry { get; set; }
+}

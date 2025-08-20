@@ -1,0 +1,317 @@
+@using SpinnerNet.Shared.Localization
+@using SpinnerNet.App.Services.WebLLM
+@inject ILocalizationService LocalizationService
+@inject ILogger<PersonaAIGenerationStep> Logger
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h6" Class="mb-2">
+            @LocalizationService.GetString("PersonaCreation_AIGeneration_Header")
+        </MudText>
+        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+            @LocalizationService.GetString("PersonaCreation_AIGeneration_Description")
+        </MudText>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudCard Outlined="true" Class="pa-4">
+            <MudCardContent>
+                @if (!_isGenerating && _generatedPersona == null)
+                {
+                    <div class="text-center">
+                        <MudIcon Icon="@Icons.Material.Filled.AutoAwesome" 
+                                Color="Color.Primary" 
+                                Size="Size.Large" 
+                                Class="mb-3" />
+                        
+                        <MudText Typo="Typo.h6" Class="mb-3">
+                            @LocalizationService.GetString("PersonaCreation_ReadyToGenerate")
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+                            @GetGenerationPreview()
+                        </MudText>
+                        
+                        <MudButton Variant="Variant.Filled" 
+                                  Color="Color.Primary" 
+                                  Size="Size.Large"
+                                  StartIcon="@Icons.Material.Filled.Psychology"
+                                  OnClick="GeneratePersona"
+                                  Disabled="@(!CanGenerate())"
+                                  @attributes="@(new Dictionary<string, object> { { "id", "generate-persona-button" } })">
+                            @LocalizationService.GetString("PersonaCreation_GeneratePersona")
+                        </MudButton>
+                    </div>
+                }
+                else if (_isGenerating)
+                {
+                    <div class="text-center">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Class="mb-3" />
+                        
+                        <MudText Typo="Typo.h6" Class="mb-2">
+                            @LocalizationService.GetString("PersonaCreation_GeneratingPersona")
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+                            @_generationStatus
+                        </MudText>
+                        
+                        @if (_generationProgress > 0)
+                        {
+                            <MudProgressLinear Value="@_generationProgress" 
+                                             Color="Color.Primary" 
+                                             Class="mb-2" />
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                @($"{_generationProgress:F0}% {LocalizationService.GetString("Common_Complete")}")
+                            </MudText>
+                        }
+                    </div>
+                }
+                else if (_generatedPersona != null)
+                {
+                    <div>
+                        <div class="d-flex align-center mb-3">
+                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" 
+                                    Color="Color.Success" 
+                                    Size="Size.Medium" 
+                                    Class="mr-2" />
+                            <MudText Typo="Typo.h6" Color="Color.Success">
+                                @LocalizationService.GetString("PersonaCreation_PersonaGenerated")
+                            </MudText>
+                        </div>
+                        
+                        <MudDivider Class="mb-3" />
+                        
+                        <MudText Typo="Typo.subtitle1" Class="mb-2">
+                            @LocalizationService.GetString("PersonaCreation_GeneratedPersonaPreview")
+                        </MudText>
+                        
+                        <MudPaper Class="pa-3 mb-3" Elevation="1">
+                            <MudText Typo="Typo.body1" Style="white-space: pre-wrap;">
+                                @_generatedPersonaText
+                            </MudText>
+                        </MudPaper>
+                        
+                        <div class="d-flex justify-space-between">
+                            <MudButton Variant="Variant.Outlined" 
+                                      Color="Color.Secondary" 
+                                      StartIcon="@Icons.Material.Filled.Refresh"
+                                      OnClick="RegeneratePersona"
+                                      Disabled="@_isGenerating"
+                                      @attributes="@(new Dictionary<string, object> { { "id", "regenerate-persona-button" } })">
+                                @LocalizationService.GetString("PersonaCreation_RegeneratePersona")
+                            </MudButton>
+                            
+                            <MudButton Variant="Variant.Filled" 
+                                      Color="Color.Success" 
+                                      EndIcon="@Icons.Material.Filled.ArrowForward"
+                                      OnClick="AcceptPersona"
+                                      @attributes="@(new Dictionary<string, object> { { "id", "accept-persona-button" } })">
+                                @LocalizationService.GetString("PersonaCreation_AcceptPersona")
+                            </MudButton>
+                        </div>
+                    </div>
+                }
+                
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @_errorMessage
+                    </MudAlert>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter] public int UserAge { get; set; } = 18;
+    [Parameter] public Dictionary<string, object> BasicInfo { get; set; } = new();
+    [Parameter] public Dictionary<string, string> InterviewAnswers { get; set; } = new();
+    [Parameter] public IWebLLMService? WebLLMService { get; set; }
+    [Parameter] public EventCallback<object> OnPersonaGenerated { get; set; }
+
+    private bool _isGenerating = false;
+    private double _generationProgress = 0;
+    private string _generationStatus = "";
+    private string _errorMessage = "";
+    private object? _generatedPersona = null;
+    private string _generatedPersonaText = "";
+
+    private bool CanGenerate()
+    {
+        var canGenerate = WebLLMService?.IsInitialized == true &&
+                         BasicInfo?.Any() == true &&
+                         InterviewAnswers?.Any() == true &&
+                         !_isGenerating;
+        
+        // Debug logging to understand why button is disabled
+        Logger.LogInformation("CanGenerate check: WebLLM={WebLLM}, BasicInfo={BasicInfo}, InterviewAnswers={InterviewAnswers}, Generating={Generating}, Result={Result}",
+            WebLLMService?.IsInitialized,
+            BasicInfo?.Any(),
+            InterviewAnswers?.Any(), 
+            _isGenerating,
+            canGenerate);
+            
+        return canGenerate;
+    }
+
+    private string GetGenerationPreview()
+    {
+        var displayName = BasicInfo?.GetValueOrDefault("displayName", "").ToString() ?? "";
+        var primaryUse = BasicInfo?.GetValueOrDefault("primaryUse", "").ToString() ?? "";
+        
+        if (!string.IsNullOrEmpty(displayName) && !string.IsNullOrEmpty(primaryUse))
+        {
+            return string.Format(
+                LocalizationService.GetString("PersonaCreation_GenerationPreviewWithInfo"),
+                displayName, primaryUse);
+        }
+        
+        return LocalizationService.GetString("PersonaCreation_GenerationPreviewGeneric");
+    }
+
+    private async Task GeneratePersona()
+    {
+        if (!CanGenerate() || WebLLMService == null)
+        {
+            _errorMessage = LocalizationService.GetString("PersonaCreation_CannotGenerate");
+            return;
+        }
+
+        _isGenerating = true;
+        _generationProgress = 0;
+        _errorMessage = "";
+        _generationStatus = LocalizationService.GetString("PersonaCreation_PreparingGeneration");
+
+        try
+        {
+            Logger.LogInformation("Starting persona generation for user age {Age}", UserAge);
+
+            // Build the prompt based on user input
+            var prompt = BuildPersonaPrompt();
+            
+            _generationStatus = LocalizationService.GetString("PersonaCreation_GeneratingWithAI");
+            _generationProgress = 25;
+            StateHasChanged();
+
+            // Generate using WebLLM
+            var options = new WebLLMGenerationOptions
+            {
+                SystemPrompt = GetSystemPrompt(),
+                UserAge = UserAge,
+                Temperature = 0.8,
+                MaxTokens = 1200,
+                TopP = 0.9
+            };
+
+            _generationProgress = 50;
+            StateHasChanged();
+
+            var response = await WebLLMService.GeneratePersonaResponseAsync(prompt, options);
+            
+            _generationProgress = 90;
+            _generationStatus = LocalizationService.GetString("PersonaCreation_FinalizingPersona");
+            StateHasChanged();
+
+            // Process the response
+            _generatedPersonaText = response;
+            _generatedPersona = new
+            {
+                Id = Guid.NewGuid().ToString(),
+                Content = response,
+                BasicInfo = BasicInfo,
+                InterviewAnswers = InterviewAnswers,
+                GeneratedAt = DateTime.UtcNow,
+                UserAge = UserAge
+            };
+
+            _generationProgress = 100;
+            _generationStatus = LocalizationService.GetString("PersonaCreation_PersonaComplete");
+            
+            Logger.LogInformation("Persona generation completed successfully. Response length: {Length}", 
+                response?.Length ?? 0);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to generate persona");
+            _errorMessage = string.Format(
+                LocalizationService.GetString("PersonaCreation_GenerationError"),
+                ex.Message);
+        }
+        finally
+        {
+            _isGenerating = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task RegeneratePersona()
+    {
+        _generatedPersona = null;
+        _generatedPersonaText = "";
+        await GeneratePersona();
+    }
+
+    private async Task AcceptPersona()
+    {
+        if (_generatedPersona != null)
+        {
+            await OnPersonaGenerated.InvokeAsync(_generatedPersona);
+            Logger.LogInformation("Persona accepted and passed to next step");
+        }
+    }
+
+    private string BuildPersonaPrompt()
+    {
+        var displayName = BasicInfo?.GetValueOrDefault("displayName", "").ToString() ?? "";
+        var description = BasicInfo?.GetValueOrDefault("description", "").ToString() ?? "";
+        var primaryUse = BasicInfo?.GetValueOrDefault("primaryUse", "").ToString() ?? "";
+        var communicationStyle = BasicInfo?.GetValueOrDefault("communicationStyle", "").ToString() ?? "";
+
+        var prompt = $"Create a detailed AI persona with the following specifications:\n\n";
+        prompt += $"Name: {displayName}\n";
+        prompt += $"Primary Use: {primaryUse}\n";
+        prompt += $"Communication Style: {communicationStyle}\n";
+        
+        if (!string.IsNullOrEmpty(description))
+        {
+            prompt += $"Description: {description}\n";
+        }
+        
+        prompt += $"User Age: {UserAge}\n\n";
+        
+        prompt += "Based on the following interview responses:\n";
+        foreach (var answer in InterviewAnswers.Where(a => !string.IsNullOrWhiteSpace(a.Value)))
+        {
+            prompt += $"Q: {answer.Key}\n";
+            prompt += $"A: {answer.Value}\n\n";
+        }
+        
+        prompt += GetAgeAdaptiveInstructions();
+        
+        return prompt;
+    }
+
+    private string GetSystemPrompt()
+    {
+        if (UserAge < 13) 
+            return LocalizationService.GetString("PersonaCreation_SystemPrompt_Child");
+        if (UserAge < 18) 
+            return LocalizationService.GetString("PersonaCreation_SystemPrompt_Teen");
+        if (UserAge < 65) 
+            return LocalizationService.GetString("PersonaCreation_SystemPrompt_Adult");
+        return LocalizationService.GetString("PersonaCreation_SystemPrompt_Senior");
+    }
+
+    private string GetAgeAdaptiveInstructions()
+    {
+        if (UserAge < 13) 
+            return LocalizationService.GetString("PersonaCreation_Instructions_Child");
+        if (UserAge < 18) 
+            return LocalizationService.GetString("PersonaCreation_Instructions_Teen");
+        if (UserAge < 65) 
+            return LocalizationService.GetString("PersonaCreation_Instructions_Adult");
+        return LocalizationService.GetString("PersonaCreation_Instructions_Senior");
+    }
+}

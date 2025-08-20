@@ -1,0 +1,305 @@
+@using SpinnerNet.App.Services.WebLLM
+@using SpinnerNet.Shared.Localization
+@inject IWebLLMService WebLLMService
+@inject ILocalizationService LocalizationService
+@implements IDisposable
+
+<div class="webllm-status-container">
+    @if (WebLLMService.IsInitializing)
+    {
+        <MudCard Class="webllm-status-card">
+            <MudCardContent>
+                <div class="webllm-status-header">
+                    <MudIcon Icon="@Icons.Material.Filled.Psychology" Color="Color.Primary" />
+                    <MudText Typo="Typo.h6">@LocalizationService.GetString("WebLLM_Loading")</MudText>
+                </div>
+                
+                <MudProgressLinear 
+                    Color="Color.Primary" 
+                    Value="@WebLLMService.InitializationProgress" 
+                    Class="webllm-progress-bar" />
+                
+                <MudText Typo="Typo.body2" Class="webllm-status-text">
+                    @CurrentStatus (@WebLLMService.InitializationProgress%)
+                </MudText>
+                
+                @if (_estimatedTimeRemaining.HasValue)
+                {
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                        @LocalizationService.GetString("WebLLM_EstimatedTime"): @FormatTimeRemaining(_estimatedTimeRemaining.Value)
+                    </MudText>
+                }
+            </MudCardContent>
+        </MudCard>
+    }
+    else if (WebLLMService.IsInitialized)
+    {
+        <MudAlert Severity="Severity.Success" Dense="true" Class="webllm-ready-alert">
+            <div class="webllm-ready-content">
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" />
+                <MudText Typo="Typo.body2">@LocalizationService.GetString("WebLLM_Ready")</MudText>
+                @if (_performanceMetrics != null && _performanceMetrics.InitializationTime.HasValue)
+                {
+                    <MudText Typo="Typo.caption">
+                        (@LocalizationService.GetString("WebLLM_LoadedIn"): @_performanceMetrics.InitializationTime.Value ms)
+                    </MudText>
+                }
+            </div>
+        </MudAlert>
+    }
+    else if (!string.IsNullOrEmpty(WebLLMService.LastError))
+    {
+        <MudAlert Severity="Severity.Error" Dense="true" Class="webllm-error-alert">
+            <div class="webllm-error-content">
+                <MudText Typo="Typo.body2">@LocalizationService.GetString("WebLLM_Error")</MudText>
+                <MudText Typo="Typo.caption">@WebLLMService.LastError</MudText>
+                <MudButton 
+                    StartIcon="@Icons.Material.Filled.Refresh" 
+                    Size="Size.Small" 
+                    Color="Color.Error" 
+                    Variant="Variant.Text"
+                    OnClick="RetryInitialization">
+                    @LocalizationService.GetString("WebLLM_Retry")
+                </MudButton>
+            </div>
+        </MudAlert>
+    }
+    
+    @if (ShowPerformanceInfo && _performanceMetrics != null)
+    {
+        <MudCollapse Expanded="_showDetails">
+            <MudCard Class="webllm-performance-card">
+                <MudCardContent>
+                    <MudText Typo="Typo.subtitle2">@LocalizationService.GetString("WebLLM_Performance")</MudText>
+                    <MudSimpleTable Dense="true" Hover="true">
+                        <tbody>
+                            @if (_performanceMetrics.InitializationTime.HasValue)
+                            {
+                                <tr>
+                                    <td>@LocalizationService.GetString("WebLLM_InitTime")</td>
+                                    <td>@_performanceMetrics.InitializationTime.Value ms</td>
+                                </tr>
+                            }
+                            @if (_performanceMetrics.AverageInferenceTime.HasValue)
+                            {
+                                <tr>
+                                    <td>@LocalizationService.GetString("WebLLM_AvgInference")</td>
+                                    <td>@_performanceMetrics.AverageInferenceTime.Value ms</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>@LocalizationService.GetString("WebLLM_TotalInferences")</td>
+                                <td>@_performanceMetrics.TotalInferences</td>
+                            </tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudCardContent>
+            </MudCard>
+        </MudCollapse>
+        
+        <MudButton 
+            StartIcon="@(_showDetails ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)"
+            Size="Size.Small" 
+            Variant="Variant.Text"
+            OnClick="ToggleDetails">
+            @LocalizationService.GetString(_showDetails ? "WebLLM_HideDetails" : "WebLLM_ShowDetails")
+        </MudButton>
+    }
+</div>
+
+@code {
+    [Parameter] public bool ShowPerformanceInfo { get; set; } = false;
+    [Parameter] public string? SessionId { get; set; }
+    [Parameter] public EventCallback<bool> OnInitializationComplete { get; set; }
+
+    private string CurrentStatus => WebLLMService.CurrentStatus;
+    private WebLLMPerformanceMetrics? _performanceMetrics;
+    private bool _showDetails = false;
+    private DateTime? _initStartTime;
+    private int? _estimatedTimeRemaining;
+    
+    // Performance tracking
+    private readonly List<int> _progressTimestamps = new();
+    private readonly Timer _performanceUpdateTimer;
+
+    public WebLLMStatus()
+    {
+        _performanceUpdateTimer = new Timer(UpdatePerformanceMetrics, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(5));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Subscribe to WebLLM events
+        WebLLMService.StatusUpdated += OnStatusUpdated;
+        WebLLMService.ProgressUpdated += OnProgressUpdated;
+        WebLLMService.ErrorOccurred += OnErrorOccurred;
+        WebLLMService.InferenceCompleted += OnInferenceCompleted;
+
+        // Update initial metrics
+        await UpdatePerformanceMetricsAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Auto-initialize if not already done and SessionId is provided
+        if (!WebLLMService.IsInitialized && 
+            !WebLLMService.IsInitializing && 
+            !string.IsNullOrEmpty(SessionId))
+        {
+            await InitializeWebLLM();
+        }
+    }
+
+    private async Task InitializeWebLLM()
+    {
+        if (string.IsNullOrEmpty(SessionId))
+        {
+            return;
+        }
+
+        try
+        {
+            _initStartTime = DateTime.UtcNow;
+            var success = await WebLLMService.InitializeAsync(SessionId);
+            
+            if (success)
+            {
+                await OnInitializationComplete.InvokeAsync(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Error handling is done through the error event
+            Console.WriteLine($"WebLLM initialization failed: {ex.Message}");
+        }
+    }
+
+    private async Task RetryInitialization()
+    {
+        await InitializeWebLLM();
+    }
+
+    private void OnStatusUpdated(string status)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnProgressUpdated(WebLLMProgress progress)
+    {
+        // Track progress for time estimation
+        if (_initStartTime.HasValue)
+        {
+            var elapsed = (DateTime.UtcNow - _initStartTime.Value).TotalSeconds;
+            if (progress.Progress > 0 && progress.Progress < 1)
+            {
+                var estimatedTotal = elapsed / progress.Progress;
+                _estimatedTimeRemaining = (int)(estimatedTotal - elapsed);
+            }
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnErrorOccurred(string error)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnInferenceCompleted(int inferenceTime)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ToggleDetails()
+    {
+        _showDetails = !_showDetails;
+    }
+
+    private async void UpdatePerformanceMetrics(object? state)
+    {
+        await UpdatePerformanceMetricsAsync();
+    }
+
+    private async Task UpdatePerformanceMetricsAsync()
+    {
+        try
+        {
+            _performanceMetrics = await WebLLMService.GetPerformanceMetricsAsync();
+            InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to update performance metrics: {ex.Message}");
+        }
+    }
+
+    private string FormatTimeRemaining(int seconds)
+    {
+        if (seconds <= 0) return LocalizationService.GetString("WebLLM_AlmostDone");
+        if (seconds < 60) return $"{seconds}s";
+        if (seconds < 3600) return $"{seconds / 60}m {seconds % 60}s";
+        return $"{seconds / 3600}h {(seconds % 3600) / 60}m";
+    }
+
+    public void Dispose()
+    {
+        _performanceUpdateTimer?.Dispose();
+        
+        // Unsubscribe from events
+        WebLLMService.StatusUpdated -= OnStatusUpdated;
+        WebLLMService.ProgressUpdated -= OnProgressUpdated;
+        WebLLMService.ErrorOccurred -= OnErrorOccurred;
+        WebLLMService.InferenceCompleted -= OnInferenceCompleted;
+    }
+}
+
+<style>
+    .webllm-status-container {
+        margin: 1rem 0;
+    }
+
+    .webllm-status-card {
+        margin-bottom: 1rem;
+    }
+
+    .webllm-status-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .webllm-progress-bar {
+        margin: 1rem 0;
+    }
+
+    .webllm-status-text {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .webllm-ready-alert,
+    .webllm-error-alert {
+        margin-bottom: 1rem;
+    }
+
+    .webllm-ready-content,
+    .webllm-error-content {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .webllm-performance-card {
+        margin-top: 0.5rem;
+    }
+
+    @@media (max-width: 600px) {
+        .webllm-ready-content,
+        .webllm-error-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>

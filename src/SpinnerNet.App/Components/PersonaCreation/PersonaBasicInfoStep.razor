@@ -1,0 +1,175 @@
+@using SpinnerNet.Shared.Localization
+@inject ILocalizationService LocalizationService
+@inject ILogger<PersonaBasicInfoStep> Logger
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h6" Class="mb-3">
+            @LocalizationService.GetString("PersonaCreation_BasicInfo_Header")
+        </MudText>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudTextField @bind-Value="_displayName"
+                     Label="@LocalizationService.GetString("PersonaCreation_DisplayName")"
+                     Placeholder="@LocalizationService.GetString("PersonaCreation_DisplayNamePlaceholder")"
+                     Required="true"
+                     RequiredError="@LocalizationService.GetString("PersonaCreation_DisplayNameRequired")"
+                     MaxLength="50"
+                     Immediate="true"
+                     OnBlur="ValidateAndNotify"
+                     @attributes="@(new Dictionary<string, object> { { "id", "display-name-input" } })" />
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudNumericField @bind-Value="_age"
+                        Label="@LocalizationService.GetString("PersonaCreation_Age")"
+                        Min="5"
+                        Max="120"
+                        Required="true"
+                        RequiredError="@LocalizationService.GetString("PersonaCreation_AgeRequired")"
+                        Immediate="true"
+                        OnBlur="OnAgeChangedInternal"
+                        @attributes="@(new Dictionary<string, object> { { "id", "age-input" } })" />
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudTextField @bind-Value="_description"
+                     Label="@LocalizationService.GetString("PersonaCreation_PersonaDescription")"
+                     Placeholder="@LocalizationService.GetString("PersonaCreation_PersonaDescriptionPlaceholder")"
+                     Lines="3"
+                     MaxLength="500"
+                     Immediate="true"
+                     OnBlur="ValidateAndNotify"
+                     @attributes="@(new Dictionary<string, object> { { "id", "description-input" } })" />
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudSelect @bind-Value="_primaryUse"
+                  Label="@LocalizationService.GetString("PersonaCreation_PrimaryUse")"
+                  Required="true"
+                  RequiredError="@LocalizationService.GetString("PersonaCreation_PrimaryUseRequired")"
+                  OnClose="ValidateAndNotify"
+                  @attributes="@(new Dictionary<string, object> { { "id", "primary-use-select" } })">
+            <MudSelectItem Value="@("companion")">@LocalizationService.GetString("PersonaCreation_UseCompanion")</MudSelectItem>
+            <MudSelectItem Value="@("assistant")">@LocalizationService.GetString("PersonaCreation_UseAssistant")</MudSelectItem>
+            <MudSelectItem Value="@("creative")">@LocalizationService.GetString("PersonaCreation_UseCreative")</MudSelectItem>
+            <MudSelectItem Value="@("educational")">@LocalizationService.GetString("PersonaCreation_UseEducational")</MudSelectItem>
+            <MudSelectItem Value="@("therapeutic")">@LocalizationService.GetString("PersonaCreation_UseTherapeutic")</MudSelectItem>
+        </MudSelect>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudSelect @bind-Value="_communicationStyle"
+                  Label="@LocalizationService.GetString("PersonaCreation_CommunicationStyle")"
+                  Required="true"
+                  RequiredError="@LocalizationService.GetString("PersonaCreation_CommunicationStyleRequired")"
+                  OnClose="ValidateAndNotify"
+                  @attributes="@(new Dictionary<string, object> { { "id", "communication-style-select" } })">
+            <MudSelectItem Value="@("formal")">@LocalizationService.GetString("PersonaCreation_StyleFormal")</MudSelectItem>
+            <MudSelectItem Value="@("casual")">@LocalizationService.GetString("PersonaCreation_StyleCasual")</MudSelectItem>
+            <MudSelectItem Value="@("friendly")">@LocalizationService.GetString("PersonaCreation_StyleFriendly")</MudSelectItem>
+            <MudSelectItem Value="@("professional")">@LocalizationService.GetString("PersonaCreation_StyleProfessional")</MudSelectItem>
+            <MudSelectItem Value="@("playful")">@LocalizationService.GetString("PersonaCreation_StylePlayful")</MudSelectItem>
+        </MudSelect>
+    </MudItem>
+
+    @if (!string.IsNullOrEmpty(_validationMessage))
+    {
+        <MudItem xs="12">
+            <MudAlert Severity="@_validationSeverity" Class="mt-2">
+                @_validationMessage
+            </MudAlert>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Parameter] public int UserAge { get; set; } = 18;
+    [Parameter] public EventCallback<int> OnAgeChanged { get; set; }
+    [Parameter] public EventCallback<bool> OnValidationChanged { get; set; }
+
+    private string _displayName = "";
+    private int _age = 18;
+    private string _description = "";
+    private string _primaryUse = "";
+    private string _communicationStyle = "";
+    
+    private string _validationMessage = "";
+    private Severity _validationSeverity = Severity.Info;
+
+    protected override void OnInitialized()
+    {
+        _age = UserAge;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (_age != UserAge)
+        {
+            _age = UserAge;
+        }
+    }
+
+    public bool IsValid()
+    {
+        return !string.IsNullOrWhiteSpace(_displayName) &&
+               _age >= 5 && _age <= 120 &&
+               !string.IsNullOrWhiteSpace(_primaryUse) &&
+               !string.IsNullOrWhiteSpace(_communicationStyle);
+    }
+
+    public async Task<Dictionary<string, object>> GetBasicInfoAsync()
+    {
+        return new Dictionary<string, object>
+        {
+            ["displayName"] = _displayName,
+            ["age"] = _age,
+            ["description"] = _description,
+            ["primaryUse"] = _primaryUse,
+            ["communicationStyle"] = _communicationStyle,
+            ["createdAt"] = DateTime.UtcNow
+        };
+    }
+
+    private async Task OnAgeChangedInternal()
+    {
+        if (_age != UserAge && _age >= 5 && _age <= 120)
+        {
+            await OnAgeChanged.InvokeAsync(_age);
+            Logger.LogInformation("User age changed to {Age}", _age);
+        }
+        await ValidateAndNotify();
+    }
+
+    private async Task ValidateAndNotify()
+    {
+        var isValid = IsValid();
+        
+        if (isValid)
+        {
+            _validationMessage = LocalizationService.GetString("PersonaCreation_BasicInfoValid");
+            _validationSeverity = Severity.Success;
+        }
+        else
+        {
+            var missingFields = new List<string>();
+            if (string.IsNullOrWhiteSpace(_displayName))
+                missingFields.Add(LocalizationService.GetString("PersonaCreation_DisplayName"));
+            if (_age < 5 || _age > 120)
+                missingFields.Add(LocalizationService.GetString("PersonaCreation_Age"));
+            if (string.IsNullOrWhiteSpace(_primaryUse))
+                missingFields.Add(LocalizationService.GetString("PersonaCreation_PrimaryUse"));
+            if (string.IsNullOrWhiteSpace(_communicationStyle))
+                missingFields.Add(LocalizationService.GetString("PersonaCreation_CommunicationStyle"));
+
+            _validationMessage = string.Format(
+                LocalizationService.GetString("PersonaCreation_MissingFields"),
+                string.Join(", ", missingFields));
+            _validationSeverity = Severity.Warning;
+        }
+
+        await OnValidationChanged.InvokeAsync(isValid);
+        StateHasChanged();
+    }
+}

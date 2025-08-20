@@ -1,0 +1,136 @@
+@using SpinnerNet.App.Services
+@inject IAgeAdaptiveThemeService ThemeService
+@inject ILogger<AgeAdaptiveContainer> Logger
+
+<div class="age-adaptive-container @GetAgeClass()" style="@GetAgeStyles()">
+    @ChildContent
+</div>
+
+<style>
+    .age-adaptive-container {
+        font-size: calc(var(--font-scale, 1) * 1rem);
+        line-height: calc(var(--font-scale, 1) * 1.5);
+    }
+
+    .age-adaptive-container .mud-button {
+        font-size: calc(var(--font-scale, 1) * 0.875rem);
+        padding: calc(var(--spacing-scale, 1) * 0.375rem) calc(var(--spacing-scale, 1) * 0.75rem);
+        min-height: calc(var(--button-scale, 1) * 2.25rem);
+        border-radius: var(--border-radius, 6px);
+    }
+
+    .age-adaptive-container .mud-typography-h1 {
+        font-size: calc(var(--font-scale, 1) * 2rem);
+        font-weight: 600;
+    }
+
+    .age-adaptive-container .mud-typography-h2 {
+        font-size: calc(var(--font-scale, 1) * 1.5rem);
+        font-weight: 500;
+    }
+
+    .age-adaptive-container .mud-typography-h3 {
+        font-size: calc(var(--font-scale, 1) * 1.25rem);
+        font-weight: 500;
+    }
+
+    .age-adaptive-container .mud-input {
+        font-size: calc(var(--font-scale, 1) * 1rem);
+        padding: calc(var(--spacing-scale, 1) * 0.5rem);
+    }
+
+    .age-adaptive-container .mud-card {
+        border-radius: var(--border-radius, 6px);
+        padding: calc(var(--spacing-scale, 1) * 1rem);
+    }
+
+    .age-child {
+        --primary-color: #FF6B6B;
+        --secondary-color: #4ECDC4;
+        --background-color: #FFF9E6;
+    }
+
+    .age-teen {
+        --primary-color: #667eea;
+        --secondary-color: #f093fb;
+        --background-color: #f8f9fa;
+    }
+
+    .age-adult {
+        --primary-color: #2563eb;
+        --secondary-color: #7c3aed;
+        --background-color: #ffffff;
+    }
+
+    .age-senior {
+        --primary-color: #0066cc;
+        --secondary-color: #059669;
+        --background-color: #ffffff;
+        --text-color: #000000;
+    }
+
+    .age-senior .mud-typography {
+        color: var(--text-color, #000000);
+        font-weight: 500;
+    }
+
+    .age-senior .mud-button {
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .age-adaptive-container .mud-button,
+    .age-adaptive-container .mud-icon-button {
+        min-width: calc(var(--button-scale, 1) * 44px);
+        min-height: calc(var(--button-scale, 1) * 44px);
+    }
+</style>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public int Age { get; set; } = 18;
+    [Parameter] public bool ApplyTheme { get; set; } = true;
+    [Parameter] public string AdditionalClasses { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ApplyTheme)
+        {
+            try
+            {
+                var theme = ThemeService.GetThemeForAge(Age);
+                Logger.LogDebug("Applied age-adaptive theme for age {Age}", Age);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to apply age-adaptive theme for age {Age}", Age);
+            }
+        }
+    }
+
+    private string GetAgeClass()
+    {
+        string ageClass;
+        if (Age < 13) 
+            ageClass = "age-child";
+        else if (Age < 18) 
+            ageClass = "age-teen";
+        else if (Age < 65) 
+            ageClass = "age-adult";
+        else 
+            ageClass = "age-senior";
+        
+        return $"age-adaptive {ageClass} {AdditionalClasses}".Trim();
+    }
+
+    private string GetAgeStyles()
+    {
+        if (Age < 13) 
+            return "--font-scale: 1.3; --spacing-scale: 1.4; --button-scale: 1.2; --border-radius: 12px;";
+        if (Age < 18) 
+            return "--font-scale: 1.1; --spacing-scale: 1.2; --button-scale: 1.1; --border-radius: 8px;";
+        if (Age < 65) 
+            return "--font-scale: 1.0; --spacing-scale: 1.0; --button-scale: 1.0; --border-radius: 6px;";
+        return "--font-scale: 1.4; --spacing-scale: 1.5; --button-scale: 1.3; --border-radius: 4px;";
+    }
+}
