@@ -1,0 +1,12 @@
+@model SpinnerNet.Web.Models.BlockHeaderMarqueeDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block mono"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@d.Bg;">
+  <div class="inset marquee">
+    <h1 class="h1 marquee__track">@Model.Text @Model.Text @Model.Text</h1>
+  </div>
+</section>

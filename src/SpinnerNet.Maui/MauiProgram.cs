@@ -36,7 +36,8 @@ public static class MauiProgram
 		builder.Services.AddMudServices();
 		
 		// Configure local-first SQLite database for data sovereignty
-		ConfigureLocalDatabase(builder.Services);
+		// COMMENTED OUT FOR SPRINT 1 - Using Cosmos DB only, Entity Framework for future sprints
+		// ConfigureLocalDatabase(builder.Services);
 		
 		// Configure SpinnerNet Core services (MediatR, CQRS, Validation)
 		ConfigureSpinnerNetServices(builder.Services, builder.Configuration);
@@ -53,6 +54,8 @@ public static class MauiProgram
 		return builder.Build();
 	}
 	
+	// COMMENTED OUT FOR SPRINT 1 - Using Cosmos DB only, Entity Framework for future sprints
+	/*
 	/// <summary>
 	/// Configure local SQLite database for offline-first data sovereignty
 	/// </summary>
@@ -67,6 +70,7 @@ public static class MauiProgram
 		// Ensure database is created on app startup
 		services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
 	}
+	*/
 	
 	/// <summary>
 	/// Configure SpinnerNet core services following established patterns
@@ -92,6 +96,8 @@ public static class MauiProgram
 	}
 }
 
+// COMMENTED OUT FOR SPRINT 1 - Using Cosmos DB only, Entity Framework for future sprints
+/*
 /// <summary>
 /// Database initializer for ensuring local SQLite database is ready
 /// </summary>
@@ -125,3 +131,4 @@ public class DatabaseInitializer : IDatabaseInitializer
 		}
 	}
 }
+*/

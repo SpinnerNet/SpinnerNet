@@ -7,9 +7,38 @@
 - **SpinnerNet.App**: Blazor hybrid with MudBlazor (registered users only)
 
 ## 🔐 Azure (rg-spinnernet-proto)
-- Web: spinnernet-3lauxg.azurewebsites.net  
-- App: spinnernet-app-3lauxg.azurewebsites.net
-- KeyVault: kv-spinnernet-3lauxg
+
+### ⚠️ DEVELOPMENT PAUSED - SERVICES STOPPED (2025-09-01)
+**To minimize costs, the following services have been stopped:**
+- ✅ **Web App**: spinnernet-3lauxg.azurewebsites.net - **STOPPED**
+- ✅ **App Service**: spinnernet-app-3lauxg.azurewebsites.net - **STOPPED**
+- ⚠️ **App Service Plan**: asp-spinnernet-3lauxg - **Still on B1 tier (~$50/month)**
+  - Cannot downgrade to Free tier due to x64 configuration
+  - Consider deleting apps and recreating on Free tier if needed
+
+**Low/No-cost services still running:**
+- ✅ **Cosmos DB**: cosmos-spinnernet-3lauxg - **Serverless (pay-per-request, no idle costs)**
+- ✅ **SignalR**: signalr-spinnernet-3lauxg - **Free tier (F1)**
+- ✅ **KeyVault**: kv-spinnernet-3lauxg - **Minimal cost (~$0.03/month)**
+- ✅ **Application Insights**: ai-spinnernet-3lauxg, spinnernet-app-insights - **Low cost**
+
+### 🔄 To Resume Development
+```bash
+# Start web apps
+az webapp start --name spinnernet-3lauxg --resource-group rg-spinnernet-proto
+az webapp start --name spinnernet-app-3lauxg --resource-group rg-spinnernet-proto
+```
+
+### 💰 For Complete Cost Elimination
+```bash
+# Option 1: Delete entire resource group (removes everything)
+az group delete --name rg-spinnernet-proto --yes --no-wait
+
+# Option 2: Delete just the App Service Plan after removing apps
+az webapp delete --name spinnernet-3lauxg --resource-group rg-spinnernet-proto
+az webapp delete --name spinnernet-app-3lauxg --resource-group rg-spinnernet-proto  
+az appservice plan delete --name asp-spinnernet-3lauxg --resource-group rg-spinnernet-proto --yes
+```
 
 ### 🔄 Project Awareness & Context & Research
 - **Always read `PLANNING.md`** at the start of a new conversation to understand the project's architecture, goals, style, and constraints.

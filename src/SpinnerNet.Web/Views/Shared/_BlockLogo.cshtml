@@ -1,0 +1,12 @@
+@model SpinnerNet.Web.Models.BlockLogoDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@d.Bg;">
+  <div class="inset">
+    <img class="heart" src="@Model.SvgUrl" alt="Logo Herz" />
+  </div>
+</section>

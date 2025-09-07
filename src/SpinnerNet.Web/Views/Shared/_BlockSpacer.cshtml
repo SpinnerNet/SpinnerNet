@@ -1,0 +1,9 @@
+@model SpinnerNet.Web.Models.BlockSpacerDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block block-spacer"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@(d.Bg ?? "transparent");">
+</section>

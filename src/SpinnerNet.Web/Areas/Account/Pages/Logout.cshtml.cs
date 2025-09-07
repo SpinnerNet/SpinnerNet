@@ -19,7 +19,7 @@ public class LogoutModel : PageModel
         {
             var username = User.Identity.Name ?? "Unknown";
             await HttpContext.SignOutAsync("Cookies");
-            _logger.LogInformation("User {UserName} signed out", userName);
+            _logger.LogInformation("User {UserName} signed out", username);
         }
 
         return Page();
@@ -31,7 +31,7 @@ public class LogoutModel : PageModel
         {
             var username = User.Identity.Name ?? "Unknown";
             await HttpContext.SignOutAsync("Cookies");
-            _logger.LogInformation("User {UserName} signed out", userName);
+            _logger.LogInformation("User {UserName} signed out", username);
         }
 
         return RedirectToPage("/");

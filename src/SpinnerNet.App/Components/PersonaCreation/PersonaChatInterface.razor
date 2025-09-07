@@ -1,0 +1,262 @@
+@page "/persona-chat"
+@using Microsoft.AspNetCore.SignalR.Client
+@using SpinnerNet.Shared.Localization
+@inject NavigationManager Navigation
+@inject ILocalizationService Localization
+@inject ILogger<PersonaChatInterface> Logger
+@implements IAsyncDisposable
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+    <MudPaper Class="pa-4" Style="height: 600px; display: flex; flex-direction: column;">
+        <MudGrid AlignItems="Center" Class="mb-3">
+            <MudItem xs="8">
+                <MudText Typo="Typo.h5">
+                    <MudIcon Icon="@Icons.Material.Filled.Psychology" Class="mr-2"/>
+                    @Localization.GetString("PersonaChat_Title")
+                </MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    @Localization.GetString("PersonaChat_Subtitle")
+                </MudText>
+            </MudItem>
+            <MudItem xs="4" Class="text-right">
+                <MudProgressLinear Value="@_personaProgress" Color="Color.Primary" Rounded="true" Size="Size.Large">
+                    <MudText Typo="Typo.caption">@_personaProgress%</MudText>
+                </MudProgressLinear>
+            </MudItem>
+        </MudGrid>
+
+        <MudPaper Class="flex-grow-1 overflow-auto pa-3" Outlined="true" Style="background-color: var(--mud-palette-background-grey);">
+            @foreach (var message in _messages)
+            {
+                <div class="@GetMessageAlignment(message)">
+                    <MudChip T="string" Color="@GetMessageColor(message)" Class="ma-2" Style="max-width: 70%;">
+                        @if (message.IsBot)
+                        {
+                            <MudAvatar Size="Size.Small" Class="mr-2">
+                                <MudIcon Icon="@Icons.Material.Filled.SmartToy"/>
+                            </MudAvatar>
+                        }
+                        <MudText Style="white-space: pre-wrap;">@message.Content</MudText>
+                    </MudChip>
+                </div>
+            }
+            @if (_isTyping)
+            {
+                <div class="d-flex justify-start">
+                    <MudChip T="string" Color="Color.Default" Class="ma-2">
+                        <MudAvatar Size="Size.Small" Class="mr-2">
+                            <MudIcon Icon="@Icons.Material.Filled.SmartToy"/>
+                        </MudAvatar>
+                        <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                    </MudChip>
+                </div>
+            }
+            <div @ref="_messagesEnd"></div>
+        </MudPaper>
+
+        <MudGrid AlignItems="Center" Class="mt-3">
+            <MudItem xs="10">
+                <MudTextField @bind-Value="_currentMessage" 
+                    Placeholder="@Localization.GetString("PersonaChat_InputPlaceholder")"
+                    Variant="Variant.Outlined"
+                    @onkeyup="@(async (KeyboardEventArgs e) => { if (e.Key == "Enter" && !e.ShiftKey) await SendMessage(); })"
+                    Disabled="@(_isProcessing || !_isConnected)"
+                    Lines="1"
+                    MaxLines="3"/>
+            </MudItem>
+            <MudItem xs="2">
+                <MudButton Variant="Variant.Filled" 
+                    Color="Color.Primary" 
+                    @onclick="SendMessage"
+                    Disabled="@(_isProcessing || string.IsNullOrWhiteSpace(_currentMessage) || !_isConnected)"
+                    FullWidth="true">
+                    @if (_isProcessing)
+                    {
+                        <MudProgressCircular Size="Size.Small" Indeterminate="true"/>
+                    }
+                    else
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.Send"/>
+                    }
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+
+        @if (!_isConnected)
+        {
+            <MudAlert Severity="Severity.Warning" Class="mt-2">
+                @Localization.GetString("PersonaChat_Connecting")
+            </MudAlert>
+        }
+    </MudPaper>
+
+    @if (_personaComplete)
+    {
+        <MudDialog @bind-IsVisible="_showCompletionDialog">
+            <DialogContent>
+                <MudText Typo="Typo.h6">@Localization.GetString("PersonaChat_Complete_Title")</MudText>
+                <MudText Class="mt-2">@Localization.GetString("PersonaChat_Complete_Message")</MudText>
+            </DialogContent>
+            <DialogActions>
+                <MudButton Color="Color.Primary" OnClick="NavigateToDashboard">
+                    @Localization.GetString("PersonaChat_Complete_Continue")
+                </MudButton>
+            </DialogActions>
+        </MudDialog>
+    }
+</MudContainer>
+
+@code {
+    private HubConnection? _hubConnection;
+    private List<ChatMessage> _messages = new();
+    private string _currentMessage = string.Empty;
+    private bool _isProcessing = false;
+    private bool _isTyping = false;
+    private bool _isConnected = false;
+    private int _personaProgress = 0;
+    private ElementReference _messagesEnd;
+    private bool _personaComplete = false;
+    private bool _showCompletionDialog = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _hubConnection = new HubConnectionBuilder()
+                .WithUrl(Navigation.ToAbsoluteUri("/persona-chat-hub"), options =>
+                {
+                    // Ensure cookies are sent with the request for authentication
+                    options.UseDefaultCredentials = true;
+                })
+                .WithAutomaticReconnect()
+                .Build();
+
+            _hubConnection.On<string, int>("ReceiveMessage", async (message, progress) =>
+            {
+                _messages.Add(new ChatMessage { Content = message, IsBot = true, Timestamp = DateTime.Now });
+                _personaProgress = progress;
+                _isTyping = false;
+                await InvokeAsync(StateHasChanged);
+                await ScrollToBottom();
+            });
+
+            _hubConnection.On<string>("ReceiveError", async (error) =>
+            {
+                _messages.Add(new ChatMessage { Content = error, IsBot = true, IsError = true, Timestamp = DateTime.Now });
+                _isTyping = false;
+                await InvokeAsync(StateHasChanged);
+            });
+
+            _hubConnection.On<string>("PersonaComplete", async (message) =>
+            {
+                _personaComplete = true;
+                _showCompletionDialog = true;
+                await InvokeAsync(StateHasChanged);
+            });
+
+            _hubConnection.Reconnecting += (exception) =>
+            {
+                _isConnected = false;
+                return InvokeAsync(StateHasChanged);
+            };
+
+            _hubConnection.Reconnected += (connectionId) =>
+            {
+                _isConnected = true;
+                return InvokeAsync(StateHasChanged);
+            };
+
+            await _hubConnection.StartAsync();
+            _isConnected = true;
+
+            await _hubConnection.SendAsync("StartPersonaDiscovery");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to connect to chat hub");
+            _messages.Add(new ChatMessage 
+            { 
+                Content = Localization.GetString("PersonaChat_ConnectionError"), 
+                IsBot = true, 
+                IsError = true,
+                Timestamp = DateTime.Now 
+            });
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(_currentMessage) || _isProcessing || !_isConnected)
+            return;
+
+        _isProcessing = true;
+        _isTyping = true;
+        
+        _messages.Add(new ChatMessage { Content = _currentMessage, IsBot = false, Timestamp = DateTime.Now });
+        
+        var messageToSend = _currentMessage;
+        _currentMessage = string.Empty;
+
+        try
+        {
+            await _hubConnection!.SendAsync("SendMessage", messageToSend);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to send message");
+            _messages.Add(new ChatMessage 
+            { 
+                Content = Localization.GetString("PersonaChat_SendError"), 
+                IsBot = true, 
+                IsError = true,
+                Timestamp = DateTime.Now 
+            });
+            _isTyping = false;
+        }
+        finally
+        {
+            _isProcessing = false;
+            await InvokeAsync(StateHasChanged);
+            await ScrollToBottom();
+        }
+    }
+
+    private async Task ScrollToBottom()
+    {
+        await Task.Delay(50);
+        await _messagesEnd.FocusAsync();
+    }
+
+    private string GetMessageAlignment(ChatMessage message)
+    {
+        return message.IsBot ? "d-flex justify-start" : "d-flex justify-end";
+    }
+
+    private Color GetMessageColor(ChatMessage message)
+    {
+        if (message.IsError)
+            return Color.Error;
+        return message.IsBot ? Color.Default : Color.Primary;
+    }
+
+    private void NavigateToDashboard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.DisposeAsync();
+        }
+    }
+
+    private class ChatMessage
+    {
+        public string Content { get; set; } = string.Empty;
+        public bool IsBot { get; set; }
+        public bool IsError { get; set; }
+        public DateTime Timestamp { get; set; }
+    }
+}

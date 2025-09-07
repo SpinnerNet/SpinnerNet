@@ -1,8 +1,10 @@
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using SpinnerNet.App.Components;
+using SpinnerNet.App.Hubs;
 using MudBlazor.Services;
 using Microsoft.AspNetCore.Antiforgery;
+using SpinnerNet.Core.Services.AI;
 // using Microsoft.AspNetCore.ResponseCompression; // Temporarily disabled
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -14,7 +16,7 @@ using Microsoft.Extensions.Logging.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure comprehensive logging with OpenTelemetry Azure Monitor
+// Configure comprehensive logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(options =>
 {
@@ -209,9 +211,44 @@ builder.Services.AddVerticalSliceServices();
 // Add Cosmos DB services
 builder.Services.AddCosmosDb(builder.Configuration);
 
+// Add AI and Chat services
+builder.Services.AddScoped<PersonaChatService>();
+
+// Add SignalR for real-time chat
+builder.Services.AddSignalR();
+
+// Add CORS for SignalR
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("https://spinnernet-app-3lauxg.azurewebsites.net")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
+
 // Configure Azure AD settings dynamically
-builder.Configuration["AzureAd:ClientId"] = azureAdClientId;
-builder.Configuration["AzureAd:ClientSecret"] = azureAdClientSecret;
+if (!string.IsNullOrEmpty(azureAdClientId))
+{
+    builder.Configuration["AzureAd:ClientId"] = azureAdClientId;
+}
+
+// For local development, use environment variable if Key Vault secret not available
+if (!string.IsNullOrEmpty(azureAdClientSecret))
+{
+    builder.Configuration["AzureAd:ClientSecret"] = azureAdClientSecret;
+}
+else if (builder.Environment.IsDevelopment())
+{
+    var envSecret = Environment.GetEnvironmentVariable("AZURE_AD_CLIENT_SECRET");
+    if (!string.IsNullOrEmpty(envSecret))
+    {
+        builder.Configuration["AzureAd:ClientSecret"] = envSecret;
+        Console.WriteLine("Using Azure AD client secret from environment variable");
+    }
+}
 
 // Add authentication services
 builder.Services.AddAuthentication(options =>
@@ -251,8 +288,6 @@ else
     app.UseDeveloperExceptionPage();
 }
 
-// Always enable developer exception page for troubleshooting
-app.UseDeveloperExceptionPage();
 
 // Add response compression before static files (Microsoft recommendation)
 // Temporarily disabled due to Azure startup issues
@@ -262,11 +297,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-// Only use CORS in development
-if (app.Environment.IsDevelopment())
-{
-    app.UseCors();
-}
+// Use CORS for SignalR support
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -289,6 +321,9 @@ app.MapStaticAssets();
 // Map Blazor components - Blazor Server handles its own SignalR hub automatically
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+// Map SignalR hub for persona chat
+app.MapHub<PersonaChatHub>("/persona-chat-hub");
     
 // Note: No need to manually map /_blazor hub - Blazor Server does this automatically
 

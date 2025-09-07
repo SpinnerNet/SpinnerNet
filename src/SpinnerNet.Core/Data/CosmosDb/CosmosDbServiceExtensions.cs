@@ -57,6 +57,8 @@ public static class CosmosDbServiceExtensions
         // Register repositories
         services.AddScoped<ICosmosRepository<UserDocument>, CosmosRepository<UserDocument>>();
         services.AddScoped<ICosmosRepository<PersonaDocument>, CosmosRepository<PersonaDocument>>();
+        services.AddScoped<ICosmosRepository<ConversationDocument>, CosmosRepository<ConversationDocument>>();
+        services.AddScoped<ICosmosRepository<InterviewSessionDocument>, CosmosRepository<InterviewSessionDocument>>();
         // COMMENTED OUT FOR SPRINT 1 - BUDDY FEATURES ARE FUTURE SPRINT
         // services.AddScoped<ICosmosRepository<BuddyDocument>, CosmosRepository<BuddyDocument>>();
         services.AddScoped<ICosmosRepository<EmailThreadDocument>, CosmosRepository<EmailThreadDocument>>();
@@ -109,6 +111,20 @@ public static class CosmosDbServiceExtensions
                 PartitionKeyPath = "/userId",
                 DefaultTtl = null,
                 IndexingPolicy = CreatePersonasIndexingPolicy()
+            },
+            new ContainerDefinition
+            {
+                Name = "Conversations",
+                PartitionKeyPath = "/UserId",
+                DefaultTtl = null,
+                IndexingPolicy = CreateConversationsIndexingPolicy()
+            },
+            new ContainerDefinition
+            {
+                Name = "InterviewSessions",
+                PartitionKeyPath = "/userId",
+                DefaultTtl = null,
+                IndexingPolicy = CreateInterviewSessionsIndexingPolicy()
             },
             new ContainerDefinition
             {
@@ -227,6 +243,48 @@ public static class CosmosDbServiceExtensions
             ExcludedPaths =
             {
                 new ExcludedPath { Path = "/data/*" }
+            }
+        };
+    }
+
+    private static IndexingPolicy CreateConversationsIndexingPolicy()
+    {
+        return new IndexingPolicy
+        {
+            IndexingMode = IndexingMode.Consistent,
+            Automatic = true,
+            IncludedPaths =
+            {
+                new IncludedPath { Path = "/UserId/?" },
+                new IncludedPath { Path = "/purpose/?" },
+                new IncludedPath { Path = "/isActive/?" },
+                new IncludedPath { Path = "/startedAt/?" },
+                new IncludedPath { Path = "/lastMessageAt/?" }
+            },
+            ExcludedPaths =
+            {
+                new ExcludedPath { Path = "/messages/*" },
+                new ExcludedPath { Path = "/personaExtraction/*" }
+            }
+        };
+    }
+
+    private static IndexingPolicy CreateInterviewSessionsIndexingPolicy()
+    {
+        return new IndexingPolicy
+        {
+            IndexingMode = IndexingMode.Consistent,
+            Automatic = true,
+            IncludedPaths =
+            {
+                new IncludedPath { Path = "/userId/?" },
+                new IncludedPath { Path = "/isCompleted/?" },
+                new IncludedPath { Path = "/startDate/?" },
+                new IncludedPath { Path = "/completedDate/?" }
+            },
+            ExcludedPaths =
+            {
+                new ExcludedPath { Path = "/responses/*" }
             }
         };
     }

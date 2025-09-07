@@ -1,0 +1,12 @@
+@model SpinnerNet.Web.Models.BlockTitleDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block mono"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@d.Bg;">
+  <div class="inset">
+    <h1 class="h1">@Model.Headline</h1>
+  </div>
+</section>

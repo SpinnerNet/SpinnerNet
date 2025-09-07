@@ -1,0 +1,109 @@
+{
+  "title": "Showcase",
+  "slug": "showcase",
+  "blocks": [
+    {
+      "kind": "Title",
+      "headline": "Block Showcase",
+      "layout": {
+        "desktop": { "col": 1,  "row": 1, "colSpan": 120, "rowSpan": 8, "bg": "#FF3300" },
+        "tablet":  { "col": 1,  "row": 1, "colSpan": 84,  "rowSpan": 6, "bg": "#FF3300" },
+        "mobile":  { "col": 1,  "row": 1, "colSpan": 72,  "rowSpan": 4, "bg": "#FF3300" }
+      }
+    },
+    
+    {
+      "kind": "Spacer",
+      "layout": {
+        "desktop": { "col": 1,  "row": 9,  "colSpan": 120, "rowSpan": 2, "bg": "#f0f0f0" },
+        "tablet":  { "col": 1,  "row": 7,  "colSpan": 84,  "rowSpan": 2, "bg": "#f0f0f0" },
+        "mobile":  { "col": 1,  "row": 5,  "colSpan": 72,  "rowSpan": 1, "bg": "#f0f0f0" }
+      }
+    },
+    
+    {
+      "kind": "Quote",
+      "quote": "Das Gitter ist die Grundlage aller Ordnung, die Leinwand für unendliche Möglichkeiten.",
+      "author": "Josef Müller-Brockmann",
+      "layout": {
+        "desktop": { "col": 1,  "row": 11, "colSpan": 60, "rowSpan": 12, "bg": "#0066FF" },
+        "tablet":  { "col": 1,  "row": 9,  "colSpan": 42, "rowSpan": 10, "bg": "#0066FF" },
+        "mobile":  { "col": 1,  "row": 6,  "colSpan": 36, "rowSpan": 8,  "bg": "#0066FF" }
+      }
+    },
+    
+    {
+      "kind": "List",
+      "items": ["Modular Grid System", "12px Base Unit", "Responsive Breakpoints", "Strict Alignment", "Whole Modules Only"],
+      "listType": "ul",
+      "layout": {
+        "desktop": { "col": 61, "row": 11, "colSpan": 60, "rowSpan": 12, "bg": "#33FF00" },
+        "tablet":  { "col": 43, "row": 9,  "colSpan": 42, "rowSpan": 10, "bg": "#33FF00" },
+        "mobile":  { "col": 37, "row": 6,  "colSpan": 36, "rowSpan": 8,  "bg": "#33FF00" }
+      }
+    },
+    
+    {
+      "kind": "HeaderMarquee",
+      "text": "Typography • Grid • System • Design • ",
+      "layout": {
+        "desktop": { "col": 1,  "row": 23, "colSpan": "*", "rowSpan": 6, "bg": "#FFFF33" },
+        "tablet":  { "col": 1,  "row": 19, "colSpan": "*", "rowSpan": 4, "bg": "#FFFF33" },
+        "mobile":  { "col": 1,  "row": 14, "colSpan": "*", "rowSpan": 3, "bg": "#FFFF33" }
+      }
+    },
+    
+    {
+      "kind": "Body",
+      "bodyHtml": "<p>Each block occupies whole modules only.</p><p>The grid never breaks, the content always aligns.</p>",
+      "layout": {
+        "desktop": { "col": 1,  "row": 29, "colSpan": 40, "rowSpan": 14, "bg": "#FF00CC" },
+        "tablet":  { "col": 1,  "row": 23, "colSpan": 28, "rowSpan": 12, "bg": "#FF00CC" },
+        "mobile":  { "col": 1,  "row": 17, "colSpan": 24, "rowSpan": 10, "bg": "#FF00CC" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_9.svg",
+      "alt": "Grid Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 41, "row": 29, "colSpan": 40, "rowSpan": 14, "bg": "#00CCFF" },
+        "tablet":  { "col": 29, "row": 23, "colSpan": 28, "rowSpan": 12, "bg": "#00CCFF" },
+        "mobile":  { "col": 25, "row": 17, "colSpan": 24, "rowSpan": 10, "bg": "#00CCFF" }
+      }
+    },
+    
+    {
+      "kind": "List",
+      "items": ["1. Define the grid", "2. Place the blocks", "3. Respect the modules", "4. Let it breathe"],
+      "listType": "ol",
+      "layout": {
+        "desktop": { "col": 81, "row": 29, "colSpan": 40, "rowSpan": 14, "bg": "#FFFF33" },
+        "tablet":  { "col": 57, "row": 23, "colSpan": 28, "rowSpan": 12, "bg": "#FFFF33" },
+        "mobile":  { "col": 49, "row": 17, "colSpan": 24, "rowSpan": 10, "bg": "#FFFF33" }
+      }
+    },
+    
+    {
+      "kind": "Spacer",
+      "layout": {
+        "desktop": { "col": 1,  "row": 43, "colSpan": 120, "rowSpan": 4, "bg": "transparent" },
+        "tablet":  { "col": 1,  "row": 35, "colSpan": 84,  "rowSpan": 3, "bg": "transparent" },
+        "mobile":  { "col": 1,  "row": 27, "colSpan": 72,  "rowSpan": 2, "bg": "transparent" }
+      }
+    },
+    
+    {
+      "kind": "Quote",
+      "quote": "Nichts ist fertig. Alles ist möglich.",
+      "author": "Bamberger Spinnerei",
+      "layout": {
+        "desktop": { "col": 1,  "row": 47, "colSpan": 120, "rowSpan": 16, "bg": "#33FF00" },
+        "tablet":  { "col": 1,  "row": 38, "colSpan": 84,  "rowSpan": 14, "bg": "#33FF00" },
+        "mobile":  { "col": 1,  "row": 29, "colSpan": 72,  "rowSpan": 12, "bg": "#33FF00" }
+      }
+    }
+  ]
+}

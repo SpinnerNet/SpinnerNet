@@ -25,26 +25,26 @@ public class RegisterModel : PageModel
     {
         [Required]
         [EmailAddress]
-        [Display(name = "Email")]
+        [Display(Name = "Email")]
         public string Email { get; set; } = "";
 
         [Required]
-        [StringLength(100, Errormessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(name = "Password")]
+        [Display(Name = "Password")]
         public string Password { get; set; } = "";
 
         [DataType(DataType.Password)]
-        [Display(name = "Confirm password")]
-        [Compare("Password", Errormessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
     }
 
     public void OnGet()
     {
         // Clear any existing messages
-        Errormessage = null;
-        Successmessage = null;
+        ErrorMessage = null;
+        SuccessMessage = null;
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -66,14 +66,14 @@ public class RegisterModel : PageModel
             }
             else
             {
-                Errormessage = "A user with this email already exists.";
+                ErrorMessage = "A user with this email already exists.";
                 return Page();
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during user registration");
-            Errormessage = "An error occurred during registration. Please try again.";
+            ErrorMessage = "An error occurred during registration. Please try again.";
             return Page();
         }
     }

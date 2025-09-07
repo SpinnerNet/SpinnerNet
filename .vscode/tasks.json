@@ -219,6 +219,71 @@
             },
             "problemMatcher": "$msCompile",
             "group": "test"
+        },
+        {
+            "label": "watch-app",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/SpinnerNet.App/SpinnerNet.App.csproj"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "publish-app",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/SpinnerNet.App/SpinnerNet.App.csproj",
+                "-c",
+                "Release",
+                "-o",
+                "${workspaceFolder}/src/publish",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "deploy-azure",
+            "command": "bash",
+            "type": "shell",
+            "args": [
+                "-c",
+                "cd src && dotnet publish SpinnerNet.App/*.csproj -c Release -o publish && cd publish && zip -r ../deployment.zip . && cd .. && az webapp deploy -g rg-spinnernet-proto -n spinnernet-app-3lauxg --src-path deployment.zip --type zip"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "run-app",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/src/SpinnerNet.App/SpinnerNet.App.csproj"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": "$msCompile",
+            "group": "build"
         }
     ]
 }

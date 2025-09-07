@@ -1,322 +1,497 @@
 @page
 @model SpinnerNet.Web.Pages.IndexModel
 @{
-    Layout = "Shared/_Layout";
+    Layout = null;
 }
 
-<!-- Hero Section - Bamberger Spinnerei -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1>@Model.GetText("Index_Hero_Title")</h1>
-            <p class="lead">@Model.GetText("Index_Hero_Slogan")</p>
-            <p class="lead">@Model.GetText("Index_Hero_Description")</p>
-            
-            <div class="hero-actions">
-                <a href="/vision" class="btn btn-secondary btn-lg">@Model.GetText("Index_Hero_Vision")</a>
-                <a href="/spinnen" class="btn btn-outline btn-lg">@Model.GetText("Index_Hero_Discover")</a>
-                <a href="/app" class="btn btn-primary btn-lg">@Model.GetText("Index_Hero_ToApp")</a>
-            </div>
-        </div>
-    </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Vision Overview Section -->
-<section class="section-sm" style="background-color: var(--color-gray-50);">
-    <div class="container">
-        <div class="section-header">
-            <h2>@Model.GetText("Index_Vision_Title")</h2>
-            <p class="lead">@Model.GetText("Index_Vision_Description")</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-6">
-                <h3>@Model.GetText("Index_Vision_RoomForAll_Title")</h3>
-                <p>@Model.GetText("Index_Vision_RoomForAll_Description")</p>
-            </div>
-            <div class="col-6">
-                <h3>@Model.GetText("Index_Vision_Digital_Title")</h3>
-                <p>@Html.Raw(@Model.GetText("Index_Vision_Digital_Description"))</p>
-            </div>
-        </div>
-    </div>
-</section>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spinner.Net</title>
+    <style>
+        @@font-face {
+            font-family: 'ROM MONO';
+            src: url('/fonts/ABC ROM Mono HEADLINE.woff2') format('woff2'),
+                url('/fonts/ABC ROM Mono HEADLINE.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-<!-- Three Pillars Section -->
-<section class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2>@Model.GetText("Index_Pillars_Title")</h2>
-            <p class="lead">@Model.GetText("Index_Pillars_Description")</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-primary) 0%, #8b5cf6 100%);">
-                        <div style="text-align: center; line-height: 1.4; color: white;">
-                            <strong>@Model.GetText("Index_Pillars_Spinnen_Label")</strong><br>
-                            @Model.GetText("Index_Pillars_Spinnen_Subtitle")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">@Model.GetText("Index_Pillars_Spinnen_Title")</h3>
-                        <p class="card-text">@Model.GetText("Index_Pillars_Spinnen_Description")</p>
-                        <div class="mt-4">
-                            <a href="/spinnen" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-secondary) 0%, #10b981 100%);">
-                        <div style="text-align: center; line-height: 1.4; color: white;">
-                            <strong>@Model.GetText("Index_Pillars_Vermitteln_Label")</strong><br>
-                            @Model.GetText("Index_Pillars_Vermitteln_Subtitle")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">@Model.GetText("Index_Pillars_Vermitteln_Title")</h3>
-                        <p class="card-text">@Model.GetText("Index_Pillars_Vermitteln_Description")</p>
-                        <div class="mt-4">
-                            <a href="/vermitteln" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-img card-img-placeholder" style="background: linear-gradient(135deg, var(--color-alt-quaternary) 0%, #f97316 100%);">
-                        <div style="text-align: center; line-height: 1.4; color: white;">
-                            <strong>@Model.GetText("Index_Pillars_Marktplatz_Label")</strong><br>
-                            @Model.GetText("Index_Pillars_Marktplatz_Subtitle")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">@Model.GetText("Index_Pillars_Marktplatz_Title")</h3>
-                        <p class="card-text">@Model.GetText("Index_Pillars_Marktplatz_Description")</p>
-                        <div class="mt-4">
-                            <a href="/marktplatz" class="btn btn-primary">@Model.GetText("Index_CTA_LearnMore")</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- How it Works Section - World Vision Layout -->
-<section class="section-sm" style="background-color: var(--color-gray-50);">
-    <div class="container">
-        <div class="section-header">
-            <h2>@Model.GetText("Index_HowItWorks_Title")</h2>
-            <p class="lead">@Model.GetText("Index_HowItWorks_Description")</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-4">
-                <div class="feature-item">
-                    <div class="feature-icon">1</div>
-                    <div class="feature-content">
-                        <h3>@Model.GetText("Index_HowItWorks_Step1_Title")</h3>
-                        <p>@Model.GetText("Index_HowItWorks_Step1_Description")</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-4">
-                <div class="feature-item">
-                    <div class="feature-icon">2</div>
-                    <div class="feature-content">
-                        <h3>@Model.GetText("Index_HowItWorks_Step2_Title")</h3>
-                        <p>@Model.GetText("Index_HowItWorks_Step2_Description")</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-4">
-                <div class="feature-item">
-                    <div class="feature-icon">3</div>
-                    <div class="feature-content">
-                        <h3>@Model.GetText("Index_HowItWorks_Step3_Title")</h3>
-                        <p>@Model.GetText("Index_HowItWorks_Step3_Description")</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'ROM MONO', monospace;
+            position: relative;
+            background: #ffffff;
+        }
 
-<!-- Success Stories Section - World Vision Card Layout -->
-<section class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2>@Model.GetText("Index_Stories_Title")</h2>
-            <p class="lead">@Model.GetText("Index_Stories_Description")</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_Maria_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_Maria_Description")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@Model.GetText("Index_Stories_Maria_Title")</h4>
-                        <p class="card-text">@Model.GetText("Index_Stories_Maria_Quote")</p>
-                    </div>
-                    <div class="card-footer">
-                        @Model.GetText("Index_Stories_Maria_Attribution")
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_Hans_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_Hans_Description")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@Model.GetText("Index_Stories_Hans_Title")</h4>
-                        <p class="card-text">@Model.GetText("Index_Stories_Hans_Quote")</p>
-                    </div>
-                    <div class="card-footer">
-                        @Model.GetText("Index_Stories_Hans_Attribution")
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-5">
-            <a href="/about#stories" class="btn btn-secondary">@Model.GetText("Index_Stories_ViewAll")</a>
-        </div>
-    </div>
-</section>
+        /* Viewport root and centered proportional stage */
+        .grid-container {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<!-- Call to Action Section - World Vision Hero Style -->
-<section class="section" style="background: linear-gradient(135deg, var(--color-primary) 0%, #3d6bb3 100%); color: white;">
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <h2 style="color: white; margin-bottom: var(--space-24);">@Model.GetText("Index_CTA_Title")</h2>
-                <p class="lead" style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-32);">
-                    @Model.GetText("Index_CTA_Description")
-                </p>
-                <div style="display: flex; gap: var(--space-16); flex-wrap: wrap;">
-                    <a href="/beta" class="btn btn-secondary btn-lg">@Model.GetText("Index_CTA_SecureBeta")</a>
-                    <a href="/contact" class="btn btn-outline btn-lg" style="border-color: white; color: white;">@Model.GetText("Index_CTA_BookConsultation")</a>
-                </div>
-            </div>
-            <div class="col-4">
-                <div style="text-align: center;">
-                    <div class="card-img card-img-placeholder" style="background-color: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3); height: 280px;">
-                        <div style="color: rgba(255,255,255,0.8); text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_Logo_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_Logo_Description")
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        .grid-stage {
+            position: absolute;
+            /* sized + centered by JS */
+            overflow: visible;
+        }
 
-<!-- News & Updates Section - World Vision Grid -->
-<section class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2>@Model.GetText("Index_News_Title")</h2>
-            <p class="lead">@Model.GetText("Index_News_Description")</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_ZeitCoin_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_ZeitCoin_Description")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-small" style="color: var(--color-gray-500);">@Model.GetText("Index_News_Date_ZeitCoin")</p>
-                        <h4 class="card-title">@Model.GetText("Index_News_ZeitCoin_Title")</h4>
-                        <p class="card-text">@Model.GetText("Index_News_ZeitCoin_Description")</p>
-                        <a href="/news/zeitcoin-2-0" class="btn btn-primary btn-sm">@Model.GetText("Index_News_ReadMore")</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_LabOpening_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_LabOpening_Description")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-small" style="color: var(--color-gray-500);">@Model.GetText("Index_News_Date_Labs")</p>
-                        <h4 class="card-title">@Model.GetText("Index_News_Labs_Title")</h4>
-                        <p class="card-text">@Model.GetText("Index_News_Labs_Description")</p>
-                        <a href="/news/new-labs" class="btn btn-primary btn-sm">@Model.GetText("Index_News_ReadMore")</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-img card-img-placeholder">
-                        <div style="text-align: center; line-height: 1.4;">
-                            <strong>@Model.GetText("Index_Placeholder_AI_Title")</strong><br>
-                            @Model.GetText("Index_Placeholder_AI_Description")
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-small" style="color: var(--color-gray-500);">@Model.GetText("Index_News_Date_AI")</p>
-                        <h4 class="card-title">@Model.GetText("Index_News_AI_Title")</h4>
-                        <p class="card-text">@Model.GetText("Index_News_AI_Description")</p>
-                        <a href="/news/ai-future-work" class="btn btn-primary btn-sm">@Model.GetText("Index_News_ReadMore")</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-5">
-            <a href="/news" class="btn btn-secondary">@Model.GetText("Index_News_ViewAll")</a>
-        </div>
-    </div>
-</section>
+        /* Grid overlay */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            /* background is set via JS using repeating-linear-gradient
+               with --module-x/--module-y CSS variables */
+        }
 
-<!-- Newsletter Section - World Vision Style -->
-<section class="section-sm" style="background-color: var(--color-gray-50);">
-    <div class="container">
-        <div class="row" style="align-items: center;">
-            <div class="col-8">
-                <h3>@Model.GetText("Index_Newsletter_Title")</h3>
-                <p class="lead mb-0">@Model.GetText("Index_Newsletter_Description")</p>
-            </div>
-            <div class="col-4">
-                <div style="display: flex; gap: var(--space-8); align-items: stretch;">
-                    <input type="email" 
-                           placeholder="@Model.GetText("Index_Newsletter_Placeholder")" 
-                           style="flex: 1; 
-                                  padding: var(--space-12); 
-                                  border: 1px solid var(--color-gray-300); 
-                                  border-radius: var(--radius-md);
-                                  font-size: var(--font-size-16);" />
-                    <button class="btn btn-primary">@Model.GetText("Index_Newsletter_Subscribe")</button>
-                </div>
+        .grid-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999; /* on top, but not interactive */
+        }
+
+        /* All blocks positioned absolutely */
+        .block {
+            position: absolute;
+            transition: background-color 1s ease;
+        }
+
+        /* Text elements positioned at grid intersections */
+        .block-text {
+            position: absolute;
+            display: block;
+            /* ensure top-left box aligns precisely */
+            font-family: 'ROM MONO', monospace;
+            text-transform: uppercase;
+            font-weight: 600;
+            line-height: 1;
+            /* remove extra leading to align top */
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Heart SVG */
+        #heartContainer svg {
+            width: 100%;
+            height: 100%;
+            transition: fill 0.3s ease;
+        }
+
+        /* Marquee */
+        .marquee-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        @@keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container" id="gridContainer">
+        <!-- Grid overlay -->
+        <div class="grid-stage" id="gridStage">
+            <!-- Grid overlay (canvas for crisp pixel-aligned lines) -->
+            <canvas class="grid-canvas" id="gridCanvas"></canvas>
+            <div class="grid-overlay" id="gridOverlay"></div>
+
+            <!-- Blocks positioned inside the stage: initial MVP only HEART -->
+            <div class="block" id="heartBlock">
+                <div id="heartContainer"></div>
             </div>
         </div>
     </div>
-</section>
+
+    <script>
+        // Configuration
+        const DESKTOP_COLS = 80;  // ≥1025px
+        const DESKTOP_ROWS = 60;
+        const TABLET_COLS = 60;   // 769–1024px
+        const TABLET_ROWS = 55;
+        const MOBILE_COLS = 40;   // ≤768px
+        const MOBILE_ROWS = 50;
+        // Module aspect from UEBERSICHT_TEMPORAER: 4mm × 3.75mm
+        const MODULE_ASPECT = 4 / 3.75; // X:Y ≈ 1.0666667
+        const MOBILE_BREAKPOINT = 768;
+        const TABLET_BREAKPOINT = 1024;
+
+        // Colors from design
+        const colors = [
+            '#ff3300', // red
+            '#0066ff', // blue
+            '#33ff00', // green
+            '#ffff33', // yellow
+            '#ff00cc', // pink
+            '#00ccff', // cyan
+            '#330099', // purple
+            '#000000', // black
+            '#ffffff'  // white
+        ];
+
+        // Heart SVG files
+        const heartFiles = [
+            'WEB_1.svg', 'WEB_2.svg', 'WEB_3.svg',
+            'WEB_4.svg', 'WEB_5.svg', 'WEB_6.svg',
+            'WEB_7.svg', 'WEB_8.svg', 'WEB_9.svg'
+        ];
+
+        // Quotes
+        const quotes = [
+            'RAUM - ZEIT - VISION',
+            'ZUKUNFT AKTIV GESTALTEN',
+            'ZEITSPARKASSE',
+            'AUS DER VERWICKLUNG, IN DIE ENTWICKLUNG.',
+            'LEIDENSCHAFTEN LEBEN.',
+            'EIN NETZ FÜR HOCHSENSIBLE MENSCHEN.',
+            'DIE SPINNEREI BEGINNT.',
+            'NOCH KEIN NETZ. ABER EIN ANFANG.',
+            'IDEEN BRAUCHEN RAUM.',
+            'WIR SPINNEN ZUKUNFT.',
+            'HIER ENTSTEHT ETWAS.',
+            'EIN ORT FÜR FRAGEN UND BEGEGNUNG.',
+            'WIR SIND LOSGEGANGEN.',
+            'NICHTS IST FERTIG. ALLES IST MÖGLICH.',
+            'ZWISCHEN GESTERN UND MORGEN.',
+            'GEMEINSCHAFT BEGINNT.',
+            'NICHT PERFEKT. ABER ECHT.',
+            'EINE IDEE. EIN ORT. VIELE WEGE.',
+            'AUS GEDANKEN WERDEN GESCHICHTEN.',
+            'ES GEHT UMS BEGINNEN.'
+        ];
+
+        // Grid calculation with proportional, centered stage
+        function calculateGrid() {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const isMobile = vw <= MOBILE_BREAKPOINT;
+            const isTablet = vw > MOBILE_BREAKPOINT && vw <= TABLET_BREAKPOINT;
+
+            const cols = isMobile ? MOBILE_COLS : (isTablet ? TABLET_COLS : DESKTOP_COLS);
+            const rows = isMobile ? MOBILE_ROWS : (isTablet ? TABLET_ROWS : DESKTOP_ROWS);
+
+            // Choose Y module size (s) so that the stage covers the viewport (no borders)
+            // stageWidth = cols * (MODULE_ASPECT * s), stageHeight = rows * s
+            const sByWidth = vw / (cols * MODULE_ASPECT);
+            const sByHeight = vh / rows;
+            const moduleY = Math.max(sByWidth, sByHeight); // cover instead of contain
+            const moduleX = MODULE_ASPECT * moduleY;
+
+            // Stage size and top-left anchoring (prevent gaps)
+            const stageWidth = cols * moduleX;
+            const stageHeight = rows * moduleY;
+            const offsetLeft = 0;
+            const offsetTop = 0;
+
+            return { moduleX, moduleY, cols, rows, vw, vh, stageWidth, stageHeight, offsetLeft, offsetTop, isMobile, isTablet };
+        }
+
+        // Position block at grid coordinates
+        function positionBlock(element, col, row, width, height) {
+            const grid = calculateGrid();
+            element.style.left = (col * grid.moduleX) + 'px';
+            element.style.top = (row * grid.moduleY) + 'px';
+            element.style.width = (width * grid.moduleX) + 'px';
+            element.style.height = (height * grid.moduleY) + 'px';
+        }
+
+        // Position text at grid intersection
+        // Precise text positioning at grid intersections with glyph-trim
+        function adjustTextAlignmentForGlyph(element) {
+            try {
+                const cs = window.getComputedStyle(element);
+                const font = cs.font || `${cs.fontStyle} ${cs.fontVariant} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ${cs.fontFamily}`;
+                const text = (element.textContent || '').trim();
+                if (!text) return;
+                const canvas = adjustTextAlignmentForGlyph._c || (adjustTextAlignmentForGlyph._c = document.createElement('canvas'));
+                const ctx = canvas.getContext('2d');
+                ctx.font = font;
+                const m = ctx.measureText(text);
+                const leftBearing = m.actualBoundingBoxLeft ?? 0;
+                const fontAscent = m.fontBoundingBoxAscent ?? m.actualBoundingBoxAscent ?? 0;
+                const glyphAscent = m.actualBoundingBoxAscent ?? 0;
+                const topTrim = Math.max(0, fontAscent - glyphAscent);
+
+                // Only ever nudge left (never right). Some fonts report
+                // negative side-bearing for certain glyphs; clamp to avoid pushing right.
+                const hNudge = Math.max(0, leftBearing);
+                element.style.textIndent = (-hNudge) + 'px';
+                element.style.transform = `translateY(${-topTrim}px)`;
+            } catch { /* ignore metrics issues */ }
+        }
+
+        function positionText(element, offsetCols = 1, offsetRows = 1, scale = 1.5) {
+            const grid = calculateGrid();
+            const crisp = (v) => Math.round(v) + 0.5; // align with canvas grid lines
+            element.style.left = crisp(offsetCols * grid.moduleX) + 'px';
+            element.style.top = crisp(offsetRows * grid.moduleY) + 'px';
+            element.style.fontSize = (grid.moduleY * scale) + 'px';
+            element.style.letterSpacing = '0px';
+            adjustTextAlignmentForGlyph(element);
+        }
+
+        // Draw grid overlay
+        function drawGrid() {
+
+            const grid = calculateGrid();
+
+            // Size and center the stage
+            const stage = document.getElementById('gridStage');
+            stage.style.width = grid.stageWidth + 'px';
+            stage.style.height = grid.stageHeight + 'px';
+            stage.style.left = grid.offsetLeft + 'px';
+            stage.style.top = grid.offsetTop + 'px';
+
+            // Draw crisp grid lines on canvas aligned to device pixels
+            const canvas = document.getElementById('gridCanvas');
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = Math.round(grid.stageWidth * dpr);
+            canvas.height = Math.round(grid.stageHeight * dpr);
+            canvas.style.width = grid.stageWidth + 'px';
+            canvas.style.height = grid.stageHeight + 'px';
+            const ctx = canvas.getContext('2d');
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, grid.stageWidth, grid.stageHeight);
+            ctx.strokeStyle = 'rgba(255,0,0,0.6)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            // Zeichne exakt an den berechneten Modulpositionen (kein 0.5px-Shift),
+            // damit Overlay und Layout identisch sind.
+            for (let c = 0; c <= grid.cols; c++) {
+                const x = c * grid.moduleX;
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, grid.stageHeight);
+            }
+            for (let r = 0; r <= grid.rows; r++) {
+                const y = r * grid.moduleY;
+                ctx.moveTo(0, y);
+                ctx.lineTo(grid.stageWidth, y);
+            }
+            ctx.stroke();
+
+            // Ensure the old CSS overlay does not double-draw
+            const overlay = document.getElementById('gridOverlay');
+            overlay.style.backgroundImage = 'none';
+
+            // Expose root-level CSS variables for Playwright tests and debugging
+            const root = document.documentElement.style;
+            root.setProperty('--module-x', grid.moduleX + 'px');
+            root.setProperty('--module-y', grid.moduleY + 'px');
+            root.setProperty('--grid-cols', grid.cols);
+            root.setProperty('--grid-rows', grid.rows);
+            root.setProperty('--grid-x', grid.moduleX + 'px');
+            root.setProperty('--grid-y', grid.moduleY + 'px');
+        }
+
+        // Layout all blocks
+        function layoutBlocks() {
+            const grid = calculateGrid();
+            const spec = [{ id: 'heartBlock', c: 0, r: 0, w: grid.cols, h: grid.rows }];
+            spec.forEach(s => positionBlock(document.getElementById(s.id), s.c, s.r, s.w, s.h));
+
+            // Position heart (1 module offset inside its block)
+            const heartContainer = document.getElementById('heartContainer');
+            heartContainer.style.position = 'absolute';
+            // Exakt 1 Modul Offset (ohne Halbpixel), damit das SVG streng unterhalb/ rechts der Linien beginnt
+            heartContainer.style.left = (1 * grid.moduleX) + 'px';
+            heartContainer.style.top = (1 * grid.moduleY) + 'px';
+            const hb = document.getElementById('heartBlock');
+            // Platz berücksichtigen (nur links/oben 1 Modul Abstand)
+            const maxW = hb.clientWidth  - 1 * grid.moduleX;
+            const maxH = hb.clientHeight - 1 * grid.moduleY;
+            // SVG-Seitenverhältnis aus viewBox: height/width
+            const aspect = window.__heartAspect || (170.1 / 181.4);
+            // Vorgabe: Unten darf nicht beschnitten werden → Höhe bestimmt Breite,
+            // danach ggf. auf maxW herunter skalieren (vollständig sichtbar, kein Beschnitt).
+            let h = maxH;
+            let w = h / aspect;
+            if (w > maxW) {
+                const scale = maxW / w;
+                w = maxW;
+                h = h * scale;
+            }
+            heartContainer.style.width = Math.max(0, Math.floor(w)) + 'px';
+            heartContainer.style.height = Math.max(0, Math.floor(h)) + 'px';
+
+            // Store layout for potential algorithms
+            window.__blockLayout = spec;
+        }
+
+        // Get random color excluding specified colors
+        function getRandomColorExcluding(excludeColors) {
+            const availableColors = colors.filter(c => !excludeColors.includes(c));
+            if (availableColors.length === 0) return colors[0];
+            return availableColors[Math.floor(Math.random() * availableColors.length)];
+        }
+
+        // Get or set heart color (persists for session)
+        let heartColor = null;
+        function getHeartColor() {
+            if (!heartColor) {
+                heartColor = sessionStorage.getItem('heartColor');
+                if (!heartColor) {
+                    heartColor = colors[Math.floor(Math.random() * colors.length)];
+                    sessionStorage.setItem('heartColor', heartColor);
+                }
+            }
+            return heartColor;
+        }
+
+        // Load heart SVG
+        function loadHeart() {
+            const container = document.getElementById('heartContainer');
+            const randomFile = heartFiles[Math.floor(Math.random() * heartFiles.length)];
+            const color = getHeartColor();
+
+            fetch(`/images/hearts/${randomFile}`)
+                .then(response => response.text())
+                .then(svgContent => {
+                    container.innerHTML = svgContent;
+                    const svgElement = container.querySelector('svg');
+                    if (svgElement) {
+                        // Sicherstellen, dass das SVG links/oben ausgerichtet ist und das Seitenverhältnis beibehält
+                        svgElement.setAttribute('preserveAspectRatio', 'xMinYMin meet');
+                        svgElement.style.display = 'block';
+                        svgElement.style.width = '100%';
+                        svgElement.style.height = '100%';
+                        // Seitenverhältnis (height/width) aus dem viewBox bestimmen
+                        const vb = svgElement.getAttribute('viewBox');
+                        if (vb) {
+                            const parts = vb.split(/\s+/).map(parseFloat);
+                            if (parts.length === 4 && parts[2] > 0) {
+                                const ratio = parts[3] / parts[2];
+                                window.__heartAspect = ratio;
+                            }
+                        }
+                        svgElement.querySelectorAll('path, g').forEach(element => {
+                            element.style.fill = color;
+                        });
+                    }
+                    // Nach dem Laden neu layouten, damit das Seitenverhältnis greift
+                    layoutBlocks();
+                })
+                .catch(error => console.error('Error loading heart:', error));
+        }
+
+        // Compute adjacency graph based on current block grid spec
+        function computeAdjacency(blocks) {
+            const neighbors = new Map();
+            const rects = blocks.map(b => ({
+                id: b.id,
+                left: b.c,
+                top: b.r,
+                right: b.c + b.w,
+                bottom: b.r + b.h
+            }));
+            rects.forEach(a => neighbors.set(a.id, new Set()));
+            for (let i = 0; i < rects.length; i++) {
+                for (let j = i + 1; j < rects.length; j++) {
+                    const a = rects[i], b = rects[j];
+                    const shareVertical = (a.left === b.right || a.right === b.left) && !(a.bottom <= b.top || a.top >= b.bottom);
+                    const shareHorizontal = (a.top === b.bottom || a.bottom === b.top) && !(a.right <= b.left || a.left >= b.right);
+                    if (shareVertical || shareHorizontal) {
+                        neighbors.get(a.id).add(b.id);
+                        neighbors.get(b.id).add(a.id);
+                    }
+                }
+            }
+            return neighbors;
+        }
+
+        // Update background color (MVP: only heart block; keep heart SVG fill persistent)
+        function updateContent() {
+            const heartFill = getHeartColor();
+            const heartBlock = document.getElementById('heartBlock');
+            if (!heartBlock) return;
+            const bg = getRandomColorExcluding([heartFill]);
+            heartBlock.style.backgroundColor = bg;
+        }
+
+        // Initialize and handle resize
+        function init() {
+            drawGrid();
+            layoutBlocks();
+            loadHeart();
+            updateContent();
+            // Re-run once fonts are loaded to ensure precise glyph alignment
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    drawGrid();
+                    layoutBlocks();
+                    updateContent();
+                });
+            }
+            // Overlay toggle: key 'g'
+            document.addEventListener('keydown', (e) => {
+                if (e.key.toLowerCase() === 'g') {
+                    const canvas = document.getElementById('gridCanvas');
+                    canvas.style.display = (canvas.style.display === 'none') ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Handle window resize (debounced) + observe container size changes
+        let resizeTimeout;
+        function relayout() {
+            drawGrid();
+            layoutBlocks();
+            updateContent();
+        }
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(relayout, 100);
+        });
+        if ('ResizeObserver' in window) {
+            const ro = new ResizeObserver(() => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(relayout, 50);
+            });
+            ro.observe(document.documentElement);
+        }
+        window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).addEventListener?.('change', relayout);
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+
+        // Update colors every 7 seconds
+        setInterval(updateContent, 7000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+{
+  "title": "Start",
+  "slug": "home",
+  "blocks": [
+    {
+      "kind": "Logo",
+      "media": { "svgUrl": "/images/hearts/WEB_3.svg" },
+      "layout": {
+        "desktop": { "col": 1,  "row": 1,  "colSpan": 12,  "rowSpan": 12, "bg": "#FF3300" },
+        "tablet":  { "col": 1,  "row": 1,  "colSpan": 10,  "rowSpan": 10, "bg": "#FF3300" },
+        "mobile":  { "col": 1,  "row": 1,  "colSpan": 8,   "rowSpan": 8,  "bg": "#FF3300" }
+      }
+    },
+    {
+      "kind": "HeaderMarquee",
+      "text": "Bamberger Spinnerei • ",
+      "layout": {
+        "desktop": { "col": 13, "row": 1,  "colSpan": "*", "rowSpan": 12, "bg": "#0066FF" },
+        "tablet":  { "col": 11, "row": 1,  "colSpan": "*", "rowSpan": 10, "bg": "#0066FF" },
+        "mobile":  { "col": 9,  "row": 1,  "colSpan": "*", "rowSpan": 8,  "bg": "#0066FF" }
+      }
+    },
+
+    { "kind": "Title", "headline": "Vision",
+      "layout": {
+        "desktop": { "col": 1,  "row": 13, "colSpan": 40, "rowSpan": 10, "bg": "#33FF00" },
+        "tablet":  { "col": 1,  "row": 11, "colSpan": 26, "rowSpan": 10, "bg": "#33FF00" },
+        "mobile":  { "col": 1,  "row": 9,  "colSpan": 24, "rowSpan": 10, "bg": "#33FF00" }
+      }
+    },
+    { "kind": "Title", "headline": "Zeit",
+      "layout": {
+        "desktop": { "col": 41, "row": 13, "colSpan": 40, "rowSpan": 10, "bg": "#33FF00" },
+        "tablet":  { "col": 27, "row": 11, "colSpan": 26, "rowSpan": 10, "bg": "#33FF00" },
+        "mobile":  { "col": 25, "row": 9,  "colSpan": 24, "rowSpan": 10, "bg": "#33FF00" }
+      }
+    },
+    { "kind": "Title", "headline": "Raum",
+      "layout": {
+        "desktop": { "col": 81, "row": 13, "colSpan": 40, "rowSpan": 10, "bg": "#33FF00" },
+        "tablet":  { "col": 53, "row": 11, "colSpan": 26, "rowSpan": 10, "bg": "#33FF00" },
+        "mobile":  { "col": 49, "row": 9,  "colSpan": 24, "rowSpan": 10, "bg": "#33FF00" }
+      }
+    },
+
+    { "kind": "Body",
+      "bodyHtml": "<p>Wir sind losgegangen.</p><p>Nichts ist fertig. Alles ist möglich.</p>",
+      "layout": {
+        "desktop": { "col": 1,  "row": 23, "colSpan": 120, "rowSpan": 14, "bg": "#26c626" },
+        "tablet":  { "col": 1,  "row": 21, "colSpan": 84,  "rowSpan": 14, "bg": "#26c626" },
+        "mobile":  { "col": 1,  "row": 19, "colSpan": 72,  "rowSpan": 14, "bg": "#26c626" }
+      }
+    },
+
+    { "kind": "Body",
+      "bodyHtml": "<p>Aus der Verwicklung, in die Entwicklung.</p>",
+      "layout": {
+        "desktop": { "col": 1,  "row": 37, "colSpan": 120, "rowSpan": 20, "bg": "#FFE450" },
+        "tablet":  { "col": 1,  "row": 35, "colSpan": 84,  "rowSpan": 20, "bg": "#FFE450" },
+        "mobile":  { "col": 1,  "row": 33, "colSpan": 72,  "rowSpan": 20, "bg": "#FFE450" }
+      }
+    }
+  ]
+}

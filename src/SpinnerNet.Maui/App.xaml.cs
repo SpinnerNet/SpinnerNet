@@ -11,7 +11,8 @@ public partial class App : Application
 		InitializeComponent();
 		
 		// Initialize database asynchronously on app startup
-		Task.Run(async () => await InitializeDatabaseAsync());
+		// COMMENTED OUT FOR SPRINT 1 - Using Cosmos DB only, Entity Framework for future sprints
+		// Task.Run(async () => await InitializeDatabaseAsync());
 	}
 
 	protected override Window CreateWindow(IActivationState? activationState)
@@ -22,6 +23,8 @@ public partial class App : Application
 		};
 	}
 	
+	// COMMENTED OUT FOR SPRINT 1 - Using Cosmos DB only, Entity Framework for future sprints
+	/*
 	/// <summary>
 	/// Initialize local SQLite database for offline-first data sovereignty
 	/// </summary>
@@ -44,4 +47,5 @@ public partial class App : Application
 			System.Diagnostics.Debug.WriteLine($"Database initialization error: {ex.Message}");
 		}
 	}
+	*/
 }

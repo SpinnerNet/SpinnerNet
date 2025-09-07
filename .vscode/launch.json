@@ -77,7 +77,9 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7174;http://localhost:5042",
+                "AZURE_AD_CLIENT_SECRET": "${env:AZURE_AD_CLIENT_SECRET}"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/src/SpinnerNet.App/Views"

@@ -1,0 +1,453 @@
+@page "{slug?}"
+@using SpinnerNet.Web.Models
+@model SpinnerNet.Web.Pages.GridModel
+@{
+    ViewData["Title"] = Model.PageData.Title;
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.PageData.Title - Bamberger Spinnerei</title>
+    <style>
+        :root {
+            --c-grid: rgba(0,0,0,.10);
+            --c-text: #111;
+
+            /* Base module - Metric: 4mm × 3.75mm */
+            /* At 96 DPI: 4mm = ~15px, 3.75mm = ~14px */
+            --mod: 15px; /* 4mm horizontal module */
+            --mod-v: 14px; /* 3.75mm vertical module */
+            
+            /* Typography trim values */
+            --trim-h1:  calc(var(--mod) * 0.34);
+            --xtrim-h1: calc(var(--mod) * 0.10);
+            --trim-p:   calc(var(--mod) * 0.30);
+            --xtrim-p:  calc(var(--mod) * 0.38);
+            
+            /* Dynamic columns - will be updated by JS */
+            --cols: 120; /* initial default, will be recalculated */
+            
+            /* Breakpoint indicator */
+            --breakpoint: 'desktop';
+        }
+
+        /* Responsive column counts */
+        @@media (max-width: 768px) {
+            :root {
+                --breakpoint: 'mobile';
+            }
+        }
+        
+        @@media (min-width: 769px) and (max-width: 1024px) {
+            :root {
+                --breakpoint: 'tablet';
+            }
+        }
+
+        @@font-face {
+            font-family: "ROM MONO";
+            src: url("/fonts/ABC ROM Mono HEADLINE.woff2") format("woff2"),
+                 url("/fonts/ABC ROM Mono HEADLINE.woff")  format("woff");
+            font-weight: 400; 
+            font-style: normal; 
+            font-display: swap;
+        }
+
+        html, body { 
+            height: 100%; 
+        }
+        
+        body { 
+            margin: 0; 
+            color: var(--c-text); 
+            overflow: hidden; 
+            font-family: "ROM MONO", monospace;
+        }
+
+        .stage { 
+            width: 100vw; 
+            height: 100svh; 
+            overflow: auto; 
+        }
+        
+        .canvas {
+            position: relative;
+            min-height: 100%;
+            display: grid;
+            grid-template-columns: repeat(var(--cols), var(--mod));
+            grid-auto-rows: var(--mod-v);
+        }
+
+        .gridOverlay {
+            position: fixed; 
+            inset: 0; 
+            pointer-events: none; 
+            z-index: 10;
+            background-image:
+                repeating-linear-gradient(to right, var(--c-grid) 0 1px, transparent 1px var(--mod)),
+                repeating-linear-gradient(to bottom, var(--c-grid) 0 1px, transparent 1px var(--mod-v));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gridOverlay.active {
+            opacity: 1;
+        }
+
+        .block {
+            grid-column: var(--col-start) / var(--col-end);
+            grid-row: var(--row-start) / var(--row-end);
+            margin: 0; 
+            padding: 0; 
+            position: relative;
+            background: var(--bg, transparent);
+            overflow: hidden;
+        }
+        
+        .inset { 
+            padding: calc(var(--mod) * 2); 
+        }
+
+        .mono { 
+            font-family: "ROM MONO", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+        }
+        
+        .h1 { 
+            margin: 0; 
+            text-transform: uppercase; 
+            font-weight: 800; 
+            font-size: clamp(1.6rem, 2.2vw + 0.9rem, 3rem); 
+            line-height: calc(var(--mod) * 4); 
+        }
+        
+        .p { 
+            margin: 0; 
+            font-size: clamp(1rem, 0.5vw + .85rem, 1.25rem); 
+            line-height: calc(var(--mod) * 2); 
+            hyphens: auto; 
+            text-wrap: pretty; 
+        }
+        
+        .stack > * + * { 
+            margin-top: calc(var(--mod) * 2); 
+        }
+
+        @@supports (text-box-trim: both) {
+            .h1, .p { 
+                text-box-trim: both; 
+                text-box-edge: cap alphabetic; 
+            }
+        }
+        
+        @@supports not (text-box-trim: both) {
+            .h1 { 
+                transform: translateX(calc(-1 * var(--xtrim-h1))) translateY(calc(-1 * var(--trim-h1))); 
+            }
+            .p { 
+                transform: translateX(calc(-1 * var(--xtrim-p)))  translateY(calc(-1 * var(--trim-p))); 
+            }
+        }
+
+        .marquee { 
+            overflow: hidden; 
+            white-space: nowrap; 
+            will-change: transform;
+        }
+        
+        .marquee__track { 
+            display: inline-block; 
+            padding-right: 50vw; 
+            animation: marquee 18s linear infinite;
+            will-change: transform;
+            transform: translateZ(0); /* Enable GPU acceleration */
+        }
+        
+        .marquee.paused .marquee__track {
+            animation-play-state: paused;
+        }
+        
+        @@keyframes marquee { 
+            from { transform: translate3d(0, 0, 0) } 
+            to { transform: translate3d(-50%, 0, 0) } 
+        }
+
+        .heart { 
+            width: 100%; 
+            height: auto; 
+            aspect-ratio: 1/1; 
+            display: block; 
+        }
+        
+        /* Quote styles */
+        .quote {
+            margin: 0;
+        }
+        
+        .quote-text {
+            font-size: clamp(1.2rem, 1.5vw + 0.9rem, 1.8rem);
+            line-height: calc(var(--mod) * 3);
+            font-style: italic;
+            margin: 0;
+        }
+        
+        .quote-author {
+            display: block;
+            margin-top: calc(var(--mod) * 2);
+            font-size: clamp(0.9rem, 0.5vw + 0.75rem, 1.1rem);
+            font-style: normal;
+            opacity: 0.8;
+        }
+        
+        /* List styles */
+        .block-list {
+            margin: 0;
+            padding-left: calc(var(--mod) * 3);
+            list-style-position: outside;
+        }
+        
+        .list-item {
+            line-height: calc(var(--mod) * 2);
+            margin-bottom: calc(var(--mod) * 1);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .grid-toggle, .breakpoint-info {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-family: "ROM MONO", monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+        
+        .grid-toggle {
+            cursor: pointer;
+        }
+        
+        .grid-toggle:hover {
+            background: rgba(0, 0, 0, 1);
+        }
+        
+        .breakpoint-info {
+            background: rgba(255, 51, 0, 0.9);
+            pointer-events: none;
+        }
+
+        /* Responsive adjustments */
+        @@media (max-width: 768px) {
+            .h1 { 
+                font-size: clamp(1.2rem, 3vw + 0.5rem, 2rem); 
+                line-height: calc(var(--mod) * 3); 
+            }
+            .p { 
+                font-size: clamp(0.9rem, 1vw + 0.7rem, 1.1rem); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gridOverlay" id="gridOverlay"></div>
+    
+    <div class="controls">
+        <div class="breakpoint-info" id="breakpointInfo">
+            <span id="breakpointText">Desktop</span> | <span id="colsText">120</span> cols
+        </div>
+        <button class="grid-toggle" onclick="toggleGrid()">Toggle Grid</button>
+    </div>
+
+    <div class="stage">
+        <div class="canvas" id="grid">
+            @foreach (var block in Model.PageData.Blocks)
+            {
+                switch (block)
+                {
+                    case BlockLogoDto b:
+                        @await Html.PartialAsync("_BlockLogo", b)
+                        break;
+                    case BlockHeaderMarqueeDto b:
+                        @await Html.PartialAsync("_BlockHeaderMarquee", b)
+                        break;
+                    case BlockTitleDto b:
+                        @await Html.PartialAsync("_BlockTitle", b)
+                        break;
+                    case BlockBodyDto b:
+                        @await Html.PartialAsync("_BlockBody", b)
+                        break;
+                    case BlockImageDto b:
+                        @await Html.PartialAsync("_BlockImage", b)
+                        break;
+                    case BlockVideoDto b:
+                        @await Html.PartialAsync("_BlockVideo", b)
+                        break;
+                    case BlockSpacerDto b:
+                        @await Html.PartialAsync("_BlockSpacer", b)
+                        break;
+                    case BlockQuoteDto b:
+                        @await Html.PartialAsync("_BlockQuote", b)
+                        break;
+                    case BlockListDto b:
+                        @await Html.PartialAsync("_BlockList", b)
+                        break;
+                    case BlockEmbedDto b:
+                        @await Html.PartialAsync("_BlockEmbed", b)
+                        break;
+                }
+            }
+        </div>
+    </div>
+
+    <script>
+        // Store all block layouts from server
+        const blockLayouts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PageData.Blocks.Select(b => new {
+            kind = b.Kind,
+            desktop = b.Layout.Desktop,
+            tablet = b.Layout.Tablet,
+            mobile = b.Layout.Mobile
+        })));
+
+        // Keep track of current breakpoint
+        let currentBreakpoint = 'desktop';
+        
+        const root = document.documentElement;
+        const mod = () => parseFloat(getComputedStyle(root).getPropertyValue('--mod'));
+
+        function getBreakpoint() {
+            const width = window.innerWidth;
+            if (width <= 768) return 'mobile';
+            if (width <= 1024) return 'tablet';
+            return 'desktop';
+        }
+
+        function updateGrid() {
+            const breakpoint = getBreakpoint();
+            const hasChanged = breakpoint !== currentBreakpoint;
+            currentBreakpoint = breakpoint;
+            
+            // Calculate columns based on viewport width - no artificial limits
+            const targetCols = Math.floor(window.innerWidth / mod());
+            
+            root.style.setProperty('--cols', targetCols);
+            
+            // Update UI
+            document.getElementById('breakpointText').textContent = 
+                breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1);
+            document.getElementById('colsText').textContent = targetCols;
+            
+            // Always update block layouts to ensure proper fill-to-end behavior
+            updateBlockLayouts(breakpoint);
+            
+            console.log(`Breakpoint: ${breakpoint}, Columns: ${targetCols}, Viewport: ${window.innerWidth}px`);
+        }
+
+        function updateBlockLayouts(breakpoint) {
+            const blocks = document.querySelectorAll('.block');
+            blocks.forEach((block, index) => {
+                if (blockLayouts[index]) {
+                    const layout = blockLayouts[index][breakpoint];
+                    
+                    // Update CSS variables for this block - using PascalCase properties from JSON
+                    block.style.setProperty('--col-start', layout.Col);
+                    
+                    // Handle "*" notation (int.MinValue = -2147483648) for fill-to-end
+                    // Also check for negative values as a broader catch
+                    const colEnd = (layout.ColSpan === -2147483648 || layout.ColSpan < 0) 
+                        ? '-1' 
+                        : (layout.Col + layout.ColSpan);
+                    block.style.setProperty('--col-end', colEnd);
+                    
+                    block.style.setProperty('--row-start', layout.Row);
+                    
+                    const rowEnd = (layout.RowSpan === -2147483648 || layout.RowSpan < 0) 
+                        ? '-1' 
+                        : (layout.Row + layout.RowSpan);
+                    block.style.setProperty('--row-end', rowEnd);
+                    
+                    if (layout.Bg) {
+                        block.style.setProperty('--bg', layout.Bg);
+                    }
+                    
+                    // Debug log for marquee blocks
+                    if (blockLayouts[index].kind === 'HeaderMarquee') {
+                        console.log(`Marquee at ${breakpoint}: Col ${layout.Col}, ColSpan ${layout.ColSpan}, colEnd ${colEnd}`);
+                    }
+                }
+            });
+        }
+        
+        // Initialize grid
+        updateGrid();
+        
+        // Update on resize with debouncing
+        let resizeTimer;
+        addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(updateGrid, 100);
+        }, { passive: true });
+
+        // Grid overlay toggle
+        function toggleGrid() {
+            const overlay = document.getElementById('gridOverlay');
+            overlay.classList.toggle('active');
+        }
+        
+        // Keyboard shortcut for grid toggle (G key)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'g' || e.key === 'G') {
+                toggleGrid();
+            }
+        });
+        
+        // Marquee performance optimization with IntersectionObserver
+        const marqueeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('paused');
+                } else {
+                    entry.target.classList.add('paused');
+                }
+            });
+        }, {
+            rootMargin: '50px'
+        });
+        
+        // Observe all marquee elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const marquees = document.querySelectorAll('.marquee');
+            marquees.forEach(marquee => {
+                marqueeObserver.observe(marquee);
+            });
+        });
+        
+        // Reduce animation frame rate when tab is not visible
+        document.addEventListener('visibilitychange', () => {
+            const marquees = document.querySelectorAll('.marquee');
+            if (document.hidden) {
+                marquees.forEach(m => m.classList.add('paused'));
+            } else {
+                marquees.forEach(m => {
+                    // Only unpause if marquee is visible
+                    const rect = m.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        m.classList.remove('paused');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

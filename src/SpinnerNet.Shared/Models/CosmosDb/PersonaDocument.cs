@@ -66,6 +66,81 @@ public class PersonaDocument
     /// When the persona was last updated
     /// </summary>
     public DateTime updatedAt { get; set; } = DateTime.UtcNow;
+
+    /// <summary>
+    /// Extracted personality traits from chat-based discovery
+    /// </summary>
+    public List<string> Traits { get; set; } = new();
+
+    /// <summary>
+    /// Extracted core values from chat-based discovery
+    /// </summary>
+    public List<string> Values { get; set; } = new();
+
+    /// <summary>
+    /// Communication style derived from conversation
+    /// </summary>
+    public string CommunicationStyle { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Decision-making approach
+    /// </summary>
+    public string DecisionMaking { get; set; } = string.Empty;
+
+    /// <summary>
+    /// User's goals and aspirations
+    /// </summary>
+    public List<string> Goals { get; set; } = new();
+
+    /// <summary>
+    /// User's challenges and pain points
+    /// </summary>
+    public List<string> Challenges { get; set; } = new();
+
+    /// <summary>
+    /// User's interests extracted from conversation
+    /// </summary>
+    public List<string> Interests { get; set; } = new();
+
+    /// <summary>
+    /// Primary motivation driving the user
+    /// </summary>
+    public string PrimaryMotivation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Preferred learning style
+    /// </summary>
+    public string LearningStyle { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Conversation ID from which this persona was extracted
+    /// </summary>
+    public string? ConversationId { get; set; }
+
+    /// <summary>
+    /// Display name for the persona
+    /// </summary>
+    public string DisplayName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Unique persona identifier
+    /// </summary>
+    public string PersonaId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Is this the default persona
+    /// </summary>
+    public bool IsDefault { get; set; } = false;
+
+    /// <summary>
+    /// Document ID
+    /// </summary>
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>
+    /// When the persona was created
+    /// </summary>
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 
 /// <summary>

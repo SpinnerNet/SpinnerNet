@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpinnerNet.Components", "Sp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpinnerNet.Maui", "SpinnerNet.Maui\SpinnerNet.Maui.csproj", "{3926AD16-0017-4E6E-BA6B-47D1B2918035}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpinnerNet.App", "SpinnerNet.App\SpinnerNet.App.csproj", "{08CC42AF-99E4-4FC1-A47F-666138150B4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,18 @@ Global
 		{3926AD16-0017-4E6E-BA6B-47D1B2918035}.Release|x64.Build.0 = Release|Any CPU
 		{3926AD16-0017-4E6E-BA6B-47D1B2918035}.Release|x86.ActiveCfg = Release|Any CPU
 		{3926AD16-0017-4E6E-BA6B-47D1B2918035}.Release|x86.Build.0 = Release|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Debug|x64.Build.0 = Debug|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Debug|x86.Build.0 = Debug|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Release|x64.ActiveCfg = Release|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Release|x64.Build.0 = Release|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Release|x86.ActiveCfg = Release|Any CPU
+		{08CC42AF-99E4-4FC1-A47F-666138150B4C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

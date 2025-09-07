@@ -27,15 +27,55 @@
 # Environment files
 .env
 .env.local
+.env.development
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Sensitive configuration files - NEVER commit these
+**/appsettings.Development.json
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.Production.json
+
+# Test directories with potential secrets
+src/tests/
+**/test-*.sh
+**/run-tests.sh
+
+# Test artifacts and screenshots
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+test-*.js
+**/test-*.js
+grid_*
+showcase_*
+*_state.png
+*_check.png
+*_layout.png
+*_position.png
+*_validation.png
+*_page
+test-results/
+/tmp/
 
 # Temporary files
 **/temp/
 **/tmp/
 **/.temp/
 **/.tmp/
+
+# Debug and test files
+**/debug-*.html
+**/debug-*.png
+**/screenshot*.png
+**/signalr-debug*
+**/*-debug.*
+**/persona-chat*.png
+TEST-CREDENTIALS.md
 
 # Node modules (if any)
 **/node_modules/
@@ -102,3 +142,17 @@ artifacts/
 
 # Context Engineering
 INITIAL.md
+.hive-mind/hive.db
+.hive-mind/hive.db-shm
+.hive-mind/hive.db-wal
+.hive-mind/memory.db
+.claude-flow/metrics/performance.json
+.claude-flow/metrics/system-metrics.json
+.claude-flow/metrics/task-metrics.json
+.hive-mind/config.json
+.hive-mind/sessions/session-1755702625478-kbw7s8o6j-auto-pause.json
+.hive-mind/sessions/session-1755702625478-kbw7s8o6j-auto-save-1755702655480.json
+.hive-mind/sessions/session-1755703381439-k4bojyjn6-auto-pause.json
+.hive-mind/sessions/session-1755703381439-k4bojyjn6-auto-save-1755703411440.json
+.hive-mind/sessions/session-1755704456447-p2wqahfqs-auto-save-1755704486449.json
+.claude-flow/metrics/agent-metrics.json

@@ -1,0 +1,15 @@
+@model SpinnerNet.Web.Models.BlockEmbedDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@d.Bg;">
+  <iframe class="block-embed"
+          src="@Model.EmbedUrl"
+          title="@(Model.Title ?? "Embedded content")"
+          style="width: 100%; height: 100%; border: none;"
+          allowfullscreen>
+  </iframe>
+</section>

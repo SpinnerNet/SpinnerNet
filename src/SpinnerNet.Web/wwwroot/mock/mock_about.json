@@ -1,0 +1,103 @@
+{
+  "title": "About",
+  "slug": "about",
+  "blocks": [
+    {
+      "kind": "HeaderMarquee",
+      "text": "About Bamberger Spinnerei • ",
+      "layout": {
+        "desktop": { "col": 1, "row": 1,  "colSpan": "*", "rowSpan": 8, "bg": "#FF3300" },
+        "tablet":  { "col": 1, "row": 1,  "colSpan": "*", "rowSpan": 6, "bg": "#FF3300" },
+        "mobile":  { "col": 1, "row": 1,  "colSpan": "*", "rowSpan": 4, "bg": "#FF3300" }
+      }
+    },
+    
+    {
+      "kind": "Title", 
+      "headline": "Geschichte",
+      "layout": {
+        "desktop": { "col": 1,  "row": 9, "colSpan": 60, "rowSpan": 8, "bg": "#0066FF" },
+        "tablet":  { "col": 1,  "row": 7, "colSpan": 42, "rowSpan": 8, "bg": "#0066FF" },
+        "mobile":  { "col": 1,  "row": 5, "colSpan": 36, "rowSpan": 6, "bg": "#0066FF" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_7.svg",
+      "alt": "Spinnerei History",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 61, "row": 9,  "colSpan": 60, "rowSpan": 24, "bg": "#FFE450" },
+        "tablet":  { "col": 43, "row": 7,  "colSpan": 42, "rowSpan": 20, "bg": "#FFE450" },
+        "mobile":  { "col": 37, "row": 5,  "colSpan": 36, "rowSpan": 16, "bg": "#FFE450" }
+      }
+    },
+    
+    {
+      "kind": "Body",
+      "bodyHtml": "<p>Die Bamberger Spinnerei wurde 1858 gegründet und war über ein Jahrhundert lang das Herz der lokalen Textilindustrie.</p><p>Heute transformieren wir diese historischen Räume in einen Ort für Innovation, Kunst und Gemeinschaft.</p>",
+      "layout": {
+        "desktop": { "col": 1,  "row": 17, "colSpan": 60, "rowSpan": 16, "bg": "#26c626" },
+        "tablet":  { "col": 1,  "row": 15, "colSpan": 42, "rowSpan": 12, "bg": "#26c626" },
+        "mobile":  { "col": 1,  "row": 11, "colSpan": 36, "rowSpan": 10, "bg": "#26c626" }
+      }
+    },
+
+    {
+      "kind": "Title",
+      "headline": "Vision",
+      "layout": {
+        "desktop": { "col": 1,  "row": 33, "colSpan": 120, "rowSpan": 8, "bg": "#33FF00" },
+        "tablet":  { "col": 1,  "row": 27, "colSpan": 84,  "rowSpan": 6, "bg": "#33FF00" },
+        "mobile":  { "col": 1,  "row": 21, "colSpan": 72,  "rowSpan": 4, "bg": "#33FF00" }
+      }
+    },
+
+    {
+      "kind": "Body",
+      "bodyHtml": "<p>Ein Ort, wo Tradition auf Innovation trifft.</p><p>Wo aus der industriellen Vergangenheit eine kreative Zukunft wächst.</p><p>Wo Menschen zusammenkommen, um Neues zu schaffen.</p>",
+      "layout": {
+        "desktop": { "col": 1,  "row": 41, "colSpan": 120, "rowSpan": 20, "bg": "#FFCC00" },
+        "tablet":  { "col": 1,  "row": 33, "colSpan": 84,  "rowSpan": 16, "bg": "#FFCC00" },
+        "mobile":  { "col": 1,  "row": 25, "colSpan": 72,  "rowSpan": 14, "bg": "#FFCC00" }
+      }
+    },
+
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_1.svg",
+      "alt": "Community Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 1,  "row": 61, "colSpan": 24, "rowSpan": 24, "bg": "#FF00FF" },
+        "tablet":  { "col": 1,  "row": 49, "colSpan": 20, "rowSpan": 20, "bg": "#FF00FF" },
+        "mobile":  { "col": 1,  "row": 39, "colSpan": 18, "rowSpan": 18, "bg": "#FF00FF" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_2.svg",
+      "alt": "Innovation Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 25, "row": 61, "colSpan": 24, "rowSpan": 24, "bg": "#00FFFF" },
+        "tablet":  { "col": 21, "row": 49, "colSpan": 20, "rowSpan": 20, "bg": "#00FFFF" },
+        "mobile":  { "col": 19, "row": 39, "colSpan": 18, "rowSpan": 18, "bg": "#00FFFF" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_3.svg",
+      "alt": "Future Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 49, "row": 61, "colSpan": 24, "rowSpan": 24, "bg": "#FFFF00" },
+        "tablet":  { "col": 41, "row": 49, "colSpan": 20, "rowSpan": 20, "bg": "#FFFF00" },
+        "mobile":  { "col": 37, "row": 39, "colSpan": 18, "rowSpan": 18, "bg": "#FFFF00" }
+      }
+    }
+  ]
+}

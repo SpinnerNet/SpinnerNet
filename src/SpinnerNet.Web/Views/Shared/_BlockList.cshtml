@@ -1,0 +1,29 @@
+@model SpinnerNet.Web.Models.BlockListDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block mono"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@d.Bg;">
+  <div class="inset">
+    @if (Model.ListType == "ol")
+    {
+      <ol class="block-list">
+        @foreach (var item in Model.Items)
+        {
+          <li class="list-item">@item</li>
+        }
+      </ol>
+    }
+    else
+    {
+      <ul class="block-list">
+        @foreach (var item in Model.Items)
+        {
+          <li class="list-item">@item</li>
+        }
+      </ul>
+    }
+  </div>
+</section>

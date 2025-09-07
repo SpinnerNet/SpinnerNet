@@ -25,7 +25,7 @@ string keyVaultStatus = "Using local configuration";
 
 try
 {
-    var keyVaultname = builder.Configuration["Azure:KeyVault:Name"];
+    var keyVaultName = builder.Configuration["Azure:KeyVault:Name"];
     if (!string.IsNullOrEmpty(keyVaultName))
     {
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
@@ -66,11 +66,14 @@ builder.Services.Configure<RouteOptions>(options =>
 // Add services to the container
 builder.Services.AddRazorPages();
 
+// Add MockContentService for grid-based content
+builder.Services.AddSingleton<SpinnerNet.Web.Services.MockContentService>();
+
 // Configure anti-forgery tokens for .NET 9
 builder.Services.AddAntiforgery(options =>
 {
-    options.Headername = "X-CSRF-TOKEN";
-    options.Cookie.name = "__SpinnerNet-CSRF";
+    options.HeaderName = "X-CSRF-TOKEN";
+    options.Cookie.Name = "__SpinnerNet-CSRF";
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.SameSite = SameSiteMode.Strict;

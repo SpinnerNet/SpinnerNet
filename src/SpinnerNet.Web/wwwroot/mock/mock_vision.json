@@ -1,0 +1,96 @@
+{
+  "title": "Vision",
+  "slug": "vision",
+  "blocks": [
+    {
+      "kind": "Video",
+      "videoUrl": "/videos/20250902_2242_Futuristic Art Immersion_simple_compose_01k462n9kgendrhswewq1sshkp.mp4",
+      "autoplay": true,
+      "loop": true,
+      "muted": true,
+      "layout": {
+        "desktop": { "col": 1,  "row": 1,  "colSpan": 60, "rowSpan": 40, "bg": "#000000" },
+        "tablet":  { "col": 1,  "row": 1,  "colSpan": 42, "rowSpan": 30, "bg": "#000000" },
+        "mobile":  { "col": 1,  "row": 1,  "colSpan": 36, "rowSpan": 24, "bg": "#000000" }
+      }
+    },
+    
+    {
+      "kind": "Title",
+      "headline": "Zukunft",
+      "layout": {
+        "desktop": { "col": 61, "row": 1,  "colSpan": 60, "rowSpan": 12, "bg": "#FF3300" },
+        "tablet":  { "col": 43, "row": 1,  "colSpan": 42, "rowSpan": 10, "bg": "#FF3300" },
+        "mobile":  { "col": 37, "row": 1,  "colSpan": 36, "rowSpan": 8,  "bg": "#FF3300" }
+      }
+    },
+    
+    {
+      "kind": "Body",
+      "bodyHtml": "<p>Die Zukunft entsteht dort, wo Menschen den Mut haben, Neues zu wagen.</p><p>In der Bamberger Spinnerei schaffen wir Räume für diese Mutigen.</p>",
+      "layout": {
+        "desktop": { "col": 61, "row": 13, "colSpan": 60, "rowSpan": 28, "bg": "#0066FF" },
+        "tablet":  { "col": 43, "row": 11, "colSpan": 42, "rowSpan": 20, "bg": "#0066FF" },
+        "mobile":  { "col": 37, "row": 9,  "colSpan": 36, "rowSpan": 16, "bg": "#0066FF" }
+      }
+    },
+    
+    {
+      "kind": "HeaderMarquee",
+      "text": "Innovation • Kunst • Gemeinschaft • ",
+      "layout": {
+        "desktop": { "col": 1,  "row": 41, "colSpan": "*", "rowSpan": 8, "bg": "#33FF00" },
+        "tablet":  { "col": 1,  "row": 31, "colSpan": "*", "rowSpan": 6, "bg": "#33FF00" },
+        "mobile":  { "col": 1,  "row": 25, "colSpan": "*", "rowSpan": 4, "bg": "#33FF00" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_4.svg",
+      "alt": "Vision Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 1,  "row": 49, "colSpan": 30, "rowSpan": 30, "bg": "#FFE450" },
+        "tablet":  { "col": 1,  "row": 37, "colSpan": 21, "rowSpan": 21, "bg": "#FFE450" },
+        "mobile":  { "col": 1,  "row": 29, "colSpan": 18, "rowSpan": 18, "bg": "#FFE450" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_5.svg",
+      "alt": "Community Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 31, "row": 49, "colSpan": 30, "rowSpan": 30, "bg": "#FF00FF" },
+        "tablet":  { "col": 22, "row": 37, "colSpan": 21, "rowSpan": 21, "bg": "#FF00FF" },
+        "mobile":  { "col": 19, "row": 29, "colSpan": 18, "rowSpan": 18, "bg": "#FF00FF" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_6.svg",
+      "alt": "Innovation Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 61, "row": 49, "colSpan": 30, "rowSpan": 30, "bg": "#00FFFF" },
+        "tablet":  { "col": 43, "row": 37, "colSpan": 21, "rowSpan": 21, "bg": "#00FFFF" },
+        "mobile":  { "col": 37, "row": 29, "colSpan": 18, "rowSpan": 18, "bg": "#00FFFF" }
+      }
+    },
+    
+    {
+      "kind": "Image",
+      "imageUrl": "/images/hearts/WEB_8.svg",
+      "alt": "Future Heart",
+      "objectFit": "contain",
+      "layout": {
+        "desktop": { "col": 91, "row": 49, "colSpan": 30, "rowSpan": 30, "bg": "#FFFF00" },
+        "tablet":  { "col": 64, "row": 37, "colSpan": 21, "rowSpan": 21, "bg": "#FFFF00" },
+        "mobile":  { "col": 55, "row": 29, "colSpan": 18, "rowSpan": 18, "bg": "#FFFF00" }
+      }
+    }
+  ]
+}

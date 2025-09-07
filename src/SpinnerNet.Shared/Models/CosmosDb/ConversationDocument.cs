@@ -67,6 +67,21 @@ public class ConversationDocument
     /// Conversation metadata and analytics
     /// </summary>
     public ConversationMetadata metadata { get; set; } = new();
+
+    /// <summary>
+    /// Purpose of this conversation (e.g., "persona_discovery", "general_chat")
+    /// </summary>
+    public string? purpose { get; set; }
+
+    /// <summary>
+    /// Extracted persona data if this is a persona discovery conversation
+    /// </summary>
+    public PersonaExtractionData? personaExtraction { get; set; }
+
+    /// <summary>
+    /// Progress percentage for persona discovery conversations
+    /// </summary>
+    public double? personaCompletionPercentage { get; set; }
 }
 
 /// <summary>
@@ -103,6 +118,20 @@ public class ConversationMessage
     /// Message metadata (emotion, confidence, etc.)
     /// </summary>
     public Dictionary<string, object> metadata { get; set; } = new();
+
+    /// <summary>
+    /// Gets the role string for OpenAI compatibility
+    /// </summary>
+    public string GetRole()
+    {
+        return sender switch
+        {
+            MessageSender.User => "user",
+            MessageSender.Buddy => "assistant",
+            MessageSender.System => "system",
+            _ => "user"
+        };
+    }
 }
 
 /// <summary>
@@ -174,4 +203,55 @@ public class ConversationMetadata
     /// Conversation language
     /// </summary>
     public string language { get; set; } = "en";
+}
+
+/// <summary>
+/// Extracted persona data from a conversation
+/// </summary>
+public class PersonaExtractionData
+{
+    /// <summary>
+    /// Extracted personality traits
+    /// </summary>
+    public List<string> traits { get; set; } = new();
+
+    /// <summary>
+    /// Extracted core values
+    /// </summary>
+    public List<string> values { get; set; } = new();
+
+    /// <summary>
+    /// Identified communication style
+    /// </summary>
+    public string communicationStyle { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Decision-making approach
+    /// </summary>
+    public string decisionMaking { get; set; } = string.Empty;
+
+    /// <summary>
+    /// User's goals and aspirations
+    /// </summary>
+    public List<string> goals { get; set; } = new();
+
+    /// <summary>
+    /// User's challenges and pain points
+    /// </summary>
+    public List<string> challenges { get; set; } = new();
+
+    /// <summary>
+    /// User's interests and hobbies
+    /// </summary>
+    public List<string> interests { get; set; } = new();
+
+    /// <summary>
+    /// Confidence score of the extraction (0.0 to 1.0)
+    /// </summary>
+    public double confidenceScore { get; set; }
+
+    /// <summary>
+    /// When the persona was extracted
+    /// </summary>
+    public DateTime extractedAt { get; set; } = DateTime.UtcNow;
 }

@@ -1,12 +1,308 @@
 @page
 @model SpinnerNet.Web.Pages.TestModel
 @{
-    ViewData["Title"] = "Test - Bamberger Spinnerei";
+    ViewData["Title"] = "Raster Test - Bamberger Spinnerei";
 }
 
-<div class="container py-5">
-    <h1>Test Page</h1>
-    <p>If you can see this, the ASP.NET Core application is working correctly with anti-forgery tokens.</p>
-    <a href="/app" class="btn btn-primary">Go to Main App</a>
-    <a href="/" class="btn btn-secondary">Back to Home</a>
+<style>
+    :root {
+        /* FESTE Rasterparameter */
+        --cols: 120;
+        /* konstante Anzahl Spalten – bei Bedarf ändern */
+        --mod: 12px;
+        /* Modulgröße in px (fix); alternativ 10–14px testen */
+
+        /* Typo-Trim (deine Werte) */
+        --trim-h1: calc(var(--mod) * 0.34);
+        --xtrim-h1: calc(var(--mod) * 0.10);
+        --trim-p: calc(var(--mod) * 0.30);
+        --xtrim-p: calc(var(--mod) * 0.38);
+
+        /* Farben (Demo) */
+        --c-grid: rgba(0, 0, 0, .10);
+        --c-bg: #ffffff;
+        --c-blue: #0066FF;
+        --c-lime: #33FF00;
+        --c-green: #26c626;
+        --c-red: #FF3300;
+        --c-yellow: #FFE450;
+        --c-text: #111;
+    }
+
+    /* Schrift immer einbinden */
+    @@font-face {
+        font-family: "ROM MONO";
+        src: url("/fonts/ABC ROM Mono HEADLINE.woff2") format("woff2"),
+            url("/fonts/ABC ROM Mono HEADLINE.woff") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        background: var(--c-bg);
+        color: var(--c-text);
+        overflow: hidden;
+        /* eigener Scroller um die Canvas */
+    }
+
+    /* ===== Scroll-Container für die Canvas ===== */
+    .stage {
+        width: 100vw;
+        height: 100svh;
+        overflow: auto;
+        /* horizontales Scrollen falls Canvas breiter ist */
+    }
+
+    /* ===== Canvas: festes Modulraster ===== */
+    .canvas {
+        position: relative;
+        width: calc(var(--cols) * var(--mod));
+        /* feste Breite in ganzen Modulen */
+        min-height: 100%;
+        margin: 0;
+        /* linksbündig, kein Zentrieren */
+        display: grid;
+        grid-template-columns: repeat(var(--cols), var(--mod));
+        grid-auto-rows: var(--mod);
+    }
+
+    /* ===== Raster-Overlay exakt über der Canvas (nicht über 100vw!) ===== */
+    .gridOverlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 10;
+        background-image:
+            repeating-linear-gradient(to right, var(--c-grid) 0 1px, transparent 1px var(--mod)),
+            repeating-linear-gradient(to bottom, var(--c-grid) 0 1px, transparent 1px var(--mod));
+    }
+
+    .gridOverlay.hidden {
+        display: none;
+    }
+
+    /* ===== Blöcke (immer ganze Zellen) ===== */
+    .block {
+        grid-column: var(--col) / span var(--colspan);
+        grid-row: var(--row) / span var(--rowspan);
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .inset {
+        padding: calc(var(--mod) * 2);
+    }
+
+    /* Inneneinrückung auf Knoten */
+
+    /* Demo-Farben */
+    .bg-red {
+        background: var(--c-red);
+    }
+
+    .bg-blue {
+        background: var(--c-blue);
+        color: #fff;
+    }
+
+    .bg-lime {
+        background: var(--c-lime);
+    }
+
+    .bg-green {
+        background: var(--c-green);
+    }
+
+    .bg-yellow {
+        background: var(--c-yellow);
+    }
+
+    /* ===== Typografie ===== */
+    .mono {
+        font-family: "ROM MONO", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .h1 {
+        margin: 0;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        font-weight: 800;
+        font-size: clamp(1.5rem, 2.2vw + 0.75rem, 3rem);
+        line-height: calc(var(--mod) * 4);
+    }
+
+    .p {
+        margin: 0;
+        font-size: clamp(1rem, 0.5vw + .85rem, 1.25rem);
+        line-height: calc(var(--mod) * 2);
+        hyphens: auto;
+        text-wrap: pretty;
+    }
+
+    .stack>*+* {
+        margin-top: calc(var(--mod) * 2);
+    }
+
+    /* Moderner Cap-/Edge-Trim */
+    @@supports (text-box-trim: both) {
+
+        .h1,
+        .p {
+            text-box-trim: both;
+            text-box-edge: cap alphabetic;
+        }
+    }
+
+    /* Fallback-Trim (X & Y) */
+    @@supports not (text-box-trim: both) {
+        .h1 {
+            transform:
+                translateX(calc(-1 * var(--xtrim-h1))) translateY(calc(-1 * var(--trim-h1)));
+        }
+
+        .p {
+            transform:
+                translateX(calc(-1 * var(--xtrim-p))) translateY(calc(-1 * var(--trim-p)));
+        }
+    }
+
+    /* Header als Laufschrift (füllt Rest bis letzte Spalte) */
+    .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .marquee__track {
+        display: inline-block;
+        padding-right: 50vw;
+        animation: marquee 18s linear infinite;
+        will-change: transform;
+    }
+
+    @@keyframes marquee {
+        from {
+            transform: translateX(0)
+        }
+
+        to {
+            transform: translateX(-50%)
+        }
+    }
+
+    /* Herz */
+    .heart {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+        display: block;
+    }
+
+    /* UI */
+    .ui {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        display: grid;
+        gap: 8px;
+        z-index: 50;
+    }
+
+    .btn {
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid #000;
+        background: #fff;
+        cursor: pointer;
+        font: 500 0.95rem system-ui, sans-serif;
+    }
+</style>
+
+<div class="stage">
+    <div id="canvas" class="canvas">
+        <div id="gridOverlay" class="gridOverlay"></div>
+
+        <!-- ROW 1: Herz + Header -->
+        <section class="block bg-red" style="--col:1;  --row:1;  --colspan:12;        --rowspan:12;">
+            <div class="inset">
+                <img id="heartSvg" class="heart" alt="Bamberger Spinnerei – Herz" />
+            </div>
+        </section>
+
+        <section class="block bg-blue mono" style="--col:13; --row:1;  --colspan:108;       --rowspan:12;">
+            <div class="inset marquee">
+                <h1 class="h1 marquee__track">Bamberger Spinnerei • Bamberger Spinnerei • Bamberger Spinnerei • </h1>
+            </div>
+        </section>
+
+        <!-- ROW 2: drei Elemente nahtlos -->
+        <section class="block bg-lime mono" style="--col:1;                --row:13; --colspan:40; --rowspan:10;">
+            <div class="inset">
+                <h1 class="h1">Vision</h1>
+            </div>
+        </section>
+        <section class="block bg-lime mono" style="--col:41;              --row:13; --colspan:40; --rowspan:10;">
+            <div class="inset">
+                <h1 class="h1">Zeit</h1>
+            </div>
+        </section>
+        <section class="block bg-lime mono" style="--col:81;              --row:13; --colspan:40; --rowspan:10;">
+            <div class="inset">
+                <h1 class="h1">Raum</h1>
+            </div>
+        </section>
+
+        <!-- ROW 3: Body-Text in grün -->
+        <section class="block bg-green mono" style="--col:1; --row:23; --colspan:120; --rowspan:14;">
+            <div class="inset stack">
+                <p class="p">Wir sind losgegangen.</p>
+                <p class="p">Nichts ist fertig. Alles ist möglich.</p>
+            </div>
+        </section>
+
+        <!-- ROW 4: gelbe Fläche (volle Breite in ganzen Blöcken) -->
+        <section class="block bg-yellow" style="--col:1; --row:37; --colspan:120; --rowspan:36;">
+            <div class="inset"></div>
+        </section>
+
+    </div>
 </div>
+
+<div class="ui">
+    <button class="btn" type="button" onclick="toggleGrid()">Grid an/aus</button>
+    <button class="btn" type="button" onclick="cycleHeart()">Herz wechseln</button>
+</div>
+
+<script>
+    // Herz-SVGs (Pfad fix)
+    const heartFiles = [
+        'WEB_1.svg', 'WEB_2.svg', 'WEB_3.svg',
+        'WEB_4.svg', 'WEB_5.svg', 'WEB_6.svg',
+        'WEB_7.svg', 'WEB_8.svg', 'WEB_9.svg'
+    ];
+    const heartBasePath = '/images/hearts/';
+    const heartImg = document.getElementById('heartSvg');
+    let heartIndex = Math.floor(Math.random() * heartFiles.length);
+
+    function applyHeart() {
+        const src = heartBasePath + heartFiles[heartIndex];
+        heartImg.src = src;
+    }
+    function cycleHeart() {
+        heartIndex = (heartIndex + 1) % heartFiles.length;
+        applyHeart();
+    }
+    applyHeart();
+
+    // Grid-Overlay toggle
+    function toggleGrid() {
+        document.getElementById('gridOverlay').classList.toggle('hidden');
+    }
+</script>

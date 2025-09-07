@@ -1,0 +1,18 @@
+@model SpinnerNet.Web.Models.BlockQuoteDto
+@{
+  var d = Model.Layout.Desktop;
+  string colEnd = (d.ColSpan == int.MinValue) ? "-1" : (d.Col + d.ColSpan).ToString();
+  string rowEnd = (d.RowSpan == int.MinValue) ? "-1" : (d.Row + d.RowSpan).ToString();
+}
+<section class="block mono"
+         style="--col-start:@d.Col; --col-end:@colEnd; --row-start:@d.Row; --row-end:@rowEnd; --bg:@d.Bg;">
+  <div class="inset">
+    <blockquote class="quote">
+      <p class="quote-text">"@Model.Quote"</p>
+      @if (!string.IsNullOrEmpty(Model.Author))
+      {
+        <cite class="quote-author">— @Model.Author</cite>
+      }
+    </blockquote>
+  </div>
+</section>
